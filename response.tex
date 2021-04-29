@@ -1,0 +1,249 @@
+\RequirePackage{etex}
+\documentclass[11pt, onecolumn, final]{IEEEtran}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\maintext{tips} %input your manuscript file name here
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\usepackage{silence}
+\WarningFilter{caption}{Unsupported document class}
+\WarningFilter{caption}{Unknown document class}
+\WarningFilter{latex}{No \author given}
+
+%\usepackage{etoolbox}
+%\usepackage{empheq}
+%\usepackage{fancyvrb}
+\usepackage{multibib}
+\newcites{lref}{Additional References Used}
+
+\usepackage{catchfilebetweentags}
+%%%% usage in manuscript
+%::: %<*tag_name>
+%::: content
+%::: %</tag_name>
+%%%% usage in response
+%::: \revision{tag_name}
+\makeatletter
+\def\CatchFBT@sanitize{%
+   \@sanitize
+   \@makeother\{%
+   \@makeother\}%
+%   \endlinechar=`\^^J% <--- This line modified
+}% \CatchFBT@sanitize
+\makeatother
+
+%\def\notloadhyperref{}
+\ifx\notloadhyperref\undefined
+	\usepackage{xr-hyper}
+\else
+	\usepackage{xr}
+\fi
+
+\input{preamble.tex}
+%\hypersetup{nolinks=true}
+% if hyperref is used in \maintext, then it has to be used here as well
+%\usepackage[hidelinks,hypertexnames=false]{hyperref}
+
+%\externaldocument{\maintext}
+%\externalcitedocument[R-]{lrefc}
+
+% For citing references that appear only in this response, use \lcite{...}.
+% The steps to be taken are:
+%		latex response
+%		bibtex lref.aux
+%		copy lref.aux to lrefc.aux, and lref.bbl to lrefc.bbl
+%		latex response
+%		latex response
+
+\makeatletter
+\renewcommand{\@biblabel}[1]{\hfill[\textrm{R}-#1]}
+\makeatother
+\newcounter{itemcount}
+\newcommand{\rcite}[1]{%
+	\def\rlist{}%
+	\def\citeform##1{R-##1}%
+	\setcounter{itemcount}{0}%
+  \renewcommand*{\do}[1]{\stepcounter{itemcount}%
+		\ifnumcomp{\value{itemcount}}{=}{1}{}{\appto\rlist{, }}%
+		\appto\rlist{R-##1}%
+	}% How to process each item
+  \docsvlist{#1}% Process list
+	\cite{\rlist}%
+	\def\citeform##1{##1}%
+}
+\newcommand{\lcite}[1]{%
+	\nocitelref{#1}%
+	\rcite{#1}%
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\theoremstyle{plain}\newtheorem{comment}{Comment}
+
+\newtheoremstyle{respstyle}%
+{3pt}% Space above
+{3pt}% Space below 
+{\normalfont\color{blue}}% Body font
+{}% Indent amount
+{\bfseries\color{blue}}% Theorem head font
+{.}% Punctuation after theorem head
+{.5em}% Space after theorem head 
+{}% Theorem head spec (can be left empty, meaning ‘normal’)
+
+\theoremstyle{respstyle}
+\newtheorem{response}{Response}
+
+\newcommand{\revise}[1]{
+\vspace{11pt}
+\noindent ``#1''
+\vspace{11pt}}
+
+%\newcommand{\revision}[1]{
+%\vspace{11pt}
+%\noindent ``\ExecuteMetaData[\maintext]{#1}''
+%\vspace{11pt}
+ %}
+
+% Usage: refer to tips.tex and tips.pdf
+%\newcommand{\revision}[1]{
+%\par
+%\begin{minipage}[t]{0.95\textwidth}
+%\setlength{\parindent}{1pc}
+%``\ExecuteMetaData[\maintext]{#1}''
+%\end{minipage}
+%\ \\
+%}
+
+\usepackage{mdframed}
+\mdfsetup{
+fontcolor=blue,
+linecolor=blue,
+}
+\newcommand{\revision}[1]{
+\par
+\begin{mdframed}[userdefinedwidth=0.95\linewidth,align=center]
+\ExecuteMetaData[\maintext]{#1}
+\end{mdframed}
+}
+
+
+% Usage example: 
+% If the tex that you transfer over using \revision contains a \label{eqa} for an equation, it will show up as (1) in the response file if this is the first equation in the response file instead of the number in the maintext.
+% Call \xrcounterref{equation}{eqa} before \revision to fix this. 
+% Change ``equation'' to the name of the corresponding counter if this is not an equation. E.g., section, figure, table.
+\newcommand{\xrcounterref}[2]{
+\setcounter{#1}{\getrefnumber{#2}}
+\addtocounter{#1}{-1}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Add newcommands from \maintext here
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\tbC}{\widetilde{\bC}}
+\newcommand{\tbL}{\widetilde{\bL}}
+\newcommand{\onehot}[1]{\mathrm{one\_hot}\left(#1\right)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\externaldocument{\maintext}
+\externaldocument[R-]{lrefc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Response to Reviewers' Comments}
+
+
+\begin{document}
+\maketitle
+
+
+We sincerely thank all the reviewers for their helpful comments. We have revised the manuscript according to the reviewers' comments, and have included here a point-by-point response to their comments. The main changes are the following:
+\begin{enumerate}
+\item ...
+\item ...
+\end{enumerate}
+Major changes are highlighted in \blue{blue} in our revised manuscript.
+
+\clearpage
+\setcounter{comment}{0}
+\setcounter{response}{0}
+
+\begin{center}
+\huge \textbf{Response to Reviewer 1}
+\end{center}
+
+
+\noindent\textbf{Recommendation:} Major Revision
+
+\begin{comment}
+A lot of comments.
+\end{comment}
+
+\begin{response}
+Thank you for your comment. Please always use the formal ``thank you'' instead of ``thanks''. Please always start your response politely and in a conciliatory tone even if you are frustrated with the comment. We can be firm, friendly and respectful. After all, the reviewer has sacrificed his or her precious time to read our manuscript and provide comments, which he or she is not obligated to do.
+
+Using the xr package, I can reference \cref{sect:General} and \cref{eq:X} of tips.tex. To do this, you need to build response.tex in the same folder containing tips.aux. 
+
+Next, I cite \cite{LenTayQui:J16,Str:93}. The references displayed are from tips.aux and tips.bbl thanks to xr. Finally, the catchfilebetweentags package allows me to quote the following from \cref{sect:Response} in tips.tex: 
+\revision{tag:NP}
+
+Note that the tag name cannot include underscores. Another quote from tips.tex:
+\xrcounterref{equation}{Lambda_SGLR}
+\revision{tag:equation}
+Notice how the equation numbers are wrong (compared to tips.pdf) if xrcounterref is not used. Try commenting it out to see what I mean! Unfortunately, since the labels are repeated here in addition to the original ones in tips.tex, we get multiply defined label warnings. Let me know if there is a work around for this without having to silence this type of warning (which is useful for catching other errors). 
+\end{response}
+
+\begin{comment}
+Do something.
+\end{comment}
+\begin{response}
+Thank you for your suggestion. I will now cite some references that appear only in the bibliography for this response using \lcite{AceDahLobOzd:11,ChePap:95,Cov:69}. The steps to be taken are:
+\begin{enumerate}[i)]
+\item latex response
+\item bibtex lref.aux
+\item latex response
+\item bibtex lref.aux
+\item\label{it:rename} copy lref.aux to lrefc.aux, and lref.bbl to lrefc.bbl
+\item latex response
+\item latex response
+\item latex response
+\end{enumerate}
+These steps are automated in the lcite\_.bat file. \textbf{If anyone can figure out a better solution, please let me know.}
+
+\end{response}
+
+
+\clearpage
+\setcounter{comment}{0}
+\setcounter{response}{0}
+
+\begin{center}
+\huge \textbf{Response to Reviewer 2}
+\end{center}
+
+\noindent\textbf{Recommendation:} Major Revision
+
+\begin{comment}
+Improve the paper.
+\end{comment}
+\begin{response}
+Thank you for your comment. Please refer to \cite{LenTayQui:J16,Str:93}. The following revision is made in \cref{sect:Response}: 
+
+\revision{tag:NP}
+
+\end{response}
+
+
+
+\clearpage
+
+\bibliographystylelref{IEEEtran}
+\bibliographylref{IEEEabrv,StringDefinitions,refs}
+
+\end{document}

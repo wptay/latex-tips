@@ -1,0 +1,292 @@
+\documentclass[draftcls,onecolumn, 12pt]{IEEEtran}
+%\documentclass[10pt, twocolumn, final]{IEEEtran}
+%\documentclass[journal]{IEEEtran}
+%\documentclass[peerreview]{IEEEtran}
+
+\usepackage{silence}
+\WarningFilter{caption}{Unsupported document class}
+\WarningFilter{caption}{Unknown document class}
+
+
+\usepackage{listings}
+\lstset{
+columns=flexible,
+breaklines=true
+}
+
+%\def\notloadhyperref{}
+\def\loadbibentry{}
+\input{preamble.tex}
+
+
+% Additional newcommands not in preamble.tex, special to your paper
+\newcommand{\tbC}{\widetilde{\bC}}
+\newcommand{\tbL}{\widetilde{\bL}}
+\newcommand{\onehot}[1]{\mathrm{one\_hot}\left(#1\right)}
+
+
+
+\begin{document}
+
+\title{Tips on Writing Papers in \LaTeX}
+\author{Wee~Peng~Tay,~\IEEEmembership{Senior~Member,~IEEE}%
+\thanks{
+This work was supported by the xxxxx. Preliminary versions of parts of this paper were presented at xxxx.  The author is with the School of Electrical and Electronic Engineering, Nanyang Technological University, Singapore. E-mail: \texttt{wptay@ntu.edu.sg}
+}%
+}
+
+%\markboth{IEEE TRANSACTIONS ON INFORMATION THEORY,~Vol.~, No.~, ~2012}%
+%{Tay: xxxx}
+
+% The paper headers
+%\markboth
+%   {To be submitted... }
+%   {Tay \MakeLowercase{\textit{et al.}}: }
+
+% make the title area
+% Don't write page number 0 to the cover page.
+\maketitle \thispagestyle{empty}
+
+% Put abstract and the paper's body in a new page, page 1.
+%\newpage
+%\setcounter{page}{1}
+
+%---------------------------------------------------------------------------%
+%                           abstract and key words                          %
+%---------------------------------------------------------------------------%
+\begin{abstract}
+We list some best practices and tips for writing technical papers in \LaTeX.
+\end{abstract}
+
+
+\begin{IEEEkeywords}
+Tips, suggestions, best practices.
+\end{IEEEkeywords}
+
+\section{General}\label{sect:General}
+\textbf{Please see the tex file for actual implementation of the examples in this note. You will not learn anything by just reading the pdf file.} This tex file includes some of the more commonly used packages and settings. It also illustrates the use of some packages, e.g., the enumitem package allows customization of the item listing. For details, read the documentation of the packages for different options.
+
+\begin{enumerate}
+	\item Windows tex distribution: MiKTeX.
+	\item There are many good \LaTeX\ tutorials online. A good starting point is \url{http://tobi.oetiker.ch/lshort/lshort.pdf}.
+	\item There are many tex editors you can use. I recommend TeXstudio, TeXnicCenter or Atom (with Git integration). You can also make use of Overleaf.
+	\item Use IEEEtran draftcls as in this tex file for drafts (editing stage). See also \url{http://www.michaelshell.org/tex/ieeetran/} for faqs.
+	\item I recommend the use of pdflatex instead of latex. This means your figures should be in pdf or png format instead of eps. The reason is that typical dvi viewers are not very stable and responsive. However, if you insist on using latex, that is also fine. You can use the latexmk toolchain ("latexmk -synctex=1 -interaction=nonstopmode -file-line-error -pdf") to automatically perform the necessary multiple pdflatex runs.
+	\item Together with pdflatex, I recommend the use of SumatraPDF as the viewer. This allows you to use synctex, which lets you sync the pdf file to your tex file (double-clicking in the pdf file brings you directly to the right place in the tex file and vice versa when opening pdf from tex).
+	%\item However, synctex does not allow file names with spaces. Please use an underscore ``\_'' if you need to have spaces.
+	\item After running pdflatex or latexmk, \textbf{\red{please look through the warnings and resolve them}}. These are very helpful to catch errors like defining same labels multiple times.
+	\item I have provided a preamble.tex that you can include into your tex file using the \textbackslash input command (see the beginning of this tex file). This file includes all the commonly used packages, declarations and aliases. \textbf{Look through the preamble.tex file first before you define your own newcommands to avoid duplication. The most updated preamble.tex file is always available on the shared Google Drive.} I will always use the most updated preamble.tex file, so there is no need for you to send me a copy. If you find some useful things to add to preamble.tex, please let me know.
+	\item You can use this tex file as a starting template when writing your papers.
+	\item Share your tex files with me through Google Drive or Overleaf.
+	\item Upload all references you have used in your paper to Google Drive, except for books. If you have referenced a paper, you should have at least read its abstract and the relevant parts that you have referenced.
+	\item Please ensure that you embed all your fonts into the pdf before you submit to a journal or conference.
+\end{enumerate}
+
+\section{Labels}\label{sect:Labels}
+
+\begin{enumerate}[(a)]
+	\item Use meaningful labels for your sections, equations, inequalities, figures, tables, and others. For example, use something like ``sect:Labels'' to label your section so that you know that this label is for a section. Later on in your text, you can then easily refer to it via something like ``Section \ref{sect:Labels}''. Similarly, I use ``eq:Meaningful\_Name'', ``ineq:Meaningful\_Name'', ``fig:Meaningful\_Name'' to label equations, inequalities, and figures.
+	\item\label{it:myitem} Tip: items can also be labeled! Example is this reference \ref{it:myitem}.
+	\item Do not over label! For equations, tables, figures and most ``objects'', we usually label only those that we need to refer to in another part of the text. In some cases, you may also label important equations although you may not refer to these in any part of your text. This makes it easier for readers to refer to your equations. However, do this judiciously.
+	\item You should try to use the cleveref package to reference labels. It is smart enough to know what you are referencing, e.g., \cref{sect:General}, \cref{sect:General,sect:Labels,sect:Equations}, \cref{eq:X} all use the same cref command. Otherwise, you have put a tilde like ``Section~\ref{sect:General}'' to avoid line breaks immediately after ``Section''.
+\end{enumerate}
+
+
+\section{Equations}\label{sect:Equations}
+
+\begin{enumerate}[1)]
+	\item There are many ways to write equations, but I find that you really only need to use either the align or align* environments provided by amsmath. The environment align will have equation numbers at every line and align* has no equation numbers. See the tips on labeling to decide when to use align and align*. Examples are:
+\begin{align}
+X & = \sum_{i=1}^n y_i \label{eq:X}\\
+& = z \nn
+& = w,
+\end{align}
+and
+\begin{align*}
+X & = \int_{a}^b f(x) \ud x \\
+& = z \\
+& = w.
+\end{align*}
+%<*tag:equation>
+Another example is
+\begin{align}
+\Lambda_{\mathrm{SGLR}}(k,t) & =\max\left\{\Lambda(k,t),\Lambda_n(k,t)\right\}, \label{Lambda_SGLR}\\
+\tau_{\mathrm{SGLR}}(b)      & =\min\{\tau(b),\tau_n(b)\}, \label{tau_SGLR2}\\
+\tau_{\mathrm{W-SGLR}}(b)    & =\min\{\widetilde{\tau}(b),\widetilde{\tau_n}(b)\}, \label{tau_WSGLR2}\\
+\Phi_i &= \tau_{\mathrm{W-SGLR}}(b) + i^2,\ \text{for $i=1,\ldots,N$}, \\
+\tbC &= \onehot{\tbL}.
+\end{align}
+%</tag:equation>
+\textbf{Note when punctuation marks like ``,'' and ``.'' are required in the equations.} Observe also how text is written in math environments.
+
+	\item Please put \& before the binary operators like $=$, $\leq$ and $\geq$. You can see why by comparing the following example with that above. Do you see that the spacing behind $=$ is now missing?
+	\begin{align*}
+	X =& \int_{a}^b f(x) \ud x \\
+	=& z \\
+	=& w.
+	\end{align*}
+
+	\item Do not write something like
+	\begin{align*}
+	&\sum_{i=1}^n y_i \\
+	&= z \\
+	&= w, \\
+	&\text{and therefore, we have}\\
+	& x + y = w.
+	\end{align*}
+	It should be written as follows:
+	\begin{align*}
+	&\sum_{i=1}^n y_i \\
+	&= z \\
+	&= w,
+	\end{align*}
+	and therefore, we have
+	\begin{align*}
+	& x + y = w.
+	\end{align*}
+	Alternatively, use the intertext command:
+\begin{align*}
+&\sum_{i=1}^n y_i \\
+&= z \\
+&= w,
+\intertext{and therefore, we have}
+& x + y = w.
+\end{align*}
+
+	\item When to use \textbackslash text and \textbackslash mathrm? From tex.stackexchange:
+\begin{lstlisting}
+\text{divides} and \mathrm{divides} might give the same result, but they are conceptually different (and can actually be printed in different ways, depending on the math fonts used). Spaces in the argument of \mathrm are ignored, for example. Moreover, \text honors the font of the surrounding environment: it will print in italics in the statement of a theorem.
+\end{lstlisting}
+You should use $\mathrm{abc}$ if abc is part of a math symbol but $\text{abc}$ if abc is text like in a conditional clause in a math environment.
+
+	\item Please refrain from using the ``\$\$ ... \$\$'' or ``\textbackslash [ ... \textbackslash ]'' environment for equation displays. It makes the latex hard for me to read and makes it difficult to add labeling later on. Tip: If you find it a hassle to type the begin and end tags, set up some keyboard shortcuts! You should have keyboard shortcuts for the commonly used environments and commands to improve your writing efficiency. A useful tool is AutoHotkey.
+
+	\item An interesting package is breqn, which provides special equation environments that can perform line breaks \emph{automatically}. This is very useful if you need to produce both single- and double-column versions of the same paper. Do check it out! As there are still some bugs in this package, I recommend that you use the breqn environments only for those few long equations, while sticking to align and align* for the rest.
+
+\end{enumerate}
+
+
+
+\section{New Commands}\label{sect:New_Commands}
+
+\begin{enumerate}
+	\item If you are using a group of symbols very frequently, define a new command for it. It is like writing a computer program. The new command can even take in an argument.
+	\item Example of a simple new command is $\Real$. See the provided preamble.tex file for more examples!
+	\item Example of a more complex new command is $\E{0}[f(X)]$. \textbf{As we use $\E$ and $\P$ very frequently, please figure out how I have defined these commands in the preamble.tex and use them appropriately.}
+\end{enumerate}
+
+\section{Graphics}\label{sect:Graphics}
+
+\begin{enumerate}
+	\item Put your figures into a subfolder called ``Figures''.
+	\item You can set the graphics path in tex using ``\textbackslash graphicspath'' (this has been done in the preamble.tex file). Then \LaTeX\ will look for the right figure in the folder you have provided in the graphics path. See \cref{fig:tandem} for an example.
+	\item In \cref{fig:tandem}, we use the subfigure environment to create \cref{fig:network,fig:regions}.
+	\item I highly recommend Ipe (\url{http://ipe.otfried.org/}) for preparing your graphics. The advantage is that you can directly input latex symbols into your graphics using Ipe. Graphics can be saved directly in pdf. For example, you can open tandem.pdf in the Figures folder using the Ipe program and edit that! If you use another graphics program, the font may not be the same as your latex document. In that case, you may need to use psfrag to replace your labels.
+	\item Please use ``!htb'' or ``!htbp'' as options in your figures environment.
+\end{enumerate}
+
+\begin{figure}[!htpb]
+    \centering
+    \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{tandem}
+        \caption{Network topology}
+        \label{fig:network}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Akregions}
+        \caption{Decision regions}
+        \label{fig:regions}
+    \end{subfigure}
+    \caption{A tandem network and its decision regions.}
+		\label{fig:tandem}
+\end{figure}
+
+
+\section{Paper Editing Process}\label{sect:editing}
+\begin{enumerate}
+	\item After you have written your paper, put it aside for a day and revise it with a fresh mind in order to improve it. \textbf{This includes checking the bibliography for errors.} See \cref{sect:Bibliography}.
+	\item Please send me your paper for editing only after you have gone over it \textbf{several times} to correct any errors and improve it. You should send the paper to me only after you feel fully satisfied with the version that you have. Typically, this will be the fourth or fifth version.
+	\item You can email me all the necessary files, upload to your Google Drive shared folder or share via Overleaf. I prefer the latter two approaches.
+	\item I will highlight my major edits in \blue{blue} and \red{red}, where the latter color usually indicates something that requires your action or special attention. Please go through all my edits to check for errors (never assume that I am always correct; I do make errors too!). If you are satisfied with an edit, remove the highlight and return the file to me, with your own edits highlighted in blue. We will iterate this process until the paper reaches a satisfactory stage.
+	\item Please note that sometimes \textbf{NOT} all my edits are highlighted. Those highlighted are for your attention and checking. Some are for you to compare with your previous version so that you can learn from the change. Do not manually transfer the changes to your previous tex file. Use the tex file I send you for your next iteration.
+\end{enumerate}
+
+
+\section{Responding to Paper Reviews}\label{sect:Response}
+\begin{enumerate}
+	\item You can use the response.tex as a starting template. I have defined some useful environments for use there in your responses to reviewers' comments.
+		\item Check out the use of the packages catchfilebetweentags and xr (or xr-hyper if the hyperref package is used). These packages make life much easier when you need to cross-reference a label or citation from your manuscript tex file in your response file. It also allows you to quote a chunk of tex directly from your manuscript tex file. How cool is that?
+	\item In the response.tex file, replace manuscript-filename with your .tex filename (without the ``.tex''). Add tags in your .tex file to reproduce the same chunk between the tags in your response. E.g., if you add the tags in your tex file:
+\begin{verbatim}
+%<*tag:NP>
+Therefore, we have shown that $P \ne NP$.
+%</tag:NP>
+\end{verbatim}
+and use ``\textbackslash revision\{tag:NP\}'' in your response.tex, the sentence between the two tags will be quoted in your response. This ensures that whatever changes you make in the tex file are reflected in the response.
+\end{enumerate}
+
+
+\section{Bibliography}\label{sect:Bibliography}
+
+%%%%% This is placed here due to bibentry, not usually used in your papers.
+\bstctlcite{IEEEBSTcontrol}
+\bibliographystyle{IEEEtran}
+\nobibliography{IEEEabrv,StringDefinitions,refs}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{enumerate}
+	\item Use bibtex to keep track of your references.
+	\item Use a meaningful system for your bibtex keys. For example, a common practice is to use the first 3 letters of the first 3 authors' last name followed by the year the paper is published, e.g., ``LenTayQui:J16''.
+	\item Use the IEEEabrv.bib file. Read the file to understand how it works. I have also provided a StringDefinitions.bib that contains some of the conferences relevant to our research areas.
+	\item Programs like JabRef can help you to organize your bib library.
+	\item In the following, I list examples of correct or preferred reference citations as well as bad citations in the IEEEtran bibliographystyle. Please refer to refs.bib to see the bib entries. Can you tell the difference between the correct citation and each of the bad citations?
+	\begin{enumerate}[(i)]
+		\item Example of correct journal citation:
+			\begin{itemize}
+				\item \footnotesize\bibentry{LenTayQui:J16}
+			\end{itemize}
+		\item Examples of bad journal citation:
+			\begin{itemize}
+				\item \footnotesize\bibentry{badjournal1}
+				\item \footnotesize\bibentry{badjournal2}
+				\item \footnotesize\bibentry{badjournal3}
+				\item \footnotesize\bibentry{badjournal4} {\color{cyan} [Note: If you do not want to use standard abbreviations in the journal name, you have to be consistent and do this for ALL journals and conferences.]}
+				\item \footnotesize\bibentry{badjournal5}
+			\end{itemize}
+		\item Examples of correct conference citation:
+			\begin{itemize}
+				\item \footnotesize\bibentry{SunTay:C16}
+				\item \footnotesize\bibentry{LenQuiChe:C15}
+			\end{itemize}
+		\item Examples of bad conference citation:
+			\begin{itemize}
+				\item \footnotesize\bibentry{badconf1}
+				\item \footnotesize\bibentry{badconf2}
+				\item \footnotesize\bibentry{badconf3} {\color{cyan}[Note: If you want to keep the ``5th'', you have to be consistent and do this for ALL conferences.]}
+				\item \footnotesize\bibentry{badconf4}
+			\end{itemize}
+		\item Example of correct book citation:
+			\begin{itemize}
+				\item \footnotesize\bibentry{Str:93}
+			\end{itemize}
+		\item Examples of bad book citation:
+			\begin{itemize}
+				\item \footnotesize\bibentry{badbook1}
+				\item \footnotesize\bibentry{badbook2}
+				\item \footnotesize\bibentry{badbook3}
+			\end{itemize}
+	\end{enumerate}
+
+
+
+\end{enumerate}
+
+%%% This is normally used for papers instead of bibentry
+%\bibliographystyle{IEEEtran}
+%\bibliography{IEEEabrv,StringDefinitions,refs}
+
+
+\end{document}
