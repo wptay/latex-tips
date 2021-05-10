@@ -69,7 +69,7 @@ Tips, suggestions, best practices.
 \begin{enumerate}
 	\item Windows tex distribution: MiKTeX.
 	\item There are many good \LaTeX\ tutorials online. A good starting point is \url{http://tobi.oetiker.ch/lshort/lshort.pdf}.
-	\item There are many tex editors you can use. I recommend TeXstudio, TeXnicCenter or Atom (with Git integration). You can also make use of Overleaf.
+	\item There are many tex editors you can use. I recommend TeXstudio, TeXnicCenter or VSCode (with Git integration). You can also make use of Overleaf.
 	\item Use IEEEtran draftcls as in this tex file for drafts (editing stage). See also \url{http://www.michaelshell.org/tex/ieeetran/} for faqs.
 	\item I recommend the use of pdflatex instead of latex. This means your figures should be in pdf or png format instead of eps. The reason is that typical dvi viewers are not very stable and responsive. However, if you insist on using latex, that is also fine. You can use the latexmk toolchain ("latexmk -synctex=1 -interaction=nonstopmode -file-line-error -pdf") to automatically perform the necessary multiple pdflatex runs.
 	\item Together with pdflatex, I recommend the use of SumatraPDF as the viewer. This allows you to use synctex, which lets you sync the pdf file to your tex file (double-clicking in the pdf file brings you directly to the right place in the tex file and vice versa when opening pdf from tex).
