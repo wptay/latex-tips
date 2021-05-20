@@ -47,9 +47,6 @@
 % if hyperref is used in \maintext, then it has to be used here as well
 %\usepackage[hidelinks,hypertexnames=false]{hyperref}
 
-%\externaldocument{\maintext}
-%\externalcitedocument[R-]{lrefc}
-
 % For citing references that appear only in this response, use \lcite{...}.
 % The steps to be taken are:
 %		latex response
@@ -66,11 +63,11 @@
 	\def\rlist{}%
 	\def\citeform##1{R-##1}%
 	\setcounter{itemcount}{0}%
-  \renewcommand*{\do}[1]{\stepcounter{itemcount}%
+  	\renewcommand*{\do}[1]{\stepcounter{itemcount}%
 		\ifnumcomp{\value{itemcount}}{=}{1}{}{\appto\rlist{, }}%
 		\appto\rlist{R-##1}%
 	}% How to process each item
-  \docsvlist{#1}% Process list
+  	\docsvlist{#1}% Process list
 	\cite{\rlist}%
 	\def\citeform##1{##1}%
 }
@@ -151,7 +148,21 @@ linecolor=blue,
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\externaldocument{\maintext}
+\makeatletter
+\newcommand*{\addFileDependency}[1]{% argument=file name and extension
+  \typeout{(#1)}
+  \@addtofilelist{#1}
+  \IfFileExists{#1}{}{\typeout{No file #1.}}
+}
+\makeatother
+
+\newcommand*{\myexternaldocument}[1]{%
+    \externaldocument{#1}%
+    \addFileDependency{#1.tex}%
+    \addFileDependency{#1.aux}%
+}
+
+\myexternaldocument{\maintext}
 \externaldocument[R-]{lrefc}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
