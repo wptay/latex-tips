@@ -1,2 +1,27 @@
+#######################################
+# Latex                               #
+#######################################
+
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.nav
+*.out
+*.run.xml
+*.snm
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.toc
+*.vrb
+*latexmkrc
+*.ini
+*.tar.gz
+*.dvi
+
 snippets.tex
 desktop.ini
