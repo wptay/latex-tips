@@ -18,7 +18,6 @@
 *.synctex.gz
 *.toc
 *.vrb
-*latexmkrc
 *.ini
 *.tar.gz
 *.dvi
