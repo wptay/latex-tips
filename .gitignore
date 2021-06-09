@@ -21,6 +21,7 @@
 *.ini
 *.tar.gz
 *.dvi
+*.bib.bak
 
 snippets.tex
 desktop.ini
