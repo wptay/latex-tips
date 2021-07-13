@@ -176,8 +176,8 @@ linecolor=blue,
 
 We sincerely thank all the reviewers for their helpful comments. We have revised the manuscript according to the reviewers' comments, and have included here a point-by-point response to their comments. The main changes are the following:
 \begin{enumerate}
-\item ...
-\item ...
+  \item ...
+  \item ...
 \end{enumerate}
 Major changes are highlighted in \blue{blue} in our revised manuscript.
 
@@ -186,7 +186,7 @@ Major changes are highlighted in \blue{blue} in our revised manuscript.
 \setcounter{response}{0}
 
 \begin{center}
-\huge \textbf{Response to Reviewer 1}
+  \huge \textbf{Response to Reviewer 1}
 \end{center}
 
 
@@ -197,35 +197,35 @@ A lot of comments.
 \end{comment}
 
 \begin{response}
-Thank you for your comment. Please always use the formal ``thank you'' instead of ``thanks''. Please always start your response politely and in a conciliatory tone even if you are frustrated with the comment. We can be firm, friendly and respectful. After all, the reviewer has sacrificed his or her precious time to read our manuscript and provide comments, which he or she is not obligated to do.
+  Thank you for your comment. Please always use the formal ``thank you'' instead of ``thanks''. Please always start your response politely and in a conciliatory tone even if you are frustrated with the comment. We can be firm, friendly and respectful. After all, the reviewer has sacrificed his or her precious time to read our manuscript and provide comments, which he or she is not obligated to do.
 
-Using the xr package, I can reference \cref{sect:General} and \cref{eq:X} of tips.tex. To do this, you need to build response.tex in the same folder containing tips.aux. 
+  Using the xr package, I can reference \cref{sect:General} and \cref{eq:X} of tips.tex. To do this, you need to build response.tex in the same folder containing tips.aux.
 
-Next, I cite \cite{LenTayQui:J16,Str:93}. The references displayed are from tips.aux and tips.bbl thanks to xr. Finally, the catchfilebetweentags package allows me to quote the following from \cref{sect:Response} in tips.tex: 
-\revision{tag:NP}
+  Next, I cite \cite{LenTayQui:J16,Str:93}. The references displayed are from tips.aux and tips.bbl thanks to xr. Finally, the catchfilebetweentags package allows me to quote the following from \cref{sect:Response} in tips.tex:
+  \revision{tag:NP}
 
-Note that the tag name cannot include underscores. Another quote from tips.tex:
-\xrcounterref{equation}{Lambda_SGLR}
-\revision{tag:equation}
-Notice how the equation numbers are wrong (compared to tips.pdf) if xrcounterref is not used. Try commenting it out to see what I mean! Unfortunately, since the labels are repeated here in addition to the original ones in tips.tex, we get multiply defined label warnings. Let me know if there is a work around for this without having to silence this type of warning (which is useful for catching other errors). 
+  Note that the tag name cannot include underscores. Another quote from tips.tex:
+  \xrcounterref{equation}{Lambda_SGLR}
+  \revision{tag:equation}
+  Notice how the equation numbers are wrong (compared to tips.pdf) if xrcounterref is not used. Try commenting it out to see what I mean! Unfortunately, since the labels are repeated here in addition to the original ones in tips.tex, we get multiply defined label warnings. Let me know if there is a work around for this without having to silence this type of warning (which is useful for catching other errors).
 \end{response}
 
 \begin{comment}
 Do something.
 \end{comment}
 \begin{response}
-Thank you for your suggestion. I will now cite some references that appear only in the bibliography for this response using \lcite{AceDahLobOzd:11,ChePap:95,Cov:69}. The steps to be taken are:
-\begin{enumerate}[i)]
-\item latex response
-\item bibtex lref.aux
-\item latex response
-\item bibtex lref.aux
-\item\label{it:rename} copy lref.aux to lrefc.aux, and lref.bbl to lrefc.bbl
-\item latex response
-\item latex response
-\item latex response
-\end{enumerate}
-These steps are automated in the lcite\_.bat file. \textbf{If anyone can figure out a better solution, please let me know.}
+  Thank you for your suggestion. I will now cite some references that appear only in the bibliography for this response using \lcite{AceDahLobOzd:11,ChePap:95,Cov:69}. The steps to be taken are:
+  \begin{enumerate}[i)]
+    \item latex response
+    \item bibtex lref.aux
+    \item latex response
+    \item bibtex lref.aux
+          \item\label{it:rename} copy lref.aux to lrefc.aux, and lref.bbl to lrefc.bbl
+    \item latex response
+    \item latex response
+    \item latex response
+  \end{enumerate}
+  These steps are automated in the lcite\_.bat file. \textbf{If anyone can figure out a better solution, please let me know.}
 
 \end{response}
 
@@ -235,7 +235,7 @@ These steps are automated in the lcite\_.bat file. \textbf{If anyone can figure 
 \setcounter{response}{0}
 
 \begin{center}
-\huge \textbf{Response to Reviewer 2}
+  \huge \textbf{Response to Reviewer 2}
 \end{center}
 
 \noindent\textbf{Recommendation:} Major Revision
@@ -244,9 +244,9 @@ These steps are automated in the lcite\_.bat file. \textbf{If anyone can figure 
 Improve the paper.
 \end{comment}
 \begin{response}
-Thank you for your comment. Please refer to \cite{LenTayQui:J16,Str:93}. The following revision is made in \cref{sect:Response}: 
+  Thank you for your comment. Please refer to \cite{LenTayQui:J16,Str:93}. The following revision is made in \cref{sect:Response}:
 
-\revision{tag:NP}
+  \revision{tag:NP}
 
 \end{response}
 
