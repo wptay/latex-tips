@@ -5,6 +5,8 @@
 
 \def\maintext{tips} %input your manuscript file name here
 
+\def\docprefix{R} %prefix to use for additional references and other local features
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -47,6 +49,18 @@
 % if hyperref is used in \maintext, then it has to be used here as well
 %\usepackage[hidelinks,hypertexnames=false]{hyperref}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Add newcommands from \maintext here
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\tbC}{\widetilde{\bC}}
+\newcommand{\tbL}{\widetilde{\bL}}
+\newcommand{\onehot}[1]{\mathrm{one\_hot}\left(#1\right)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 % For citing references that appear only in this response, use \lcite{...}.
 % The steps to be taken are:
 %		latex response
@@ -56,17 +70,17 @@
 %		latex response
 
 \makeatletter
-\renewcommand{\@biblabel}[1]{\hfill[\textrm{R}-#1]}
+\renewcommand{\@biblabel}[1]{\hfill[\textrm{\docprefix}-#1]}
 \makeatother
 \newcounter{itemcount}
 \newcommand{\rcite}[1]{%
 	\def\rlist{}%
-	\def\citeform##1{R-##1}%
+	\def\citeform##1{\docprefix-##1}%
 	\setcounter{itemcount}{0}%
   	\renewcommand*{\do}[1]{\stepcounter{itemcount}%
-		\ifnumcomp{\value{itemcount}}{=}{1}{}{\appto\rlist{, }}%
-		\appto\rlist{R-##1}%
-	}% How to process each item
+      \ifnumcomp{\value{itemcount}}{=}{1}{}{\appto\rlist{, }}%
+      \appto\rlist{\docprefix-##1}%
+    }% How to process each item
   	\docsvlist{#1}% Process list
 	\cite{\rlist}%
 	\def\citeform##1{##1}%
@@ -118,14 +132,15 @@
 
 \usepackage{mdframed}
 \mdfsetup{
-fontcolor=blue,
-linecolor=blue,
+  fontcolor=blue,
+  linecolor=blue,
 }
+
 \newcommand{\revision}[1]{
-\par
-\begin{mdframed}[userdefinedwidth=0.95\linewidth,align=center]
-\ExecuteMetaData[\maintext]{#1}
-\end{mdframed}
+  \par%
+  \begin{mdframed}[userdefinedwidth=0.95\linewidth,align=center]%
+    \ExecuteMetaData[\maintext]{#1}%
+  \end{mdframed}%
 }
 
 
@@ -138,15 +153,6 @@ linecolor=blue,
 \addtocounter{#1}{-1}
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Add newcommands from \maintext here
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newcommand{\tbC}{\widetilde{\bC}}
-\newcommand{\tbL}{\widetilde{\bL}}
-\newcommand{\onehot}[1]{\mathrm{one\_hot}\left(#1\right)}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \makeatletter
 \newcommand*{\addFileDependency}[1]{% argument=file name and extension
@@ -163,7 +169,7 @@ linecolor=blue,
 }
 
 \myexternaldocument{\maintext}
-\externaldocument[R-]{lrefc}
+\externaldocument[\docprefix-]{lrefc}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -172,7 +178,6 @@ linecolor=blue,
 
 \begin{document}
 \maketitle
-
 
 We sincerely thank all the reviewers for their helpful comments. We have revised the manuscript according to the reviewers' comments, and have included here a point-by-point response to their comments. The main changes are the following:
 \begin{enumerate}
@@ -220,7 +225,7 @@ Do something.
     \item bibtex lref.aux
     \item latex response
     \item bibtex lref.aux
-          \item\label{it:rename} copy lref.aux to lrefc.aux, and lref.bbl to lrefc.bbl
+    \item\label{it:rename} copy lref.aux to lrefc.aux, and lref.bbl to lrefc.bbl
     \item latex response
     \item latex response
     \item latex response

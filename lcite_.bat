@@ -1,5 +1,7 @@
 @ECHO OFF
 
+set BIBINPUTS=.\bib
+
 latex response
 bibtex lref.aux
 latex response
