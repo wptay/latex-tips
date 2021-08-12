@@ -13,6 +13,7 @@
 columns=flexible,
 breaklines=true
 }
+\usepackage{lipsum}
 
 %\def\notloadhyperref{}
 \def\loadbibentry{}
@@ -84,10 +85,15 @@ breaklines=true
 \section{Labels}\label{sect:Labels}
 
 \begin{enumerate}[(a)]
-	\item Use meaningful labels for your sections, equations, inequalities, figures, tables, and others. For example, use something like ``sect:Labels'' to label your section so that you know that this label is for a section. Later on in your text, you can then easily refer to it via something like ``Section \ref{sect:Labels}''. Similarly, I use ``eq:Meaningful\_Name'', ``ineq:Meaningful\_Name'', ``fig:Meaningful\_Name'' to label equations, inequalities, and figures.
-	      \item\label{it:myitem} Tip: items can also be labeled! Example is this reference \ref{it:myitem}.
-	\item Do not over label! For equations, tables, figures and most ``objects'', we usually label only those that we need to refer to in another part of the text. In some cases, you may also label important equations although you may not refer to these in any part of your text. This makes it easier for readers to refer to your equations. However, do this judiciously.
-	\item You should try to use the cleveref package to reference labels. It is smart enough to know what you are referencing, e.g., \cref{sect:General}, \cref{sect:General,sect:Labels,sect:Equations}, \cref{eq:X} all use the same cref command. Otherwise, you have put a tilde like ``Section~\ref{sect:General}'' to avoid line breaks immediately after ``Section''.
+  \item Use meaningful labels for your sections, equations, inequalities, figures, tables, and others. For example, use something like ``sect:Labels'' to label your section so that you know that this label is for a section. Later on in your text, you can then easily refer to it via something like ``Section \ref{sect:Labels}''. Similarly, I use ``eq:Meaningful\_Name'', ``ineq:Meaningful\_Name'', ``fig:Meaningful\_Name'' to label equations, inequalities, and figures.
+
+	\begin{Example}\label{eg:lipsum}
+	\lipsum[1]
+	\end{Example}
+
+  \item\label{it:myitem} Tip: items can also be labeled! Example is this reference \ref{it:myitem}.
+  \item Do not over label! For equations, tables, figures and most ``objects'', we usually label only those that we need to refer to in another part of the text. In some cases, you may also label important equations although you may not refer to these in any part of your text. This makes it easier for readers to refer to your equations. However, do this judiciously.
+  \item You should try to use the cleveref package to reference labels. It is smart enough to know what you are referencing, e.g., \cref{sect:General}, \cref{sect:General,sect:Labels,sect:Equations}, \cref{eq:X} all use the same cref command. Otherwise, you have put a tilde like ``Section~\ref{sect:General}'' to avoid line breaks immediately after ``Section''.
 \end{enumerate}
 
 
@@ -214,16 +220,23 @@ breaklines=true
 
 \section{Responding to Paper Reviews}\label{sect:Response}
 \begin{enumerate}
-	\item You can use the response.tex as a starting template. I have defined some useful environments for use there in your responses to reviewers' comments.
-	\item Check out the use of the packages catchfilebetweentags and xr (or xr-hyper if the hyperref package is used). These packages make life much easier when you need to cross-reference a label or citation from your manuscript tex file in your response file. It also allows you to quote a chunk of tex directly from your manuscript tex file. How cool is that?
-	\item In the response.tex file, replace manuscript-filename with your .tex filename (without the ``.tex''). Add tags in your .tex file to reproduce the same chunk between the tags in your response. E.g., if you add the tags in your tex file:
-	      \begin{verbatim}
+\item You can use the response.tex as a starting template. I have defined some useful environments for use there in your responses to reviewers' comments.
+\item Check out the use of the packages catchfilebetweentags and xr (or xr-hyper if the hyperref package is used). These packages make life much easier when you need to cross-reference a label or citation from your manuscript tex file in your response file. It also allows you to quote a chunk of tex directly from your manuscript tex file. How cool is that?
+
+\item In the response.tex file, replace manuscript-filename with your .tex filename (without the ``.tex''). Add tags in your .tex file to reproduce the same chunk between the tags in your response. E.g., if you add the tags in your tex file:
+\begin{verbatim}
 %<*tag:NP>
 Therefore, we have shown that $P \ne NP$.
 %</tag:NP>
 \end{verbatim}
-	      and use ``\textbackslash revision\{tag:NP\}'' in your response.tex, the sentence between the two tags will be quoted in your response. This ensures that whatever changes you make in the tex file are reflected in the response.
+and use ``\textbackslash revision\{tag:NP\}'' in your response.tex, the sentence between the two tags will be quoted in your response. This ensures that whatever changes you make in the tex file are reflected in the response.
 \end{enumerate}
+
+%<*tag:ex>
+\begin{Example}\label{eg:subGSP}
+Consider the subset of vertices $V_0$ of an unweighted directed graph $G$. Suppose that we consider the adjacency matrix $\bA_G$ as the graph shift operator for $G$. The adjacency matrix $\bA_{H_0}$ of the subgraph $H_0$ shown is a submatrix consisting of the even-indexed rows and columns of $\bA_G^2$. Any filter shift invariant \gls{wrt} $\bA_{H_0}$ can be viewed as a polynomial of $\bA_G^2$ composed with a projection to the vertices of $H_0$.
+\end{Example}
+%</tag:ex>
 
 
 \section{Bibliography}\label{sect:Bibliography}

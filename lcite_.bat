@@ -1,5 +1,6 @@
 @ECHO OFF
 
+REM Change this accordingly
 set BIBINPUTS=.\bib
 
 latex response

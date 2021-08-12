@@ -141,20 +141,20 @@
 \AtBeginDocument{
   \let\oldlabel@in@display\label@in@display%
   \let\oldlabel\label%
-  \newcommand{\labelimport}{%
-    \stepcounter{newdocumentimport}%
-    \def\label@in@display##1{%
-      \setcounter{equation}{\getrefnumber{##1}}%
-      \addtocounter{equation}{-1}%
-      \oldlabel@in@display{\docprefix-\thenewdocumentimport-##1}%
-    }%
-    \def\label##1{%
-      \oldlabel{\docprefix-\thenewdocumentimport-##1}%
-    }%
-  }
-  \let\oldExecuteMetaData\ExecuteMetaData
-  \renewcommand{\ExecuteMetaData}{\labelimport\oldExecuteMetaData}
 }
+\newcommand{\labelimport}{%
+  \stepcounter{newdocumentimport}%
+  \def\label@in@display##1{%
+    \xrcounterref{equation}{##1}%
+    \oldlabel@in@display{\docprefix-\thenewdocumentimport-##1}%
+  }%
+  \def\label##1{%
+    \oldlabel{\docprefix-\thenewdocumentimport-##1}%
+  }%
+}
+\let\oldExecuteMetaData\ExecuteMetaData
+\renewcommand{\ExecuteMetaData}{\labelimport\oldExecuteMetaData}
+
 \makeatother
 
 \newcounter{eqcounter}
@@ -275,7 +275,7 @@ Improve the paper.
 
   \revision{tag:NP}
 
-  Please refer to the following:
+  Please refer to the following equation:
   \begin{align}
   f(x) &= \sum_{i>0} y_i. \label{eq:test}
   \end{align}
@@ -290,6 +290,19 @@ A lot of comments.
 \begin{response}
   Thank you for your comment. Repeated quote from tips.tex:
   \revision{tag:equation}
+\end{response}
+
+
+\begin{comment}
+Some other comments.
+\end{comment}
+
+\begin{response}
+We provide the following example, reproduced here:
+\xrcounterref{Example}{eg:subGSP}
+\revision{tag:ex}
+
+Note the use of $\backslash$xrcounterref to set the numbering of environments correctly. \textbf{If you know how to make this automatic, let me know.}
 \end{response}
 
 
