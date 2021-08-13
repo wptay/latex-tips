@@ -93,7 +93,9 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\theoremstyle{plain}\newtheorem{comment}{Comment}
+\newcounter{reviewer}
+
+\theoremstyle{plain}\newtheorem{comment}{Comment}[reviewer]
 
 \newtheoremstyle{respstyle}%
 {3pt}% Space above
@@ -106,12 +108,12 @@
 {}% Theorem head spec (can be left empty, meaning ‘normal’)
 
 \theoremstyle{respstyle}
-\newtheorem{response}{Response}
+\newtheorem{response}{Response}[reviewer]
 
-\newcommand{\revise}[1]{
-\vspace{11pt}
-\noindent ``#1''
-\vspace{11pt}}
+%\newcommand{\revise}[1]{
+%\vspace{11pt}
+%\noindent ``#1''
+%\vspace{11pt}}
 
 %\newcommand{\revision}[1]{
 %\vspace{11pt}
@@ -211,11 +213,10 @@ We sincerely thank all the reviewers for their helpful comments. We have revised
 Major changes are highlighted in \blue{blue} in our revised manuscript.
 
 \clearpage
-\setcounter{comment}{0}
-\setcounter{response}{0}
+\refstepcounter{reviewer}
 
 \begin{center}
-  \huge \textbf{Response to Reviewer 1}
+  \huge \textbf{Response to Reviewer \thereviewer}
 \end{center}
 
 
@@ -258,11 +259,10 @@ Do something.
 
 
 \clearpage
-\setcounter{comment}{0}
-\setcounter{response}{0}
+\refstepcounter{reviewer}
 
 \begin{center}
-  \huge \textbf{Response to Reviewer 2}
+  \huge \textbf{Response to Reviewer \thereviewer}
 \end{center}
 
 \noindent\textbf{Recommendation:} Major Revision
