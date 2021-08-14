@@ -60,10 +60,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Newcommands - do not change
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 % For citing references that appear only in this response, use \lcite{...}.
 % The steps to be taken are:
 %		latex response
@@ -93,7 +89,9 @@
 	\rcite{#1}%
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcounter{reviewer}
 
@@ -112,14 +110,26 @@
 \theoremstyle{respstyle}
 \newtheorem{response}{Response}[reviewer]
 
-\newcommand{\PbPResponseHeader}{%
-\clearpage%
-\refstepcounter{reviewer}%
-\begin{center}%
-  \huge \textbf{Response to Reviewer \thereviewer}%
-\end{center}%
-}
+%\newcommand{\revise}[1]{
+%\vspace{11pt}
+%\noindent ``#1''
+%\vspace{11pt}}
 
+%\newcommand{\revision}[1]{
+%\vspace{11pt}
+%\noindent ``\ExecuteMetaData[\maintext]{#1}''
+%\vspace{11pt}
+ %}
+
+% Usage: refer to tips.tex and tips.pdf
+%\newcommand{\revision}[1]{
+%\par
+%\begin{minipage}[t]{0.95\textwidth}
+%\setlength{\parindent}{1pc}
+%``\ExecuteMetaData[\maintext]{#1}''
+%\end{minipage}
+%\ \\
+%}
 
 \usepackage{mdframed}
 \mdfsetup{
@@ -127,10 +137,9 @@
   linecolor=blue,
 }
 
-\newcounter{newdocumentimport}
-
 
 \makeatletter
+\newcounter{newdocumentimport}
 \AtBeginDocument{
   \let\oldlabel@in@display\label@in@display%
   \let\oldlabel\label%
@@ -147,8 +156,8 @@
 }
 \let\oldExecuteMetaData\ExecuteMetaData
 \renewcommand{\ExecuteMetaData}{\labelimport\oldExecuteMetaData}
-\makeatother
 
+\makeatother
 
 \newcounter{eqcounter}
 \newcommand{\revision}[1]{
@@ -190,12 +199,6 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Start of response to reviewers
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 \title{Response to Reviewers' Comments}
 
 
@@ -209,11 +212,13 @@ We sincerely thank all the reviewers for their helpful comments. We have revised
 \end{enumerate}
 Major changes are highlighted in \blue{blue} in our revised manuscript.
 
+\clearpage
+\refstepcounter{reviewer}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+  \huge \textbf{Response to Reviewer \thereviewer}
+\end{center}
 
-% Initial a new point-by-point response to a new reviewer
-\PbPResponseHeader
 
 \noindent\textbf{Recommendation:} Major Revision
 
@@ -253,8 +258,12 @@ Do something.
 \end{response}
 
 
-% Initial a new point-by-point response to a new reviewer
-\PbPResponseHeader
+\clearpage
+\refstepcounter{reviewer}
+
+\begin{center}
+  \huge \textbf{Response to Reviewer \thereviewer}
+\end{center}
 
 \noindent\textbf{Recommendation:} Major Revision
 
@@ -277,6 +286,7 @@ Improve the paper.
 \begin{comment}
 A lot of comments.
 \end{comment}
+
 \begin{response}
   Thank you for your comment. Repeated quote from tips.tex:
   \revision{tag:equation}
@@ -286,25 +296,14 @@ A lot of comments.
 \begin{comment}
 Some other comments.
 \end{comment}
+
 \begin{response}
-We provide the following example, reproduced here: 
+We provide the following example, reproduced here:
 \xrcounterref{Example}{eg:subGSP}
 \revision{tag:ex}
 
 Note the use of $\backslash$xrcounterref to set the numbering of environments correctly. \textbf{If you know how to make this automatic, let me know.}
 \end{response}
-
-\begin{comment}
-Some other comments.
-\end{comment}
-\begin{response}
-We provide the following theorem, reproduced here:
-\xrcounterref{Theorem}{thm:poly}
-\revision{tag:thm}
-
-Note the use of $\backslash$xrcounterref to set the numbering of environments correctly. \textbf{If you know how to make this automatic, let me know.}
-\end{response}
-
 
 
 \clearpage
