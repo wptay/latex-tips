@@ -222,6 +222,10 @@
 	\newtheorem{Proposition_A}{Proposition}[section]
 	\newtheorem{Lemma_A}{Lemma}[section]
 	\newtheorem{Definition_A}{Definition}[section]
+	\newtheorem{Example_A}{Example}[section]
+	\newtheorem{Remark_A}{Remark}[section]
+	\newtheorem{Assumption_A}{Assumption}[section]
+	\newtheorem{Exercise_A}{Exercise}[section]
 \fi
 
 % Remarks
@@ -553,7 +557,7 @@
 \DeclareMathSymbol{\ssfOmega}{0}{ssfletters}{'012}
 
 
-% Bold greek
+% Greek
 \newcommand{\balpha}{\bm{\alpha}}
 \newcommand{\bbeta}{\bm{\beta}}
 \newcommand{\bgamma}{\bm{\gamma}}
@@ -564,7 +568,6 @@
 \newcommand{\btau}{\bm{\tau}}
 \newcommand{\bpi}{\bm{\pi}}
 \newcommand{\bepsilon}{\bm{\epsilon}}
-\newcommand{\veps}{\varepsilon}
 \newcommand{\bvarepsilon}{\bm{\varepsilon}}
 \newcommand{\bsigma}{\bm{\sigma}}
 \newcommand{\bvarsigma}{\bm{\varsigma}}
@@ -603,6 +606,7 @@
 \newcommand{\tepsilon}{\widetilde{\epsilon}}
 \newcommand{\tvarepsilon}{\widetilde{\varepsilon}}
 \newcommand{\tsigma}{\widetilde{\sigma}}
+\newcommand{\tvarsigma}{\widetilde{\varsigma}}
 \newcommand{\tzeta}{\widetilde{\zeta}}
 \newcommand{\tmeta}{\widetilde{\eta}}
 \newcommand{\tkappa}{\widetilde{\kappa}}
@@ -614,8 +618,41 @@
 \newcommand{\tlambda}{\widetilde{\lambda}}
 \newcommand{\trho}{\widetilde{\rho}}
 
-\newcommand{\tbAlpha}{\widetilde{\bAlpha}}
-\newcommand{\tbBeta}{\widetilde{\bBeta}}
+\newcommand{\tGamma}{\widetilde{\Gamma}}
+\newcommand{\tDelta}{\widetilde{\Delta}}
+\newcommand{\tTheta}{\widetilde{\Theta}}
+\newcommand{\tPi}{\widetilde{\Pi}}
+\newcommand{\tSigma}{\widetilde{\Sigma}}
+\newcommand{\tPhi}{\widetilde{\Phi}}
+\newcommand{\tPsi}{\widetilde{\Psi}}
+\newcommand{\tOmega}{\widetilde{\Omega}}
+\newcommand{\tXi}{\widetilde{\Xi}}
+\newcommand{\tLambda}{\widetilde{\Lambda}}
+
+\newcommand{\tbalpha}{\widetilde{\balpha}}
+\newcommand{\tbbeta}{\widetilde{\bbeta}}
+\newcommand{\tbgamma}{\widetilde{\bgamma}}
+\newcommand{\tbdelta}{\widetilde{\bdelta}}
+\newcommand{\tbtheta}{\widetilde{\btbheta}}
+\newcommand{\tbmu}{\widetilde{\bmu}}
+\newcommand{\tbnu}{\widetilde{\bnu}}
+\newcommand{\tbtau}{\widetilde{\btbau}}
+\newcommand{\tbpi}{\widetilde{\bpi}}
+\newcommand{\tbepsilon}{\widetilde{\bepsilon}}
+\newcommand{\tbvarepsilon}{\widetilde{\bvarepsilon}}
+\newcommand{\tbsigma}{\widetilde{\bsigma}}
+\newcommand{\tbvarsigma}{\widetilde{\bvarsigma}}
+\newcommand{\tbzeta}{\widetilde{\bzeta}}
+\newcommand{\tbmeta}{\widetilde{\beta}}
+\newcommand{\tbkappa}{\widetilde{\bkappa}}
+\newcommand{\tbchi}{\widetilde\bm{\latexchi}\movedownsub}
+\newcommand{\tbphi}{\widetilde{\bphi}}
+\newcommand{\tbpsi}{\widetilde{\bpsi}}
+\newcommand{\tbomega}{\widetilde{\bomega}}
+\newcommand{\tbxi}{\widetilde{\bxi}}
+\newcommand{\tblambda}{\widetilde{\blambda}}
+\newcommand{\tbrho}{\widetilde{\brho}}
+
 \newcommand{\tbGamma}{\widetilde{\bGamma}}
 \newcommand{\tbDelta}{\widetilde{\bDelta}}
 \newcommand{\tbTheta}{\widetilde{\bTheta}}
@@ -639,18 +676,117 @@
 \newcommand{\hepsilon}{\widehat{\epsilon}}
 \newcommand{\hvarepsilon}{\widehat{\varepsilon}}
 \newcommand{\hsigma}{\widehat{\sigma}}
+\newcommand{\hvarsigma}{\widehat{\varsigma}}
 \newcommand{\hzeta}{\widehat{\zeta}}
 \newcommand{\hmeta}{\widehat{\eta}}
 \newcommand{\hkappa}{\widehat{\kappa}}
 \newcommand{\hchi}{\widehat{\latexchi}\movedownsub}
 \newcommand{\hphi}{\widehat{\phi}}
-\newcommand{\barbPhi}{\bar{\bPhi}}
 \newcommand{\hpsi}{\widehat{\psi}}
 \newcommand{\homega}{\widehat{\omega}}
 \newcommand{\hxi}{\widehat{\xi}}
 \newcommand{\hlambda}{\widehat{\lambda}}
 \newcommand{\hrho}{\widehat{\rho}}
 
+\newcommand{\hGamma}{\widehat{\Gamma}}
+\newcommand{\hDelta}{\widehat{\Delta}}
+\newcommand{\hTheta}{\widehat{\Theta}}
+\newcommand{\hPi}{\widehat{\Pi}}
+\newcommand{\hSigma}{\widehat{\Sigma}}
+\newcommand{\hPhi}{\widehat{\Phi}}
+\newcommand{\hPsi}{\widehat{\Psi}}
+\newcommand{\hOmega}{\widehat{\Omega}}
+\newcommand{\hXi}{\widehat{\Xi}}
+\newcommand{\hLambda}{\widehat{\Lambda}}
+
+\newcommand{\hbalpha}{\widehat{\balpha}}
+\newcommand{\hbbeta}{\widehat{\bbeta}}
+\newcommand{\hbgamma}{\widehat{\bgamma}}
+\newcommand{\hbdelta}{\widehat{\bdelta}}
+\newcommand{\hbtheta}{\widehat{\btheta}}
+\newcommand{\hbmu}{\widehat{\bmu}}
+\newcommand{\hbnu}{\widehat{\bnu}}
+\newcommand{\hbtau}{\widehat{\btau}}
+\newcommand{\hbpi}{\widehat{\bpi}}
+\newcommand{\hbepsilon}{\widehat{\bepsilon}}
+\newcommand{\hbvarepsilon}{\widehat{\bvarepsilon}}
+\newcommand{\hbsigma}{\widehat{\bsigma}}
+\newcommand{\hbvarsigma}{\widehat{\bvarsigma}}
+\newcommand{\hbzeta}{\widehat{\bzeta}}
+\newcommand{\hbmeta}{\widehat{\beta}}
+\newcommand{\hbkappa}{\widehat{\bkappa}}
+\newcommand{\hbchi}{\widehat\bm{\latexchi}\movedownsub}
+\newcommand{\hbphi}{\widehat{\bphi}}
+\newcommand{\hbpsi}{\widehat{\bpsi}}
+\newcommand{\hbomega}{\widehat{\bomega}}
+\newcommand{\hbxi}{\widehat{\bxi}}
+\newcommand{\hblambda}{\widehat{\blambda}}
+\newcommand{\hbrho}{\widehat{\brho}}
+
+\newcommand{\hbGamma}{\widehat{\bGamma}}
+\newcommand{\hbDelta}{\widehat{\bDelta}}
+\newcommand{\hbTheta}{\widehat{\bTheta}}
+\newcommand{\hbPi}{\widehat{\bPi}}
+\newcommand{\hbSigma}{\widehat{\bSigma}}
+\newcommand{\hbPhi}{\widehat{\bPhi}}
+\newcommand{\hbPsi}{\widehat{\bPsi}}
+\newcommand{\hbOmega}{\widehat{\bOmega}}
+\newcommand{\hbXi}{\widehat{\bXi}}
+\newcommand{\hbLambda}{\widehat{\bLambda}}
+
+\makeatletter
+\newcommand*\rel@kern[1]{\kern#1\dimexpr\macc@kerna}
+\newcommand*\widebar[1]{%
+  \begingroup
+  \def\mathaccent##1##2{%
+    \rel@kern{0.8}%
+    \overline{\rel@kern{-0.8}\macc@nucleus\rel@kern{0.2}}%
+    \rel@kern{-0.2}%
+  }%
+  \macc@depth\@ne
+  \let\math@bgroup\@empty \let\math@egroup\macc@set@skewchar
+  \mathsurround\z@ \frozen@everymath{\mathgroup\macc@group\relax}%
+  \macc@set@skewchar\relax
+  \let\mathaccentV\macc@nested@a
+  \macc@nested@a\relax111{#1}%
+  \endgroup
+}
+\makeatother
+
+\newcommand{\barbalpha}{\widebar{\balpha}}
+\newcommand{\barbbeta}{\widebar{\bbeta}}
+\newcommand{\barbgamma}{\widebar{\bgamma}}
+\newcommand{\barbdelta}{\widebar{\bdelta}}
+\newcommand{\barbtheta}{\widebar{\btheta}}
+\newcommand{\barbmu}{\widebar{\bmu}}
+\newcommand{\barbnu}{\widebar{\bnu}}
+\newcommand{\barbtau}{\widebar{\btau}}
+\newcommand{\barbpi}{\widebar{\bpi}}
+\newcommand{\barbepsilon}{\widebar{\bepsilon}}
+\newcommand{\barbvarepsilon}{\widebar{\bvarepsilon}}
+\newcommand{\barbsigma}{\widebar{\bsigma}}
+\newcommand{\barbvarsigma}{\widebar{\bvarsigma}}
+\newcommand{\barbzeta}{\widebar{\bzeta}}
+\newcommand{\barbmeta}{\widebar{\beta}}
+\newcommand{\barbkappa}{\widebar{\bkappa}}
+\newcommand{\barbchi}{\bar\bm{\latexchi}\movedownsub}
+\newcommand{\barbphi}{\widebar{\bphi}}
+\newcommand{\barbpsi}{\widebar{\bpsi}}
+\newcommand{\barbomega}{\widebar{\bomega}}
+\newcommand{\barbxi}{\widebar{\bxi}}
+\newcommand{\barblambda}{\widebar{\blambda}}
+\newcommand{\barbrho}{\widebar{\brho}}
+
+\newcommand{\barbGamma}{\widebar{\bGamma}}
+\newcommand{\barbDelta}{\widebar{\bDelta}}
+\newcommand{\barbTheta}{\widebar{\bTheta}}
+\newcommand{\barbPi}{\widebar{\bPi}}
+\newcommand{\barbSigma}{\widebar{\bSigma}}
+\newcommand{\barbPhi}{\widebar{\bPhi}}
+\newcommand{\barbPsi}{\widebar{\bPsi}}
+\newcommand{\barbOmega}{\widebar{\bOmega}}
+\newcommand{\barbXi}{\widebar{\bXi}}
+\newcommand{\barbLambda}{\widebar{\bLambda}}
 
 %MathOperator
 \DeclareMathOperator*{\argmax}{arg\,max}
