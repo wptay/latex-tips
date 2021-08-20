@@ -13,14 +13,13 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amssymb,amsfonts,mathrsfs,bm}% Typical maths resource packages
 \usepackage{mathtools}
-%\let\proof\relax
-%\let\endproof\relax
 \usepackage{amsthm}
 \usepackage{nicefrac}
-%\let\labelindent\relax
 \usepackage[shortlabels]{enumitem}
 \usepackage{graphicx}
 \usepackage{epstopdf}
+\DeclareGraphicsExtensions{.eps,.png,.jpg,.pdf}
+
 \usepackage{url}
 \usepackage{colortbl}
 \usepackage{booktabs}
@@ -28,6 +27,7 @@
 \usepackage[table,dvipsnames]{xcolor}
 \usepackage[normalem]{ulem}
 \usepackage{xparse}
+\usepackage{calc}
 
 \makeatletter
 \@ifpackageloaded{natbib}{
@@ -62,24 +62,7 @@
 \let\@makecaption\MYcaption
 \makeatother
 
-
-% achieves the functionality of \tag for subequations environment
-\makeatletter
-\newenvironment{varsubequations}[1]
-{%
-	\addtocounter{equation}{-1}%
-	\begin{subequations}
-		\renewcommand{\theparentequation}{#1}%
-		\def\@currentlabel{#1}%
-		}
-		{%
-	\end{subequations}\ignorespacesafterend
-}
-\makeatother
-
-
 \usepackage{glossaries}
-
 \makeatletter
 % copy old \gls and \glspl
 \let\oldgls\gls
@@ -108,7 +91,6 @@
 	\ifnum\sfcode`\.=\spacefactor\else#1\fi
 }
 \makeatother
-
 
 \newacronym{wrt}{w.r.t.}{with respect to}
 \newacronym{RHS}{R.H.S.}{right-hand side}
@@ -224,8 +206,8 @@
 		\newtheorem{Lemma}{Lemma}
 	\else
 		\newtheorem{Theorem}{Theorem}
-		\newtheorem{Corollary}[theorem]{Corollary}
-		\newtheorem{Proposition}[theorem]{Proposition}
+		\newtheorem{Corollary}[Theorem]{Corollary}
+		\newtheorem{Proposition}[Theorem]{Proposition}
 	\fi
 
 	\newtheorem{Definition}{Definition}
@@ -241,11 +223,6 @@
 	\newtheorem{Lemma_A}{Lemma}[section]
 	\newtheorem{Definition_A}{Definition}[section]
 \fi
-
-
-\newcommand{\ml}[1]{\begin{multlined}#1\end{multlined}}
-\newcommand{\nn}{\nonumber\\ }
-
 
 % Remarks
 \theoremstyle{remark}
@@ -282,6 +259,25 @@
 		\ifdim\lastskip<1.5em \hskip-\lastskip
 			\hskip1.5em plus0em minus0.5em \fi \nobreak
 		\vrule height0.75em width0.5em depth0.25em\fi}
+
+
+% achieves the functionality of \tag for subequations environment
+\makeatletter
+\newenvironment{varsubequations}[1]
+{%
+	\addtocounter{equation}{-1}%
+	\begin{subequations}
+		\renewcommand{\theparentequation}{#1}%
+		\def\@currentlabel{#1}%
+		}
+		{%
+	\end{subequations}\ignorespacesafterend
+}
+\makeatother
+
+
+\newcommand{\ml}[1]{\begin{multlined}#1\end{multlined}}
+\newcommand{\nn}{\nonumber\\ }
 
 
 % Move down subscripts for some symbols like \chi
@@ -724,6 +720,11 @@
 \newcommand{\lea}[1]{\stackrel{#1}{\le}}
 \newcommand{\gea}[1]{\stackrel{#1}{\ge}}
 
+% Colored text box for use in underbrace and overbrace
+\NewDocumentCommand {\tcbox} { D[]{black} D[]{c} D<>{\widthof{#4}} m } {%
+	\parbox[#2]{#3}{\centering\footnotesize{\color{#1} #4}} 
+}
+
 \newcommand{\T}{^{\intercal}}% transpose notation
 \newcommand{\setcomp}{^{\mathsf{c}}} %set complement
 \newcommand{\ud}{\,\mathrm{d}} % for integrals like \int f(x) \ud x
@@ -744,6 +745,9 @@
 \newcommand{\ceil}[1]{\left\lceil{#1}\right\rceil}
 \newcommand{\floor}[1]{\left\lfloor{#1}\right\rfloor}
 \newcommand{\trace}[1]{{\Tr\left( #1 \right)}}
+
+\newcommand{\bmat}[1]{\begin{bmatrix} #1 \end{bmatrix}}
+\newcommand{\smat}[1]{\left[\begin{smallmatrix} #1 \end{smallmatrix}\right]}
 
 \newcommand{\KLD}[2]{{D({#1}\, \|\, {#2})}}
 \newcommand{\Lh}[1]{\ell_{#1}}
@@ -833,14 +837,23 @@
 \IfValueT{#3}{\right]}%
 }
 
+
 \def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern5mu{#1#2}}}
-\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\newcommand{\independent}{\protect\mathpalette{\protect\independenT}{\perp}}
 \newcommand{\Bern}[1]{\mathrm{Bern}\left(#1\right)}
 \newcommand{\Unif}[1]{\mathrm{Unif}\left(#1\right)}
 \newcommand{\Dir}[1]{\mathrm{Dir}\left(#1\right)}
 \newcommand{\Cat}[1]{\mathrm{Cat}\left(#1\right)}
 \newcommand{\N}[2]{{\calN\left({#1},\, {#2}\right)}}
 \newcommand{\Beta}[2]{{\calB e\left({#1},\, {#2}\right)}}
+
+% General distribution, e.g., \dist{Beta}[a,b][x]
+\DeclareDocumentCommand \dist {m o o} {%
+\mathrm{#1}\left(%
+\IfValueT{#3}{#3\, \middle|\, }%
+\IfValueT{#2}{#2}%
+\right)%
+}
 
 
 \let\oldforall\forall
@@ -863,6 +876,8 @@
 		\immediate\write18{pdfcrop ./Figures/#2 ./Figures/#2-crop.pdf}}%
 	\includegraphics[#1]{./Figures/#2-crop.pdf}}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Supplement
 \newcommand{\beginsupplement}{
