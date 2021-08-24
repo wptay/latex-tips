@@ -633,7 +633,7 @@
 \newcommand{\tbbeta}{\widetilde{\bbeta}}
 \newcommand{\tbgamma}{\widetilde{\bgamma}}
 \newcommand{\tbdelta}{\widetilde{\bdelta}}
-\newcommand{\tbtheta}{\widetilde{\btbheta}}
+\newcommand{\tbtheta}{\widetilde{\btheta}}
 \newcommand{\tbmu}{\widetilde{\bmu}}
 \newcommand{\tbnu}{\widetilde{\bnu}}
 \newcommand{\tbtau}{\widetilde{\btbau}}
@@ -798,6 +798,7 @@
 \DeclareMathOperator{\st}{s.t.\ }
 %\DeclareMathOperator{\st}{subject\,\,to}
 \DeclareMathOperator{\as}{a.s.}
+\DeclareMathOperator{\const}{const}
 \DeclareMathOperator{\diag}{diag}
 \DeclareMathOperator{\cum}{cum}
 \DeclareMathOperator{\sgn}{sgn}
@@ -983,13 +984,19 @@
 \newcommand{\N}[2]{{\calN\left({#1},\, {#2}\right)}}
 \newcommand{\Beta}[2]{{\calB e\left({#1},\, {#2}\right)}}
 
-% General distribution, e.g., \dist{Beta}[a,b][x]
+% General distribution 
+% E.g., \dist{Beta}[a,b][x] gives Beta(x | a,b); \dist{Beta}[a,b] gives Beta(a,b)
+\ExplSyntaxOn
 \DeclareDocumentCommand \dist {m o o} {%
 \mathrm{#1}\left(%
-\IfValueT{#3}{#3\, \middle|\, }%
-\IfValueT{#2}{#2}%
+	\IfValueT{#3}{%
+		\tl_if_blank:nTF{ #3 }{\cdot\, \middle|\, }{#3\, \middle|\, }%
+	}
+	\IfValueT{#2}{#2}%
 \right)%
 }
+\ExplSyntaxOff
+
 
 
 \let\oldforall\forall
