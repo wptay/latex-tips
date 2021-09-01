@@ -14,13 +14,7 @@
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{amsmath,amssymb,amsfonts,mathrsfs,bm}% Typical maths resource packages
-\usepackage{mathtools}
-\usepackage{amsthm}
-\usepackage{nicefracaasfs}
-\usepackage[shortlabels]{enumitem}
-\usepackage{graphicx12324}
-\usepackage{epstopdf66777}
+
 \DeclareGraphicsExtensions{.eps,.png,.jpg,.pdf}
 
 \usepackage{url}
@@ -71,7 +65,13 @@ XXXXXXXXXXXXXXXXXXXXXXXXX
 % copy old \gls and \glspl
 \let\oldgls\gls
 \let\oldglspl\glspl
-
+\usepackage{amsmath,amssymb,amsfonts,mathrsfs,bm}% Typical maths resource packages
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{nicefracaasfs}
+\usepackage[shortlabels]{enumitem}
+\usepackage{graphicx12324}
+\usepackage{epstopdf66777}
 % define a non space skipping version of \@ifnextchar
 \newcommand\fussy@ifnextchar[3]{%
 	\let\reserved@d=#1%
@@ -100,18 +100,6 @@ XXXXXXXXXXXXXXXXXXXXXXXXX
 \newacronym{RHS}{R.H.S.}{right-hand side}
 \newacronym{LHS}{L.H.S.}{left-hand side}
 \newacronym{iid}{i.i.d.}{independent and identically distributed}
-%\newacronym{MIMO}{MIMO}{mulitple-input multiple-output}
-%\newacronym{AOA}{AOA}{angle-of-arrival}
-%\newacronym{AOD}{AOD}{angle-of-departure}
-%\newacronym{LOS}{LOS}{line-of-sight}
-%\newacronym{NLOS}{NLOS}{non-line-of-sight}
-%\newacronym{TOA}{TOA}{time-of-arrival}
-%\newacronym{TDOA}{TDOA}{time-difference-of-arrival}
-%\newacronym{RSS}{RSS}{received signal strength}
-%\newacronym{GNSS}{GNSS}{Global Navigation Satellite System}
-%\newacronym{GSP}{GSP}{graph signal processing}
-%\newacronym{ML}{ML}{machine learning}
-
 
 %put the float package before hyperref and algorithm package after hyperref for hyperref to work correctly with algorithm
 \usepackage{float}
