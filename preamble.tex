@@ -857,11 +857,6 @@
 \newcommand{\lea}[1]{\stackrel{#1}{\le}}
 \newcommand{\gea}[1]{\stackrel{#1}{\ge}}
 
-% Colored text box for use in underbrace and overbrace
-\NewDocumentCommand {\tcbox} { D[]{black} D[]{c} D<>{\widthof{#4}} m } {%
-	\parbox[#2]{#3}{\centering\footnotesize{\color{#1} #4}} 
-}
-
 \newcommand{\T}{^{\intercal}}% transpose notation
 \newcommand{\setcomp}{^{\mathsf{c}}} %set complement
 \newcommand{\ud}{\,\mathrm{d}} % for integrals like \int f(x) \ud x
@@ -926,7 +921,7 @@
 %}
 
 \NewDocumentCommand{\evalat}{s O{\big} m m}{%
-\IfBooleanTF{#1}
+\IfBooleanTF{#1}%
 {{\left. #3 \right|_{#4}}}
 {{#3#2|_{#4}}}%
 }
@@ -987,7 +982,7 @@
 % General distribution 
 % E.g., \dist{Beta}[a,b][x] gives Beta(x | a,b); \dist{Beta}[a,b] gives Beta(a,b)
 \ExplSyntaxOn
-\DeclareDocumentCommand \dist {m o o} {%
+\NewDocumentCommand \dist {m o o} {%
 \mathrm{#1}\left(%
 	\IfValueT{#3}{%
 		\tl_if_blank:nTF{ #3 }{\cdot\, \middle|\, }{#3\, \middle|\, }%
@@ -997,6 +992,20 @@
 }
 \ExplSyntaxOff
 
+%Misc
+
+% Colored underbrace/overbrace
+\NewDocumentCommand {\cbrace} { D[]{black} d[] D(){\widthof{#5}} m m } {%
+	\begingroup%
+		\color{#1}
+		\IfValueTF{#2}{%
+			\overbrace{{\color{#1}#4}}^%
+		}{
+			\underbrace{#4}_%
+		}%
+		{\parbox[c]{#3}{\centering\footnotesize{#5}}}%
+	\endgroup% 
+}
 
 
 \let\oldforall\forall
@@ -1055,8 +1064,6 @@
 %\newcommand{\hhide}[1]{{\color{magenta} [TO BE EXCLUDED] #1}}
 
 \newcommand{\txp}[2]{\texorpdfstring{#1}{#2}}
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % For diagnosis: if activated, will show what is causing 
