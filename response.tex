@@ -114,11 +114,11 @@
 \newtheorem{response}{Response}[reviewer]
 
 \newcommand{\PbPResponseHeader}{%
-\clearpage%
-\refstepcounter{reviewer}%
-\begin{center}%
-  \huge \textbf{Response to Reviewer \thereviewer}%
-\end{center}%
+  \clearpage%
+  \refstepcounter{reviewer}%
+  \begin{center}%
+    \huge \textbf{Response to Reviewer \thereviewer}%
+  \end{center}%
 }
 
 
@@ -129,8 +129,6 @@
 }
 
 \newcounter{newdocumentimport}
-
-
 \makeatletter
 \AtBeginDocument{
   \let\oldlabel@in@display\label@in@display%
@@ -149,7 +147,6 @@
 \let\oldExecuteMetaData\ExecuteMetaData
 \renewcommand{\ExecuteMetaData}{\labelimport\oldExecuteMetaData}
 \makeatother
-
 
 \newcounter{eqcounter}
 \newcommand{\revision}[1]{
