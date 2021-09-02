@@ -1,0 +1,75 @@
+% A stripped-down theme of the NTU PowerPoint template
+% 
+% Usage:
+%
+% \documentclass{beamer}
+%
+% \usetheme[options]{NTU}
+% ... ...
+
+
+
+\ProvidesPackage{beamerthemeNTU}[2014/12/11 v2.0 for beamer]
+
+\mode<presentation>
+
+\newif\ifbeamer@secheader
+\beamer@secheaderfalse
+
+\DeclareOptionBeamer{secheader}{\beamer@secheadertrue}
+\ProcessOptionsBeamer
+
+\newif\ifbeamer@plainstyle
+\beamer@plainstylefalse
+
+\DeclareOptionBeamer{plainstyle}{\beamer@plainstyletrue}
+\ProcessOptionsBeamer
+
+\ifbeamer@plainstyle
+	\useinnertheme{rounded}
+	\setbeamertemplate{footline}[frame number]
+\else
+	\usecolortheme{beaver}
+	\usecolortheme{orchid}
+	\useinnertheme{rounded}
+	\useoutertheme{infon}
+	\usefonttheme[onlymath]{serif}
+	\setbeamercolor{block title}{use=structure,fg=white,bg=red!50!black}
+	\setbeamercolor{block body}{use=structure,fg=black,bg=red!10!white}
+\fi
+
+
+\usesubitemizeitemtemplate{%
+    \tiny\raise1.5pt\hbox{\color{beamerstructure}$\blacktriangleright$}%
+}
+\usesubsubitemizeitemtemplate{%
+    \tiny\raise1.5pt\hbox{\color{beamerstructure}$\bigstar$}%
+}
+
+\setbeamersize{text margin left=1em,text margin right=1em}
+
+\setbeamertemplate{background canvas}{
+	\ifnum\c@framenumber=1%
+		\includegraphics[width=\paperwidth,height=\paperheight]{NTUlogo.jpg}
+  %\else%
+		%\includegraphics[width=\paperwidth,height=\paperheight]{NTUbackground.jpg}						
+	\fi%
+}
+
+\ifbeamer@secheader\else\setbeamertemplate{headline}[default]\fi
+
+\setbeamertemplate{footnote}{%
+  \tiny%
+  \parindent 1em\noindent%
+  \raggedright
+  \hbox to 1.8em{\hfil\insertfootnotemark} \insertfootnotetext\par%
+}%
+\setlength\footnotesep{0pt}
+
+\setbeamercolor{bibliography entry author}{fg=black}
+\setbeamercolor{bibliography entry journal}{fg=black}
+\setbeamercolor{bibliography entry note}{fg=black}
+
+
+\mode
+<all>
