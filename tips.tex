@@ -3,10 +3,10 @@
 %\documentclass[journal]{IEEEtran}
 %\documentclass[peerreview]{IEEEtran}
 
+% These packages are used on in this tips.tex file, not required for your paper. Please remove if not using.
 \usepackage{silence}
 \WarningFilter{caption}{Unsupported document class}
 \WarningFilter{caption}{Unknown document class}
-
 
 \usepackage{listings}
 \lstset{
@@ -15,8 +15,16 @@ breaklines=true
 }
 \usepackage{lipsum}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Load the preamble.tex
+% \notloadhyperref stops loading of the hyperref package
+% \loadbibentry by itself loads the bibentry package (this is usually not required for your paper)
+% If hyperref is loaded, \loadbibentry modifies \@bibitem to make bibentry package compatible with hyperref
+
 %\def\notloadhyperref{}
-\def\loadbibentry{}
+\def\loadbibentry{} %comment out, usually not used in your paper
 \input{preamble.tex}
 
 
@@ -76,7 +84,7 @@ breaklines=true
 	      %\item Together with pdflatex, I recommend the use of SumatraPDF as the viewer. This allows you to use synctex, which lets you sync the pdf file to your tex file (double-clicking in the pdf file brings you directly to the right place in the tex file and vice versa when opening pdf from tex).
 	      %\item However, synctex does not allow file names with spaces. Please use an underscore ``\_'' if you need to have spaces.
 	\item After running pdflatex or latexmk, \textbf{\red{please look through the warnings and resolve them}}. These are very helpful to catch errors like defining same labels multiple times.
-	\item I have provided a preamble.tex that you can include into your tex file using the \textbackslash input command (see the beginning of this tex file). This preamble.tex file includes all the commonly used packages, declarations and aliases. \textbf{Look through the preamble.tex file first before you define your own newcommands to avoid duplication. The most updated preamble.tex file is always available on the shared Google Drive.} I will always use the most updated preamble.tex file, so there is no need for you to send me a copy. If you find some useful things to add to preamble.tex, please let me know.
+	\item I have provided a preamble.tex that you can include into your tex file using the \textbackslash input command (see the beginning of this tex file). This preamble.tex file includes all the commonly used packages, declarations and aliases. \textbf{Look through the preamble.tex file first before you define your own newcommands to avoid duplication. The most updated preamble.tex file is always available on \url{https://gitlab.com/wptay/latex-tips}.} I will always use the most updated preamble.tex file, so there is no need for you to include a copy in your workspace (you can keep a global copy somewhere and configure your Latex to point to it or include a path in latexmkrc). If you find some useful things to add to preamble.tex, please let me know.
 	\item You can use this tex file as a starting template when writing your papers.
 	\item Upload all references you have used in your paper to Google Drive, except for books. If you have referenced a paper, you should have at least read its abstract and the relevant parts that you have referenced.
 	\item Please ensure that you embed all your fonts into the pdf before you submit to a journal or conference.
@@ -177,7 +185,7 @@ breaklines=true
 \begin{enumerate}
 	\item If you are using a group of symbols very frequently, define a new command for it. It is like writing a computer program. The new command can even take in an argument.
 	\item Example of a simple new command is $\Real$. See the provided preamble.tex file for more examples!
-	\item Example of a more complex new command is $\E{0}[f(X)]$. \textbf{As we use $\E$ and $\P$ very frequently, please figure out how I have defined these commands in the preamble.tex and use them appropriately.}
+	\item Example of a more complex new command is $\E_{0}[f(X)]$. \textbf{As we use $\E$ and $\P$ very frequently, please figure out how I have defined these commands in the preamble.tex and use them appropriately.}
 \end{enumerate}
 
 \section{Graphics}\label{sect:Graphics}
@@ -259,6 +267,7 @@ Suppose $T\subset\Real$ is a finite or a bounded interval. If almost surely ever
 \nobibliography{IEEEabrv,StringDefinitions,refs}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\red{The statement ``\textbackslash def\textbackslash loadbibentry'' allows the bib entries to be printed as below. Remove or comment this out in your paper.}
 
 \begin{enumerate}
 	\item Use bibtex to keep track of your references.
