@@ -885,8 +885,6 @@
 \newcommand{\KLD}[2]{{D({#1}\, \|\, {#2})}}
 \newcommand{\Lh}[1]{\ell_{#1}}
 \newcommand{\LLh}[1]{\log{\Lh{#1}}}
-\newcommand{\cond}[2]{\left. {#1}\, \middle| \, {#2} \right.}
-
 
 % just to make sure it exists
 \providecommand\given{}
@@ -927,52 +925,75 @@
 {{#3#2|_{#4}}}%
 }
 
-\NewDocumentCommand \ifcond {m m} {%
-	{#1} %
-	\IfValueT{#2}{\, \middle|\, {#2}}%
+
+\NewDocumentCommand \ifcondp {m m} {%
+	#1%
+	\IfValueT{#2}{\given #2}%
 }
 
-%\newcommand\argProtect[1]{\def\ProcessedArgument{{#1}}}
+\providecommand\given{}
+\DeclarePairedDelimiterXPP\cprob[1]{}(){}{
+\renewcommand\given{\nonscript\,\delimsize\vert\nonscript\,\mathopen{}}
+\ifcondp#1
+}
+\DeclarePairedDelimiterXPP\cexp[1]{}[]{}{
+\renewcommand\given{\nonscript\,\delimsize\vert\nonscript\,\mathopen{}}
+\ifcondp#1
+}
+
 
 % Allows the use of 
 % \P : \mathbb{P}
 % \P(X) : \mathbb{P}\left({X}\right)
-% \P_{p}(X) or \P{p}(X) : \mathbb{P}_{p}\left({X}\right)
-% \P(X @| Y) or \P(X){Y} : \mathbb{P}\left({X}\, \middle| \, {Y}\right). 
-% \P_{p}(X @| Y) or \P{p}(X){Y} : \mathbb{P}_{p}\left({X}\, \middle| \, {Y}\right)
+% \P_{p}(X) : \mathbb{P}_{p}\left({X}\right)
+% \P(X \given Y) or \P(X @| Y) or \P(X){Y} : \mathbb{P}\left({X}\, \middle| \, {Y}\right). 
+% \P_{p}(X \given Y) or \P_{p}(X @| Y) or \P{p}(X){Y} : \mathbb{P}_{p}\left({X}\, \middle| \, {Y}\right)
 % Caveats: Iterated expressions do not work well with \P(X @| Y) notation
-% \P(\P(X @| Y) @| Z) does not work, use \P({\P(X @| Y)} @| Z) or \P(\P(X){Y} @| Z)
-% \P(\P(X @| Y)) does not work, use \P( {\P(X @| Y)} )
-\DeclareDocumentCommand \P {e{_} g >{\SplitArgument{ 1 }{ @| }}d() g } {%
+% \P(\P(X @| Y) @| Z) does not work, use \P({\P(X \given Y)} \given Z) 
+\DeclareDocumentCommand \P { s e{_} >{\SplitArgument{ 1 }{ @| }}d() g } {%
 	\mathbb{P}%
-	\IfValueTF{#1}{_{#1}}
-	{\IfValueT{#2}{_{#2}}}%
-	\IfValueT{#3}{\left(\ifcond#3}%
-	\IfValueT{#4}{\, \middle|\, {#4}}%
-	\IfValueT{#3}{\right)}%
+	\IfBooleanTF{#1}%
+		{
+			\IfValueT{#2}{_{#2}}%
+			\IfValueTF{#4}%
+				{\cprob{#3 \given #4}}%
+				{\IfValueT{#3}{\cprob{#3}}}%
+		}%
+		{
+			\IfValueT{#2}{_{#2}}%
+			\IfValueTF{#4}%
+				{\cprob*{#3 \given #4}}%
+				{\IfValueT{#3}{\cprob*{#3}}}%
+		}%
 }
 
 % Allows the use of 
 % \E : \mathbb{E}
 % \E[X] : \mathbb{E}\left[{X}\right]
 % \E_{p}[X] or \E{p}[X] : \mathbb{E}_{p}\left[{X}\right]
-% \E[X @| Y] or \E[X]{Y} : \mathbb{E}\left[{X}\, \middle| \, {Y}\right]. 
-% \E_{p}[X @| Y] or \E{p}[X]{Y} : \mathbb{E}_{p}\left[{X}\, \middle| \, {Y}\right]
+% \E[X \given Y] or \E[X @| Y] or \E[X]{Y} : \mathbb{E}\left[{X}\, \middle| \, {Y}\right]. 
+% \E_{p}[X \given Y] or \E_{p}[X @| Y] or \E{p}[X]{Y} : \mathbb{E}_{p}\left[{X}\, \middle| \, {Y}\right]
 % Caveats: Iterated expressions do not work well with \E[X @| Y] notation
-% \E[\E[X @| Y] @| Z] does not work, use \E[{\E[X @| Y]} @| Z] or \E[\E[X]{Y} @| Z]
-% \E[\E[X @| Y]] does not work, use \E[ {\E[X @| Y]} ]
-\DeclareDocumentCommand \E {e{_} g >{\SplitArgument{ 1 }{ @| }}o g } {%
-\mathbb{E}%
-\IfValueTF{#1}{_{#1}}
-{\IfValueT{#2}{_{#2}}}%
-\IfValueT{#3}{\left[\ifcond#3}%
-\IfValueT{#4}{\, \middle|\, {#4}}%
-\IfValueT{#3}{\right]}%
+% \E[\E[X @| Y] @| Z] does not work, use \E[\E[X \given Y]} \given Z] 
+\DeclareDocumentCommand \E { s e{_} >{\SplitArgument{ 1 }{ @| }}d[] g } {%
+	\mathbb{E}%
+	\IfBooleanTF{#1}%
+		{
+			\IfValueT{#2}{_{#2}}%
+			\IfValueTF{#4}%
+				{\cexp{#3 \given #4}}%
+				{\IfValueT{#3}{\cexp{#3}}}%
+		}%
+		{
+			\IfValueT{#2}{_{#2}}%
+			\IfValueTF{#4}%
+				{\cexp*{#3 \given #4}}%
+				{\IfValueT{#3}{\cexp*{#3}}}%
+		}%
 }
 
-
-\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern5mu{#1#2}}}
-\newcommand{\independent}{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\indep#1#2{\mathrel{\rlap{$#1#2$}\mkern5mu{#1#2}}}
+\newcommand{\independent}{\protect\mathpalette{\protect\indep}{\perp}}
 \newcommand{\Bern}[1]{\mathrm{Bern}\left(#1\right)}
 \newcommand{\Unif}[1]{\mathrm{Unif}\left(#1\right)}
 \newcommand{\Dir}[1]{\mathrm{Dir}\left(#1\right)}
