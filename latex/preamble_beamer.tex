@@ -884,6 +884,7 @@
 % \P_{p}(X \given Y) or \P_{p}(X @| Y) or \P{p}(X){Y} : \mathbb{P}_{p}\left({X}\, \middle| \, {Y}\right)
 % Caveats: Iterated expressions do not work well with \P(X @| Y) notation
 % \P(\P(X @| Y) @| Z) does not work, use \P({\P(X \given Y)} \given Z) 
+% Starred version \P* does not use \left and \right. Maybe used in inline equations. 
 \DeclareDocumentCommand \P { s e{_} >{\SplitArgument{ 1 }{ @| }}d() g } {%
 	\mathbb{P}%
 	\IfBooleanTF{#1}%
@@ -909,6 +910,7 @@
 % \E_{p}[X \given Y] or \E_{p}[X @| Y] or \E{p}[X]{Y} : \mathbb{E}_{p}\left[{X}\, \middle| \, {Y}\right]
 % Caveats: Iterated expressions do not work well with \E[X @| Y] notation
 % \E[\E[X @| Y] @| Z] does not work, use \E[\E[X \given Y]} \given Z] 
+% Starred version \E* does not use \left and \right. Maybe used in inline equations. 
 \DeclareDocumentCommand \E { s e{_} >{\SplitArgument{ 1 }{ @| }}d[] g } {%
 	\mathbb{E}%
 	\IfBooleanTF{#1}%
