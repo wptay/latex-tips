@@ -867,11 +867,11 @@
 
 \providecommand\given{}
 \DeclarePairedDelimiterXPP\cprob[1]{}(){}{
-\renewcommand\given{\nonscript\,\delimsize\vert\nonscript\,\mathopen{}}
+\renewcommand\given{\nonscript\,\delimsize\vert\allowbreak\nonscript\,\mathopen{}}
 \ifcondp#1
 }
 \DeclarePairedDelimiterXPP\cexp[1]{}[]{}{
-\renewcommand\given{\nonscript\,\delimsize\vert\nonscript\,\mathopen{}}
+\renewcommand\given{\nonscript\,\delimsize\vert\allowbreak\nonscript\,\mathopen{}}
 \ifcondp#1
 }
 
@@ -928,15 +928,6 @@
 		}%
 }
 
-\def\indep#1#2{\mathrel{\rlap{$#1#2$}\mkern5mu{#1#2}}}
-\newcommand{\independent}{\protect\mathpalette{\protect\indep}{\perp}}
-\newcommand{\Bern}[1]{\mathrm{Bern}\left(#1\right)}
-\newcommand{\Unif}[1]{\mathrm{Unif}\left(#1\right)}
-\newcommand{\Dir}[1]{\mathrm{Dir}\left(#1\right)}
-\newcommand{\Cat}[1]{\mathrm{Cat}\left(#1\right)}
-\newcommand{\N}[2]{{\calN\left({#1},\, {#2}\right)}}
-\newcommand{\Beta}[2]{{\calB e\left({#1},\, {#2}\right)}}
-
 
 % General distribution 
 % E.g., \dist{Beta}[a,b][x] gives Beta(x | a,b); \dist{Beta}[a,b] gives Beta(a,b)
@@ -950,6 +941,16 @@
 \right)%
 }
 \ExplSyntaxOff
+
+\newcommand{\Bern}[1]{\dist{Bern}[#1]}
+\newcommand{\Unif}[1]{\dist{Unif}[#1]}
+\newcommand{\Dir}[1]{\dist{Dir}[#1]}
+\newcommand{\Cat}[1]{\dist{Cat}[#1]}
+\newcommand{\N}[2]{\dist{\calN}[#1,\, #2]}
+\newcommand{\Beta}[2]{\dist{Beta}[#1,\, #2]}
+
+\def\indep#1#2{\mathrel{\rlap{$#1#2$}\mkern5mu{#1#2}}}
+\newcommand{\independent}{\protect\mathpalette{\protect\indep}{\perp}}
 
 
 %Misc
