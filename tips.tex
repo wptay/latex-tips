@@ -3,6 +3,7 @@
 %\documentclass[journal]{IEEEtran}
 %\documentclass[peerreview]{IEEEtran}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % These packages are used on in this tips.tex file, not required for your paper. Please remove if not using.
 \usepackage{silence}
 \WarningFilter{caption}{Unsupported document class}
@@ -20,7 +21,7 @@ breaklines=true
 
 
 % Load the preamble.tex
-% \notloadhyperref stops loading of the hyperref package
+% \notloadhyperref stops loading of the hyperref package 
 % \loadbibentry by itself loads the bibentry package (this is usually not required for your paper)
 % If hyperref is loaded, \loadbibentry modifies \@bibitem to make bibentry package compatible with hyperref
 
@@ -29,12 +30,14 @@ breaklines=true
 \input{preamble.tex}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Additional newcommands not in preamble.tex, special to your paper
 \newcommand{\tbC}{\widetilde{\bC}}
 \newcommand{\tbL}{\widetilde{\bL}}
 \newcommand{\onehot}[1]{\mathrm{one\_hot}\left(#1\right)}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
 
@@ -68,7 +71,6 @@ breaklines=true
 	We list some best practices and tips for writing technical papers in \LaTeX.
 \end{abstract}
 
-
 \begin{IEEEkeywords}
 	Tips, suggestions, best practices.
 \end{IEEEkeywords}
@@ -94,15 +96,15 @@ breaklines=true
 \section{Labels}\label{sect:Labels}
 
 \begin{enumerate}[(a)]
-  \item Use meaningful labels for your sections, equations, inequalities, figures, tables, and others. For example, use something like ``sect:Labels'' to label your section so that you know that this label is for a section. Later on in your text, you can then easily refer to it via something like ``Section \ref{sect:Labels}''. Similarly, I use ``eq:Meaningful\_Name'', ``ineq:Meaningful\_Name'', ``fig:Meaningful\_Name'' to label equations, inequalities, and figures.
-
+  \item Use meaningful labels for your sections, equations, inequalities, figures, tables, and others. For example, use something like ``sect:Labels'' to label your section so that you know that this label is for a section. Later on in your text, you can then easily refer to it via something like ``\cref{sect:Labels}''. 
+	
 	\begin{Example}\label{eg:lipsum}
 	\lipsum[1]
 	\end{Example}
 
   \item\label{it:myitem} Tip: items can also be labeled! Example is this reference \ref{it:myitem}.
   \item Do not over label! For equations, tables, figures and most ``objects'', we usually label only those that we need to refer to in another part of the text. In some cases, you may also label important equations although you may not refer to these in any part of your text. This makes it easier for readers to refer to your equations. However, do this judiciously.
-  \item You should try to use the cleveref package to reference labels. It is smart enough to know what you are referencing, e.g., \cref{sect:General}, \cref{sect:General,sect:Labels,sect:Equations}, \cref{eq:X} all use the same cref command. Otherwise, you have put a tilde like ``Section~\ref{sect:General}'' to avoid line breaks immediately after ``Section''.
+  \item You should try to use the cleveref package to reference labels. It is smart enough to know what you are referencing, e.g., \cref{sect:General}, \cref{sect:General,sect:Labels,sect:Equations}, and \cref{eq:X} all use the same cref command. Otherwise, you have put a tilde like ``Section~\ref{sect:General}'' to avoid line breaks immediately after ``Section''.
 \end{enumerate}
 
 
@@ -122,15 +124,15 @@ breaklines=true
 		        & = w.
 	      \end{align*}
 	      %<*tag:equation>
-	      Another example is
-	      \begin{align}
-		      \Lambda_{\mathrm{SGLR}}(k,t) & =\max\left\{\Lambda(k,t),\Lambda_n(k,t)\right\}, \label{Lambda_SGLR}   \\
-		      \tau_{\mathrm{SGLR}}(b)      & =\min\{\tau(b),\tau_n(b)\}, \label{tau_SGLR2}                          \\
-		      \tau_{\mathrm{W-SGLR}}(b)    & =\min\{\widetilde{\tau}(b),\widetilde{\tau_n}(b)\}, \label{tau_WSGLR2} \\
-		      \Phi_i                       & = \tau_{\mathrm{W-SGLR}}(b) + i^2,\ \text{for $i=1,\ldots,N$},         \\
-		      \tbC                         & = \onehot{\tbL}. \\
-					d &= \KLD*{p_X}{p_{Z}}.
-	      \end{align}
+				Another example is
+				\begin{align}
+				\Lambda_{\mathrm{SGLR}}(k,t) & =\max\left\{\Lambda(k,t),\Lambda_n(k,t)\right\}, \label{eq:Lambda_SGLR}    \\
+				\tau_{\mathrm{SGLR}}(b)      & =\min\{\tau(b),\tau_n(b)\}, \label{eq:tau_SGLR2}                           \\
+				\tau_{\mathrm{W-SGLR}}(b)    & =\min\{\widetilde{\tau}(b),\widetilde{\tau_n}(b)\}, \label{eq:tau_WSGLR2}  \\
+				\Phi_i                       & = \tau_{\mathrm{W-SGLR}}(b) + i^2,\ \text{for $i=1,\ldots,N$},         \nn
+				\tbC                         & = \onehot{\tbL}, \label{eq:tbC}                                            \\
+				d                            & = \KLD*{p_X}{p_{Z}}. \nonumber
+				\end{align}
 	      %</tag:equation>
 	      \textbf{Note when punctuation marks like ``,'' and ``.'' are required in the equations.} Observe also how text is written in math environments.
 
@@ -187,7 +189,11 @@ breaklines=true
 \begin{enumerate}
 	\item If you are using a group of symbols very frequently, define a new command for it. It is like writing a computer program. The new command can even take in an argument.
 	\item Example of a simple new command is $\Real$. See the provided preamble.tex file for more examples!
-	\item Example of a more complex new command is $\E_{0}[f(X)]$. \textbf{As we use $\E$ and $\P$ very frequently, please figure out how I have defined these commands in the preamble.tex and use them appropriately.}
+	\item Example of a more complex new command is $\E_{0}[f(X)]$. \textbf{As we use $\E$ and $\P$ very frequently, please figure out how I have defined these commands in the preamble.tex and use them appropriately.} Examples are:
+	\begin{align*}
+		f(\btheta) &= \E_{X \sim p_{\btheta}}[\frac{f(X)}{g(X,Y)} \given Y],\\
+		\P(A \given B) &= \P(\set*{\omega\in\Omega \given \ofrac{2}X(\omega) > b} \given \limsup_{n\to\infty} X_n(\omega) = a).
+	\end{align*}
 \end{enumerate}
 
 \section{Graphics}\label{sect:Graphics}
