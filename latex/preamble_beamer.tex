@@ -1,3 +1,6 @@
+
+% LTeX: enabled=false
+
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amssymb,amsfonts,mathrsfs,bm}% Typical maths resource packages
@@ -760,17 +763,24 @@
 \DeclareMathOperator{\Mod}{mod}
 
 %Paired delimiters
-\DeclarePairedDelimiter\abs{\lvert}{\rvert}
-\DeclarePairedDelimiter\parens{(}{)}
-\DeclarePairedDelimiter\brk{[}{]}
-\DeclarePairedDelimiter\braces{\{}{\}}
-\DeclarePairedDelimiter\angles{\langle}{\rangle}
-\DeclarePairedDelimiterX\ip[2]{\langle}{\rangle}{#1,#2}
-\DeclarePairedDelimiterX\norm[1]{\lVert}{\rVert}{#1}
-\DeclarePairedDelimiterXPP\col[1]{\operatorname{col}}{\{}{\}}{}{#1} % column vector
-\DeclarePairedDelimiterXPP\row[1]{\operatorname{row}}{\{}{\}}{}{#1} % row vector
-\DeclarePairedDelimiterXPP\erf[1]{\operatorname{erf}}{(}{)}{}{#1}
-\DeclarePairedDelimiterXPP\erfc[1]{\operatorname{erfc}}{(}{)}{}{#1}
+\newcommand{\ifbcdot}[1]{\ifblank{#1}{\cdot}{#1}}
+
+\DeclarePairedDelimiterX\abs[1]{\lvert}{\rvert}{\ifbcdot{#1}}
+\DeclarePairedDelimiterX\parens[1]{(}{)}{\ifbcdot{#1}}
+\DeclarePairedDelimiterX\brk[1]{[}{]}{\ifbcdot{#1}}
+\DeclarePairedDelimiterX\braces[1]{\{}{\}}{\ifbcdot{#1}}
+\DeclarePairedDelimiterX\angles[1]{\langle}{\rangle}{#1}
+\DeclarePairedDelimiterX\ip[2]{\langle}{\rangle}{\ifbcdot{#1},\ifbcdot{#2}}
+\DeclarePairedDelimiterX\norm[1]{\lVert}{\rVert}{\ifbcdot{#1}}
+\DeclarePairedDelimiterX\ceil[1]{\lceil}{\rceil}{\ifbcdot{#1}}
+\DeclarePairedDelimiterX\floor[1]{\lfloor}{\rfloor}{\ifbcdot{#1}}
+
+\DeclarePairedDelimiterXPP\trace[1]{\operatorname{Tr}}{(}{)}{}{\ifbcdot{#1}} % column vector
+\DeclarePairedDelimiterXPP\col[1]{\operatorname{col}}{\{}{\}}{}{\ifbcdot{#1}} % column vector
+\DeclarePairedDelimiterXPP\row[1]{\operatorname{row}}{\{}{\}}{}{\ifbcdot{#1}} % row vector
+\DeclarePairedDelimiterXPP\erf[1]{\operatorname{erf}}{(}{)}{}{\ifbcdot{#1}}
+\DeclarePairedDelimiterXPP\erfc[1]{\operatorname{erfc}}{(}{)}{}{\ifbcdot{#1}}
+\DeclarePairedDelimiterXPP\KLD[2]{D}{(}{)}{}{\ifbcdot{#1}\, \delimsize\|\, \ifbcdot{#2}} % KL divergence
 \DeclarePairedDelimiterXPP\op[2]{\operatorname{#1}}{(}{)}{}{#2} % general operator
 
 
@@ -809,14 +819,10 @@
 \newcommand{\ddfrac}[2]{{\dfrac{\mathrm{d} {#1}}{\mathrm{d} {#2}}}}
 \newcommand{\ppfrac}[2]{\dfrac{\partial {#1}}{\partial {#2}}}
 \newcommand{\tc}[1]{^{(#1)}}
-\newcommand{\ceil}[1]{\left\lceil{#1}\right\rceil}
-\newcommand{\floor}[1]{\left\lfloor{#1}\right\rfloor}
-\newcommand{\trace}[1]{{\Tr\left( #1 \right)}}
 
 \newcommand{\bmat}[1]{\begin{bmatrix} #1 \end{bmatrix}}
 \newcommand{\smat}[1]{\left[\begin{smallmatrix} #1 \end{smallmatrix}\right]}
 
-\newcommand{\KLD}[2]{{D({#1}\, \|\, {#2})}}
 \newcommand{\Lh}[1]{\ell_{#1}}
 \newcommand{\LLh}[1]{\log{\Lh{#1}}}
 

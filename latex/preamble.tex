@@ -29,6 +29,7 @@
 \usepackage[normalem]{ulem}
 \usepackage{xparse}
 \usepackage{calc}
+\usepackage{etoolbox}
 
 \makeatletter
 \@ifpackageloaded{natbib}{
@@ -827,19 +828,25 @@
 \DeclareMathOperator{\Mod}{mod}
 
 %Paired delimiters
-\DeclarePairedDelimiter\abs{\lvert}{\rvert}
-\DeclarePairedDelimiter\parens{(}{)}
-\DeclarePairedDelimiter\brk{[}{]}
-\DeclarePairedDelimiter\braces{\{}{\}}
-\DeclarePairedDelimiter\angles{\langle}{\rangle}
-\DeclarePairedDelimiterX\ip[2]{\langle}{\rangle}{#1,#2}
-\DeclarePairedDelimiterX\norm[1]{\lVert}{\rVert}{#1}
-\DeclarePairedDelimiterXPP\col[1]{\operatorname{col}}{\{}{\}}{}{#1} % column vector
-\DeclarePairedDelimiterXPP\row[1]{\operatorname{row}}{\{}{\}}{}{#1} % row vector
-\DeclarePairedDelimiterXPP\erf[1]{\operatorname{erf}}{(}{)}{}{#1}
-\DeclarePairedDelimiterXPP\erfc[1]{\operatorname{erfc}}{(}{)}{}{#1}
-\DeclarePairedDelimiterXPP\op[2]{\operatorname{#1}}{(}{)}{}{#2} % general operator
+\newcommand{\ifbcdot}[1]{\ifblank{#1}{\cdot}{#1}}
 
+\DeclarePairedDelimiterX\abs[1]{\lvert}{\rvert}{\ifbcdot{#1}}
+\DeclarePairedDelimiterX\parens[1]{(}{)}{\ifbcdot{#1}}
+\DeclarePairedDelimiterX\brk[1]{[}{]}{\ifbcdot{#1}}
+\DeclarePairedDelimiterX\braces[1]{\{}{\}}{\ifbcdot{#1}}
+\DeclarePairedDelimiterX\angles[1]{\langle}{\rangle}{#1}
+\DeclarePairedDelimiterX\ip[2]{\langle}{\rangle}{\ifbcdot{#1},\ifbcdot{#2}}
+\DeclarePairedDelimiterX\norm[1]{\lVert}{\rVert}{\ifbcdot{#1}}
+\DeclarePairedDelimiterX\ceil[1]{\lceil}{\rceil}{\ifbcdot{#1}}
+\DeclarePairedDelimiterX\floor[1]{\lfloor}{\rfloor}{\ifbcdot{#1}}
+
+\DeclarePairedDelimiterXPP\trace[1]{\operatorname{Tr}}{(}{)}{}{\ifbcdot{#1}} % column vector
+\DeclarePairedDelimiterXPP\col[1]{\operatorname{col}}{\{}{\}}{}{\ifbcdot{#1}} % column vector
+\DeclarePairedDelimiterXPP\row[1]{\operatorname{row}}{\{}{\}}{}{\ifbcdot{#1}} % row vector
+\DeclarePairedDelimiterXPP\erf[1]{\operatorname{erf}}{(}{)}{}{\ifbcdot{#1}}
+\DeclarePairedDelimiterXPP\erfc[1]{\operatorname{erfc}}{(}{)}{}{\ifbcdot{#1}}
+\DeclarePairedDelimiterXPP\KLD[2]{D}{(}{)}{}{\ifbcdot{#1}\, \delimsize\|\, \ifbcdot{#2}} % KL divergence
+\DeclarePairedDelimiterXPP\op[2]{\operatorname{#1}}{(}{)}{}{#2} % general operator
 
 % Math relations
 \newcommand{\convp}{\stackrel{\mathrm{p}}{\longrightarrow}}
@@ -875,14 +882,10 @@
 \newcommand{\ddfrac}[2]{{\dfrac{\mathrm{d} {#1}}{\mathrm{d} {#2}}}}
 \newcommand{\ppfrac}[2]{\dfrac{\partial {#1}}{\partial {#2}}}
 \newcommand{\tc}[1]{^{(#1)}}
-\newcommand{\ceil}[1]{\left\lceil{#1}\right\rceil}
-\newcommand{\floor}[1]{\left\lfloor{#1}\right\rfloor}
-\newcommand{\trace}[1]{{\Tr\left( #1 \right)}}
 
 \newcommand{\bmat}[1]{\begin{bmatrix} #1 \end{bmatrix}}
 \newcommand{\smat}[1]{\left[\begin{smallmatrix} #1 \end{smallmatrix}\right]}
 
-\newcommand{\KLD}[2]{{D({#1}\, \|\, {#2})}}
 \newcommand{\Lh}[1]{\ell_{#1}}
 \newcommand{\LLh}[1]{\log{\Lh{#1}}}
 
@@ -947,7 +950,7 @@
 % \P(X) : \mathbb{P}\left({X}\right)
 % \P_{p}(X) : \mathbb{P}_{p}\left({X}\right)
 % \P(X \given Y) or \P(X @| Y) or \P(X){Y} : \mathbb{P}\left({X}\, \middle| \, {Y}\right). 
-% \P_{p}(X \given Y) or \P_{p}(X @| Y) or \P{p}(X){Y} : \mathbb{P}_{p}\left({X}\, \middle| \, {Y}\right)
+% \P_{p}(X \given Y) or \P_{p}(X @| Y) : \mathbb{P}_{p}\left({X}\, \middle| \, {Y}\right)
 % Caveats: Iterated expressions do not work well with \P(X @| Y) notation
 % \P(\P(X @| Y) @| Z) does not work, use \P(\P(X \given Y) \given Z) 
 % Starred version \P* does not use \left and \right. Maybe used in inline equations. 
@@ -973,7 +976,7 @@
 % \E[X] : \mathbb{E}\left[{X}\right]
 % \E_{p}[X] or \E{p}[X] : \mathbb{E}_{p}\left[{X}\right]
 % \E[X \given Y] or \E[X @| Y] or \E[X]{Y} : \mathbb{E}\left[{X}\, \middle| \, {Y}\right]. 
-% \E_{p}[X \given Y] or \E_{p}[X @| Y] or \E{p}[X]{Y} : \mathbb{E}_{p}\left[{X}\, \middle| \, {Y}\right]
+% \E_{p}[X \given Y] or \E_{p}[X @| Y] : \mathbb{E}_{p}\left[{X}\, \middle| \, {Y}\right]
 % Caveats: Iterated expressions do not work well with \E[X @| Y] notation
 % \E[\E[X @| Y] @| Z] does not work, use \E[\E[X \given Y] \given Z] 
 % Starred version \E* does not use \left and \right. Maybe used in inline equations. 
