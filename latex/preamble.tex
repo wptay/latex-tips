@@ -834,7 +834,7 @@
 \DeclarePairedDelimiterX\parens[1]{(}{)}{\ifbcdot{#1}}
 \DeclarePairedDelimiterX\brk[1]{[}{]}{\ifbcdot{#1}}
 \DeclarePairedDelimiterX\braces[1]{\{}{\}}{\ifbcdot{#1}}
-\DeclarePairedDelimiterX\angles[1]{\langle}{\rangle}{#1}
+\DeclarePairedDelimiterX\angles[1]{\langle}{\rangle}{\ifblank{#1}{\cdot,\cdot}{#1}}
 \DeclarePairedDelimiterX\ip[2]{\langle}{\rangle}{\ifbcdot{#1},\ifbcdot{#2}}
 \DeclarePairedDelimiterX\norm[1]{\lVert}{\rVert}{\ifbcdot{#1}}
 \DeclarePairedDelimiterX\ceil[1]{\lceil}{\rceil}{\ifbcdot{#1}}
