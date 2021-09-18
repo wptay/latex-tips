@@ -198,6 +198,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %Theorem declarations
+% \def\renewtheorem in your document if you want to redefine these theorem environments.
+% Alternatively, call \clearthms
+
+\makeatletter
+\def\cleartheorem#1{%
+    \expandafter\let\csname#1\endcsname\relax
+    \expandafter\let\csname c@#1\endcsname\relax
+}
+\def\clearthms#1{ \@for\tname:=#1\do{\cleartheorem\tname} 
+\makeatother
 
 \ifx\renewtheorem\undefined
 	% for use in main body
@@ -282,7 +292,7 @@
 \makeatother
 
 
-\newcommand{\ml}[1]{\begin{multlined}#1\end{multlined}}
+\newcommand{\ml}[1]{\begin{multlined}[t]#1\end{multlined}}
 \newcommand{\nn}{\nonumber\\ }
 
 
@@ -1023,12 +1033,14 @@
 
 %Misc
 
-% Colored underbrace/overbrace
-\NewDocumentCommand {\cbrace} { D[]{black} d[] D(){\widthof{#5}} m m } {%
+% Colored underbrace/overbrace: 
+% \cbrace[blue](5em){text}{text in underbrace}
+% \cbrace+[blue](5em){text}{text in overbrace}
+\NewDocumentCommand {\cbrace} {t+ D[]{black} D(){\widthof{#5}} m m } {%
 	\begingroup%
-		\color{#1}
-		\IfValueTF{#2}{%
-			\overbrace{{\color{#1}#4}}^%
+		\color{#2}
+		\IfBooleanTF{#1}{%
+			\overbrace{#4}^%
 		}{
 			\underbrace{#4}_%
 		}%

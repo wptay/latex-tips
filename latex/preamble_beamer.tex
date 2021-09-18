@@ -217,7 +217,7 @@
 \makeatother
 
 
-\newcommand{\ml}[1]{\begin{multlined}#1\end{multlined}}
+\newcommand{\ml}[1]{\begin{multlined}[t]#1\end{multlined}}
 \newcommand{\nn}{\nonumber\\ }
 
 % Move down subscripts for some symbols like \chi
@@ -961,18 +961,28 @@
 
 %Misc
 
-% Colored underbrace/overbrace
-\NewDocumentCommand {\cbrace} { D[]{black} d[] D(){\widthof{#5}} m m } {%
+% Colored underbrace/overbrace: 
+% \cbrace[blue](5em){text}{text in underbrace}
+% \cbrace+[blue](5em){text}{text in overbrace}
+\NewDocumentCommand {\cbraceo} {t+ D[]{black} D(){\widthof{#5}} m m } {%
 	\begingroup%
-		\color{#1}
-		\IfValueTF{#2}{%
-			\overbrace{{\color{#1}#4}}^%
+		\color{#2}
+		\IfBooleanTF{#1}{%
+			\overbrace{#4}^%
 		}{
 			\underbrace{#4}_%
 		}%
 		{\parbox[c]{#3}{\centering\footnotesize{#5}}}%
 	\endgroup% 
 }
+\NewDocumentCommand{\cbrace}{t+ d<> D[]{black} D(){\widthof{#6}} m m } {%
+	\IfValueTF{#2}{%
+		\alt<#2>{\IfBooleanTF{#1}{\cbraceo+}{\cbraceo}%
+			[#3](#4){#5}{#6}}%
+			{#5}
+	}{\IfBooleanTF{#1}{\cbraceo+}{\cbraceo}[#3](#4){#5}{#6}}
+}
+
 
 \let\oldforall\forall
 \renewcommand{\forall}{\oldforall \, }
@@ -1000,10 +1010,9 @@
 
 \newcommand<>{\red}[1]{{\color#2{red} #1}}
 \newcommand<>{\blue}[1]{{{\color#2{blue} #1}}}
-\newcommand<>{\green}[1]{{\color#2{green} #1}}
+\newcommand<>{\green}[1]{{\color#2{OliveGreen} #1}}
 \newcommand<>{\gray}[1]{{\color#2{gray} #1}}
 \newcommand<>{\orange}[1]{{\color#2{Orange} #1}}
 \newcommand<>{\cyan}[1]{{\color#2{Cyan} #1}}
 
 \newcommand<>{\alertc}[2][red]{{\color#3{#1} #2}}
-
