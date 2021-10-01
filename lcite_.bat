@@ -2,14 +2,20 @@
 
 REM Change this accordingly
 set BIBINPUTS=.\bib
+REM set target=response
+set /P target=Enter target: 
+set lrefaux=lref-%target%.aux
+set lrefbbl=lref-%target%.bbl
+@ECHO %lrefaux%, %lrefbbl%
+pause
 
-latex response
+latex %target%
 bibtex lref.aux
-latex response
+latex %target%
 bibtex lref.aux
-copy lref.aux lrefc.aux
-copy lref.bbl lrefc.bbl
-latex response
-latex response
-latex response
-pdflatex -synctex=-1 -interaction=nonstopmode response
+copy lref.aux %lrefaux%
+copy lref.bbl %lrefbbl%
+latex %target%
+latex %target%
+latex %target%
+pdflatex -synctex=-1 -interaction=nonstopmode %target%

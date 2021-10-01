@@ -15,7 +15,6 @@
 \WarningFilter{caption}{Unknown document class}
 \WarningFilter{latex}{No \author given}
 
-%\usepackage{etoolbox}
 %\usepackage{empheq}
 %\usepackage{fancyvrb}
 \usepackage{multibib}
@@ -69,7 +68,7 @@
 % The steps to be taken are:
 %		latex response
 %		bibtex lref.aux
-%		copy lref.aux to lrefc.aux, and lref.bbl to lrefc.bbl
+%		copy lref.aux to lref-response.aux, and lref.bbl to lref-response.bbl
 %		latex response
 %		latex response
 
@@ -184,7 +183,7 @@
 }
 
 \myexternaldocument{\maintext}
-\externaldocument[\docprefix-]{lrefc}
+\externaldocument[\docprefix-]{lref-response}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -241,7 +240,7 @@ Do something.
     \item bibtex lref.aux
     \item latex response
     \item bibtex lref.aux
-    \item\label{it:rename} copy lref.aux to lrefc.aux, and lref.bbl to lrefc.bbl
+    \item\label{it:rename} copy lref.aux to lref-response.aux, and lref.bbl to lref-response.bbl
     \item latex response
     \item latex response
     \item latex response

@@ -18,8 +18,6 @@ breaklines=true
 \usepackage{lipsum}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 % Load the preamble.tex
 % \notloadhyperref stops loading of the hyperref package 
 % \loadbibentry by itself loads the bibentry package (this is usually not required for your paper)
@@ -28,6 +26,35 @@ breaklines=true
 %\def\notloadhyperref{}
 \def\loadbibentry{} %comment out, usually not used in your paper
 \input{preamble.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Comment out this whole part if not referencing any supplementary material 
+% in the file supplementary.tex
+
+\ifx\notloadhyperref\undefined
+	\usepackage{xr-hyper}
+\else
+	\usepackage{xr}
+\fi
+
+\makeatletter
+\newcommand*{\addFileDependency}[1]{% argument=file name and extension
+  \typeout{(#1)}
+  \@addtofilelist{#1}
+  \IfFileExists{#1}{}{\typeout{No file #1.}}
+}
+\makeatother
+
+\newcommand*{\myexternaldocument}[1]{%
+    \externaldocument{#1}%
+    \addFileDependency{#1.tex}%
+    \addFileDependency{#1.aux}%
+}
+
+\myexternaldocument{supplementary}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -254,13 +281,15 @@ Consider the subset of vertices $V_0$ of an unweighted directed graph $G$. Suppo
 \end{Example}
 %</tag:ex>
 
-
 \begin{Theorem}\label{thm:Gamma}
 For any $\Gamma \in L^2(X\times [n])$, $\Gamma\,* = \E_{\mu_X}[\Gamma_x\,*]$ is a bounded linear operator.
 \end{Theorem}
+\begin{IEEEproof}
+See \cref{proof:thm:Gamma} in the supplementary material.
+\end{IEEEproof}
 
 %<*tag:thm>
-This is a theorem.
+The following is another theorem.
 \begin{Theorem}\label{thm:poly}
 Suppose $T\subset\Real$ is a finite or a bounded interval. If almost surely every $x \in X$ has no repeated eigenvalues and has uniformly bounded operator norm, then every convolution filter is a bi-polynomial filter.
 \end{Theorem}
