@@ -1,0 +1,131 @@
+\RequirePackage{etex}
+\documentclass[11pt, onecolumn, final]{IEEEtran}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\maintext{tips} %input your manuscript file name here
+
+\def\docprefix{S} %prefix to use for additional references and other local features
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{expl3}
+\usepackage{silence}
+\WarningFilter{caption}{Unsupported document class}
+\WarningFilter{caption}{Unknown document class}
+\WarningFilter{latex}{No \author given}
+
+\usepackage{multibib}
+\newcites{lref}{Supplementary References}
+
+
+%\def\notloadhyperref{}
+\ifx\notloadhyperref\undefined
+	\usepackage{xr-hyper}
+\else
+	\usepackage{xr}
+\fi
+
+\input{preamble.tex}
+%\hypersetup{nolinks=true}
+% if hyperref is used in \maintext, then it has to be used here as well
+%\usepackage[hidelinks,hypertexnames=false]{hyperref}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Add newcommands from \maintext here
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\tbC}{\widetilde{\bC}}
+\newcommand{\tbL}{\widetilde{\bL}}
+\newcommand{\onehot}[1]{\mathrm{one\_hot}\left(#1\right)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Newcommands - do not change
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% For citing references that appear only in this response, use \lcite{...}.
+% The steps to be taken are:
+%		latex response
+%		bibtex lref.aux
+%		copy lref.aux to lref-supplementary.aux, and lref.bbl to lref-supplementary.bbl
+%		latex response
+%		latex response
+
+\makeatletter
+\renewcommand{\@biblabel}[1]{\hfill[\textrm{\docprefix}-#1]}
+\makeatother
+\newcounter{itemcount}
+\newcommand{\rcite}[1]{%
+	\def\rlist{}%
+	\def\citeform##1{\docprefix-##1}%
+	\setcounter{itemcount}{0}%
+  	\renewcommand*{\do}[1]{\stepcounter{itemcount}%
+      \ifnumcomp{\value{itemcount}}{=}{1}{}{\appto\rlist{, }}%
+      \appto\rlist{\docprefix-##1}%
+    }% How to process each item
+  	\docsvlist{#1}% Process list
+	\cite{\rlist}%
+	\def\citeform##1{##1}%
+}
+\newcommand{\lcite}[1]{%
+	\nocitelref{#1}%
+	\rcite{#1}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\thesection}{\docprefix\Roman{section}}
+\renewcommand{\thesectiondis}{\docprefix\Roman{section}.}
+\renewcommand{\theequation}{\docprefix\arabic{equation}}
+\renewcommand{\thetable}{\docprefix\arabic{table}}
+\renewcommand{\thefigure}{\docprefix\arabic{figure}}
+
+
+\makeatletter
+\newcommand*{\addFileDependency}[1]{% argument=file name and extension
+  \typeout{(#1)}
+  \@addtofilelist{#1}
+  \IfFileExists{#1}{}{\typeout{No file #1.}}
+}
+\makeatother
+
+\newcommand*{\myexternaldocument}[1]{%
+    \externaldocument{#1}%
+    \addFileDependency{#1.tex}%
+    \addFileDependency{#1.aux}%
+}
+
+\myexternaldocument{\maintext}
+\externaldocument[\docprefix-]{lref-supplementary}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\title{Supplementary Material}
+
+\begin{document}
+\maketitle
+
+This is the supplementary material to ``Tips on Writing Papers in \LaTeX''. The references like equation numbers refer to those in the main paper, except for those prefixed by ``\docprefix''. For example, we can reference \cref{sect:General} and equation \cref{eq:Lambda_SGLR} from the main paper. We can cite \cite{LenTayQui:J16}, which is from the bibliography of the main paper.
+
+\section{Preliminaries}\label{supp:Preliminaries}
+
+This is a section in the supplementary material. From a result in \lcite{WanSonTay:J21}, we have
+\begin{align}
+		f(\btheta) &= \E_{X \sim p_{\btheta}}[\frac{f(X)}{g(X,Y)} \given Y], \label{eq:f}\\
+		\P(A \given B) &= \P(\set*{\omega\in\Omega \given \ofrac{2}X(\omega) > b} \given \limsup_{n\to\infty} X_n(\omega) = a). \label{eq:AB}
+\end{align}
+
+\section{Proof of \cref{thm:Gamma}}\label{proof:thm:Gamma}
+
+The proof follows from \cref{eq:AB}.
+
+
+\bibliographystylelref{IEEEtran}
+\bibliographylref{IEEEabrv,StringDefinitions,refs}
+
+\end{document}
