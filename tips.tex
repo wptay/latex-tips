@@ -4,20 +4,13 @@
 %\documentclass[peerreview]{IEEEtran}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% These packages are used on in this tips.tex file, not required for your paper. Please remove if not using.
-\usepackage{silence}
-\WarningFilter{caption}{Unsupported document class}
-\WarningFilter{caption}{Unknown document class}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Load your additional packages not in preamble.tex. Please check these are indeed not there.
+% Put here because hyperref package usually has to be one of the last packages to be loaded.
 
-\usepackage{listings}
-\lstset{
-columns=flexible,
-breaklines=true
-}
-\usepackage{babel}
-\usepackage{lipsum}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Load the preamble.tex
 % \notloadhyperref stops loading of the hyperref package 
 % \loadbibentry by itself loads the bibentry package (this is usually not required for your paper)
@@ -27,8 +20,8 @@ breaklines=true
 \def\loadbibentry{} %comment out, usually not used in your paper
 \input{preamble.tex}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Comment out this whole part if not referencing any supplementary material 
 % in the file supplementary.tex
 
@@ -53,18 +46,37 @@ breaklines=true
 }
 
 \myexternaldocument{supplementary}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% These additional packages are only used on in this tips.tex file, 
+% not required for your paper. Please remove.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Additional newcommands not in preamble.tex, special to your paper
+\usepackage{silence}
+\WarningFilter{caption}{Unsupported document class}
+\WarningFilter{caption}{Unknown document class}
+
+\usepackage{listings}
+\lstset{
+columns=flexible,
+breaklines=true
+}
+\usepackage{babel}
+\usepackage{lipsum}
+\usepackage{forest}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Additional newcommands not in preamble.tex, special to your paper.
+% Please remove and add your own ones.
+
 \newcommand{\tbC}{\widetilde{\bC}}
 \newcommand{\tbL}{\widetilde{\bL}}
 \newcommand{\onehot}[1]{\mathrm{one\_hot}\left(#1\right)}
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
 
@@ -115,11 +127,60 @@ breaklines=true
 	      %\item However, synctex does not allow file names with spaces. Please use an underscore ``\_'' if you need to have spaces.
 	\item After running pdflatex or latexmk, \textbf{\red{please look through the warnings and resolve them}}. These are very helpful to catch errors like defining same labels multiple times.
 	\item I have provided a preamble.tex that you can include into your tex file using the \textbackslash input command (see the beginning of this tex file). This preamble.tex file includes all the commonly used packages, declarations and aliases. \textbf{Look through the preamble.tex file first before you define your own newcommands to avoid duplication. The most updated preamble.tex file is always available on \url{https://gitlab.com/wptay/latex-tips}.} I will always use the most updated preamble.tex file, so there is no need for you to include a copy in your workspace (you can keep a global copy somewhere and configure your Latex to point to it or include a path in latexmkrc). If you find some useful things to add to preamble.tex, please let me know.
+	\item A typical working tree looks like that in \cref{fig:working-tree}. 
 	\item You can use this tex file as a starting template when writing your papers.
 	\item Upload all references you have used in your paper to Google Drive, except for books. If you have referenced a paper, you should have at least read its abstract and the relevant parts that you have referenced.
 	\item Please ensure that you embed all your fonts into the pdf before you submit to a journal or conference.
 \end{enumerate}
 
+\begin{figure}[!htb] 
+  \centering 
+\begin{forest}
+	for tree={
+	font=\ttfamily,
+	grow'=0,
+	child anchor=west,
+	parent anchor=south,
+	anchor=west,
+	calign=first,
+	edge path={
+			\noexpand\path [draw, \forestoption{edge}]
+			(!u.south west) +(7.5pt,0) |- node[fill,inner sep=1.25pt] {} (.child anchor)\forestoption{edge label};
+		},
+	before typesetting nodes={
+			if n=1
+				{insert before={[,phantom]}}
+				{}
+		},
+	fit=band,
+	before computing xy={l=15pt},
+	}
+	[work directory
+		[figures
+			[abc.pdf]
+			[xyz.png]
+		]
+		[drafts (NOT required if using git)
+			[papernameV1.tex]
+			[papernameV1.pdf]
+			[papernameV2.tex]
+			[papernameV2.pdf]
+		]
+		[conferencename (conference version)
+			[papernameconf.tex]
+			[papernameconf.pdf]
+		]
+		[bib (if you have many bib files)
+			[file1.bib]
+			[file2.bib]
+		]
+		[latexmkrc (for BIBINPUTS and TEXINPUTS)]
+		[papername.tex]
+		[supplementary.tex (if you have)]
+	]
+\end{forest}
+\caption{Typical working tree.}\label{fig:working-tree}
+\end{figure}
 \section{Labels}\label{sect:Labels}
 
 \begin{enumerate}[(a)]
