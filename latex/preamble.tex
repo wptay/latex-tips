@@ -15,6 +15,7 @@
 \usepackage{amsmath,amssymb,amsfonts,mathrsfs,bm}% Typical maths resource packages
 \usepackage{mathtools}
 \usepackage{amsthm}
+\usepackage{scalerel}
 \usepackage{nicefrac}
 \usepackage[shortlabels]{enumitem}
 \usepackage{graphicx}
@@ -836,6 +837,8 @@
 \DeclareMathOperator{\eig}{eig}
 \DeclareMathOperator{\ima}{im}
 \DeclareMathOperator{\Mod}{mod}
+\DeclareMathOperator*{\concat}{\scalerel*{\parallel}{\sum}}
+
 
 %Paired delimiters
 \newcommand{\ifbcdot}[1]{\ifblank{#1}{\cdot}{#1}}
