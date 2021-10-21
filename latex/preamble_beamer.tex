@@ -813,9 +813,9 @@
 \newcommand{\bone}{\bm{1}}
 
 % Math functions
-\newcommand{\indicator}[1]{{\bf 1}_{\braces*{#1}}}
+\DeclarePairedDelimiterXPP\indicate[1]{{\bf 1}}{\{}{\}}{}{\ifbcdot{#1}}
+\newcommand{\indicator}[1]{{\bf 1}_{\braces*{\ifbcdot{#1}}}}
 \newcommand{\indicatore}[1]{{\bf 1}_{#1}}
-\newcommand{\indicate}[1]{{\bf 1}\braces*{#1}}
 \newcommand{\ofrac}[1]{{\frac{1}{#1}}}
 \newcommand{\odfrac}[1]{{\dfrac{1}{#1}}}
 \newcommand{\ddfrac}[2]{{\dfrac{\mathrm{d} {#1}}{\mathrm{d} {#2}}}}
