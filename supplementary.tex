@@ -84,21 +84,6 @@
 \renewcommand{\thetable}{\docprefix\arabic{table}}
 \renewcommand{\thefigure}{\docprefix\arabic{figure}}
 
-
-\makeatletter
-\newcommand*{\addFileDependency}[1]{% argument=file name and extension
-  \typeout{(#1)}
-  \@addtofilelist{#1}
-  \IfFileExists{#1}{}{\typeout{No file #1.}}
-}
-\makeatother
-
-\newcommand*{\myexternaldocument}[1]{%
-    \externaldocument{#1}%
-    \addFileDependency{#1.tex}%
-    \addFileDependency{#1.aux}%
-}
-
 \myexternaldocument{\maintext}
 \externaldocument[\docprefix-]{lref-supplementary}
 
@@ -110,11 +95,11 @@
 \begin{document}
 \maketitle
 
-This is the supplementary material to ``Tips on Writing Papers in \LaTeX''. The references like equation numbers refer to those in the main paper, except for those prefixed by ``\docprefix''. For example, we can reference \cref{sect:General} and equation \cref{eq:Lambda_SGLR} from the main paper. We can cite \cite{LenTayQui:J16}, which is from the bibliography of the main paper.
+This is the supplementary material to ``Tips on Writing Papers in \LaTeX''. The references like equation numbers refer to those in the main paper, except for those prefixed by ``\docprefix''. For example, we can reference \cref{sect:General} and equation \cref{eq:Lambda_SGLR} from the main paper but \cref{eq:f} is from this supplementary material. Similarly, we can cite \cite{LenTayQui:J16}, which is from the bibliography of the main paper. 
 
 \section{Preliminaries}\label{supp:Preliminaries}
 
-This is a section in the supplementary material. From a result in \lcite{WanSonTay:J21}, we have
+This is a section in the supplementary material. From a result in \lcite{WanSonTay:J21} (note that this is a local citation that does not appear in the main paper), we have
 \begin{align}
 		f(\btheta) &= \E_{X \sim p_{\btheta}}[\frac{f(X)}{g(X,Y)} \given Y], \label{eq:f}\\
 		\P(A \given B) &= \P(\set*{\omega\in\Omega \given \ofrac{2}X(\omega) > b} \given \limsup_{n\to\infty} X_n(\omega) = a). \label{eq:AB}
