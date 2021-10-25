@@ -9,6 +9,8 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\usepackage{lmodern}
+\usepackage{anyfontsize}
 \usepackage{expl3}
 \usepackage{silence}
 \WarningFilter{caption}{Unsupported document class}
@@ -209,7 +211,7 @@ A lot of comments.
   Using the xr package, I can reference \cref{sect:General} and \cref{eq:X} of tips.tex. To do this, you need to build response.tex in the same folder containing tips.aux.
 
   Next, I cite \cite{LenTayQui:J16,Str:93}. The references displayed are from tips.aux and tips.bbl thanks to xr. Finally, the catchfilebetweentags package allows me to quote the following from \cref{sect:Response} in tips.tex:
-  \revision{tag:NP}
+  \revision{tag:catch}
 
   Note that the tag name cannot include underscores. Another quote from tips.tex:
   \revision{tag:equation}
@@ -245,8 +247,7 @@ Improve the paper.
 \end{comment}
 \begin{response}
   Thank you for your comment. Please refer to \cite{LenTayQui:J16,Str:93}. The following revision is made in \cref{sect:Response}:
-
-  \revision{tag:NP}
+  \revision{tag:catch}
 
   Please refer to the following equation:
   \begin{align}

@@ -31,20 +31,6 @@
 	\usepackage{xr}
 \fi
 
-\makeatletter
-\newcommand*{\addFileDependency}[1]{% argument=file name and extension
-  \typeout{(#1)}
-  \@addtofilelist{#1}
-  \IfFileExists{#1}{}{\typeout{No file #1.}}
-}
-\makeatother
-
-\newcommand*{\myexternaldocument}[1]{%
-    \externaldocument{#1}%
-    \addFileDependency{#1.tex}%
-    \addFileDependency{#1.aux}%
-}
-
 \myexternaldocument{supplementary}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -333,7 +319,10 @@ breaklines=true
 Therefore, we have shown that $P \ne NP$.
 %</tag:NP>
 \end{verbatim}
-and use ``\textbackslash revision\{tag:NP\}'' in your response.tex, the sentence between the two tags will be quoted in your response. This ensures that whatever changes you make in the tex file are reflected in the response. Examples given below are used in response.tex.
+and use ``\textbackslash revision\{tag:NP\}'' in your response.tex, the sentence between the two tags will be quoted in your response. 
+%<*tag:catch>
+This ensures that whatever changes you make in the tex file are reflected in the response. Examples given below are used in response.tex.
+%</tag:catch>
 \end{enumerate}
 
 %<*tag:ex>
