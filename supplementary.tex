@@ -16,9 +16,12 @@
 \WarningFilter{latex}{No \author given}
 
 \usepackage{multibib}
+
+% Used by \lcite, if you do not have any local cites, comment this out.
 \newcites{lref}{Supplementary References}
 
-
+% if hyperref is used in \maintext, then it has to be used here as well
+% \notloadhyperref tells preamble.tex not to load hyperref package.
 %\def\notloadhyperref{}
 \ifx\notloadhyperref\undefined
 	\usepackage{xr-hyper}
@@ -27,9 +30,6 @@
 \fi
 
 \input{preamble.tex}
-%\hypersetup{nolinks=true}
-% if hyperref is used in \maintext, then it has to be used here as well
-%\usepackage[hidelinks,hypertexnames=false]{hyperref}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -85,6 +85,8 @@
 \renewcommand{\thefigure}{\docprefix\arabic{figure}}
 
 \myexternaldocument{\maintext}
+
+% Used by \lcite, if you do not have any local cites, comment this out.
 \externaldocument[\docprefix-]{lref-supplementary}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

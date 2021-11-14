@@ -6,7 +6,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Load your additional packages not in preamble.tex. Please check these are indeed not there.
-% Put here because hyperref package usually has to be one of the last packages to be loaded.
+% Put here because hyperref package in preamble.tex usually has to be one of the last packages to be loaded.
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -52,6 +53,7 @@ breaklines=true
 \usepackage{babel}
 \usepackage{lipsum}
 \usepackage{forest}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Additional newcommands not in preamble.tex, special to your paper.
@@ -151,8 +153,11 @@ breaklines=true
 			[papernameV1.pdf]
 			[papernameV2.tex]
 			[papernameV2.pdf]
+			[responseR1.tex]
+			[responseR1.pdf]
 		]
 		[conferencename (conference version)
+			[latexmkrc (for BIBINPUTS and TEXINPUTS)]
 			[papernameconf.tex]
 			[papernameconf.pdf]
 		]
@@ -162,7 +167,9 @@ breaklines=true
 		]
 		[latexmkrc (for BIBINPUTS and TEXINPUTS)]
 		[papername.tex]
-		[supplementary.tex (if you have)]
+		[papername.pdf]
+		[supplementary.tex (if applicable)]
+		[response.tex (if applicable)]
 	]
 \end{forest}
 \caption{Typical working tree.}\label{fig:working-tree}
@@ -276,7 +283,7 @@ breaklines=true
 	\item Put your figures into a subfolder called ``Figures''.
 	\item You can set the graphics path in tex using ``\textbackslash graphicspath'' (this has been done in the preamble.tex file). Then \LaTeX\ will look for the right figure in the folder you have provided in the graphics path. See \cref{fig:tandem} for an example.
 	\item In \cref{fig:tandem}, we use the subfigure environment to create \cref{fig:network,fig:regions}.
-	\item I highly recommend Ipe (\url{http://ipe.otfried.org/}) for preparing your graphics. The advantage is that you can directly input latex symbols into your graphics using Ipe. Graphics can be saved directly in pdf. For example, you can open tandem.pdf in the Figures folder using the Ipe program and edit that! If you use another graphics program, the font may not be the same as your latex document. In that case, you may need to use psfrag to replace your labels.
+	\item I highly recommend Ipe (\url{http://ipe.otfried.org/}) for preparing your graphics. The advantage is that you can directly input latex symbols into your graphics using Ipe. Graphics can be saved directly in pdf. For example, you can open tandem.pdf in the Figures folder using the Ipe program and edit that! There is also an Ipelet that allows you to convert Ipe to tikz if you prefer the latter. If you use another graphics program, the font may not be the same as your latex document. In that case, you may need to use psfrag to replace your labels.
 	\item Please use ``!htb'' or ``!htbp'' as options in your figures environment.
 \end{enumerate}
 

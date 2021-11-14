@@ -935,10 +935,11 @@
 %{\{\, #2 \IfBooleanTF{#3}{\mid}{\mathrel{} : \mathrel{}} #4\, \}}% 
 %}
 
-\NewDocumentCommand{\evalat}{s O{\big} m m}{%
+\NewDocumentCommand{\evalat}{ s O{\big} m e{_^} }{%
 \IfBooleanTF{#1}%
-{{\left. #3 \right|_#4}}
-{{#3#2|_#4}}%
+{\left. #3 \right|}{#3#2|}%
+\IfValueT{#4}{_{#4}}%
+\IfValueT{#5}{^{#5}}%
 }
 
 
