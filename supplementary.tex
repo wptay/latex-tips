@@ -61,7 +61,8 @@
 \renewcommand{\@biblabel}[1]{\hfill[\textrm{\docprefix}-#1]}
 \makeatother
 \newcounter{itemcount}
-\newcommand{\rcite}[1]{%
+\DeclareDocumentCommand{\rcite} { o m }
+{%
 	\def\rlist{}%
 	\def\citeform##1{\docprefix-##1}%
 	\setcounter{itemcount}{0}%
@@ -69,13 +70,13 @@
       \ifnumcomp{\value{itemcount}}{=}{1}{}{\appto\rlist{, }}%
       \appto\rlist{\docprefix-##1}%
     }% How to process each item
-  	\docsvlist{#1}% Process list
-	\cite{\rlist}%
+  	\docsvlist{#2}% Process list
+	\IfValueTF{#1}{\cite[#1]{\rlist}}{\cite{\rlist}}%
 	\def\citeform##1{##1}%
 }
-\newcommand{\lcite}[1]{%
-	\nocitelref{#1}%
-	\rcite{#1}%
+\DeclareDocumentCommand{\lcite} { o m } {%
+	\nocitelref{#2}%
+	\rcite[#1]{#2}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -103,7 +104,7 @@ This is the supplementary material to ``Tips on Writing Papers in \LaTeX''. The 
 
 \section{Preliminaries}\label{supp:Preliminaries}
 
-This is a section in the supplementary material. From a result in \lcite{WanSonTay:J21} (note that this is a local citation that does not appear in the main paper), we have
+This is a section in the supplementary material. From a result in \lcite[Theorem 1]{WanSonTay:J21} (note that this is a local citation that does not appear in the main paper), we have
 \begin{align}
 		f(\btheta) &= \E_{X \sim p_{\btheta}}[\frac{f(X)}{g(X,Y)} \given Y], \label{eq:f}\\
 		\P(A \given B) &= \P(\set*{\omega\in\Omega \given \ofrac{2}X(\omega) > b} \given \limsup_{n\to\infty} X_n(\omega) = a). \label{eq:AB}
@@ -113,7 +114,7 @@ This is a section in the supplementary material. From a result in \lcite{WanSonT
 
 The proof follows from \cref{eq:AB}.
 
-
+% Used by \lcite, if you do not have any local cites, comment this out.
 \bibliographystylelref{IEEEtran}
 \bibliographylref{IEEEabrv,StringDefinitions,refs}
 

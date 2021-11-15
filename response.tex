@@ -77,12 +77,12 @@
 %		latex response
 % For convenience, lcite_.bat (Windows) and lcite_.sh (Linux) are provided.
 
-
 \makeatletter
 \renewcommand{\@biblabel}[1]{\hfill[\textrm{\docprefix}-#1]}
 \makeatother
 \newcounter{itemcount}
-\newcommand{\rcite}[1]{%
+\DeclareDocumentCommand{\rcite} { o m }
+{%
 	\def\rlist{}%
 	\def\citeform##1{\docprefix-##1}%
 	\setcounter{itemcount}{0}%
@@ -90,13 +90,13 @@
       \ifnumcomp{\value{itemcount}}{=}{1}{}{\appto\rlist{, }}%
       \appto\rlist{\docprefix-##1}%
     }% How to process each item
-  	\docsvlist{#1}% Process list
-	\cite{\rlist}%
+  	\docsvlist{#2}% Process list
+	\IfValueTF{#1}{\cite[#1]{\rlist}}{\cite{\rlist}}%
 	\def\citeform##1{##1}%
 }
-\newcommand{\lcite}[1]{%
-	\nocitelref{#1}%
-	\rcite{#1}%
+\DeclareDocumentCommand{\lcite} { o m } {%
+	\nocitelref{#2}%
+	\rcite[#1]{#2}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -295,9 +295,8 @@ Note the use of $\backslash$xrcounterref to set the numbering of environments co
 \end{response}
 
 
-
+% Used by \lcite, if you do not have any local cites, comment this out.
 \clearpage
-
 \bibliographystylelref{IEEEtran}
 \bibliographylref{IEEEabrv,StringDefinitions,refs}
 

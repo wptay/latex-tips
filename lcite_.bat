@@ -2,7 +2,8 @@
 
 REM Change this accordingly
 set BIBINPUTS=.\bib
-REM set target=response
+REM
+
 set /P target=Enter target: 
 set lrefaux=lref-%target%.aux
 set lrefbbl=lref-%target%.bbl

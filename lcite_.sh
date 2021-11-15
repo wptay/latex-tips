@@ -4,6 +4,8 @@ set +v
 
 # Change this accordingly
 export BIBINPUTS='.\bib'
+#
+
 read -p 'Enter target: ' target
 lrefaux=lref-$target.aux
 lrefbbl=lref-$target.bbl
