@@ -49,11 +49,13 @@
 
 % For citing references that appear only in this response, use \lcite{...}.
 % The steps to be taken are:
-%		latex response
+%		latex supplementary
 %		bibtex lref.aux
 %		copy lref.aux to lref-supplementary.aux, and lref.bbl to lref-supplementary.bbl
-%		latex response
-%		latex response
+%		latex supplementary
+%		latex supplementary
+%		latex supplementary
+% For convenience, lcite_.bat (Windows) and lcite_.sh (Linux) are provided.
 
 \makeatletter
 \renewcommand{\@biblabel}[1]{\hfill[\textrm{\docprefix}-#1]}

@@ -12,17 +12,6 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Load the preamble.tex
-% \notloadhyperref stops loading of the hyperref package 
-% \loadbibentry by itself loads the bibentry package (this is usually not required for your paper)
-% If hyperref is loaded, \loadbibentry modifies \@bibitem to make bibentry package compatible with hyperref
-
-%\def\notloadhyperref{}
-\def\loadbibentry{} %comment out, usually not used in your paper
-\input{preamble.tex}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Comment out this whole part if not referencing any supplementary material 
 % in the file supplementary.tex
 
@@ -32,7 +21,21 @@
 	\usepackage{xr}
 \fi
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Load the preamble.tex
+% \notloadhyperref stops loading of the hyperref package 
+% \loadbibentry by itself loads the bibentry package (this is usually not required for your paper)
+% If hyperref is loaded, \loadbibentry modifies \@bibitem to make bibentry package compatible with hyperref
+
+%\def\notloadhyperref{}
+\def\loadbibentry{} %comment out, usually not used in your paper
+\input{preamble.tex}
+
+% Comment out this whole part if not referencing any supplementary material 
+% in the file supplementary.tex
 \myexternaldocument{supplementary}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
