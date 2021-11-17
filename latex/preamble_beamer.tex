@@ -1003,10 +1003,13 @@
 \graphicspath{{./Figures/}{./figures/}}
 \pdfsuppresswarningpagegroup=1
 
-\newcommand{\includeCroppedPdf}[2][]{%
-	\IfFileExists{./Figures/#2-crop.pdf}{}{%
-		\immediate\write18{pdfcrop ./Figures/#2 ./Figures/#2-crop.pdf}}%
-	\includegraphics[#1]{./Figures/#2-crop.pdf}}
+% Need to enable write18 to use this.
+\DeclareDocumentCommand{\includeCroppedPdf}{ o O{./Figures/} m }{
+	\IfFileExists{#2#3-crop.pdf}{}{%
+		\immediate\write18{pdfcrop #2#3.pdf #2#3-crop.pdf}}%
+	\includegraphics[#1]{#2#3-crop.pdf}
+}
+
 
 %colors
 \definecolor{gray90}{gray}{0.9}
