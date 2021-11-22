@@ -9,8 +9,8 @@ export BIBINPUTS='.\bib'
 read -p 'Enter target: ' target
 lrefaux=lref-$target.aux
 lrefbbl=lref-$target.bbl
-echo $lrefaux, $lrefbbl
-read -p "Press enter to continue"
+# echo $lrefaux, $lrefbbl
+# read -p "Press enter to continue"
 
 latex $target
 bibtex lref.aux
@@ -22,3 +22,4 @@ latex $target
 latex $target
 latex $target
 pdflatex -synctex=-1 -interaction=nonstopmode $target
+rm $target.dvi

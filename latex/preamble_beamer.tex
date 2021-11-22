@@ -884,30 +884,31 @@
 \ifcondp#1
 }
 
-
 % Allows the use of 
 % \P : \mathbb{P}
 % \P(X) : \mathbb{P}\left({X}\right)
 % \P_{p}(X) : \mathbb{P}_{p}\left({X}\right)
 % \P(X \given Y) or \P(X @| Y) or \P(X){Y} : \mathbb{P}\left({X}\, \middle| \, {Y}\right). 
-% \P_{p}(X \given Y) or \P_{p}(X @| Y) or \P{p}(X){Y} : \mathbb{P}_{p}\left({X}\, \middle| \, {Y}\right)
+% \P_{p}(X \given Y) or \P_{p}(X @| Y) : \mathbb{P}_{p}\left({X}\, \middle| \, {Y}\right)
 % Caveats: Iterated expressions do not work well with \P(X @| Y) notation
-% \P(\P(X @| Y) @| Z) does not work, use \P({\P(X \given Y)} \given Z) 
+% \P(\P(X @| Y) @| Z) does not work, use \P(\P(X \given Y) \given Z) 
 % Starred version \P* does not use \left and \right. Maybe used in inline equations. 
-\DeclareDocumentCommand \P { s e{_} >{\SplitArgument{ 1 }{ @| }}d() g } {%
+\DeclareDocumentCommand \P { s e{_^} >{\SplitArgument{ 1 }{ @| }}d() g } {%
 	\mathbb{P}%
 	\IfBooleanTF{#1}%
 		{
 			\IfValueT{#2}{_{#2}}%
-			\IfValueTF{#4}%
-				{\cprob{#3 \given #4}}%
-				{\IfValueT{#3}{\cprob{#3}}}%
+			\IfValueT{#3}{^{#3}}%
+			\IfValueTF{#5}%
+				{\cprob{#4 \given #5}}%
+				{\IfValueT{#4}{\cprob{#4}}}%
 		}%
 		{
 			\IfValueT{#2}{_{#2}}%
-			\IfValueTF{#4}%
-				{\cprob*{#3 \given #4}}%
-				{\IfValueT{#3}{\cprob*{#3}}}%
+			\IfValueT{#3}{^{#3}}%
+			\IfValueTF{#5}%
+				{\cprob*{#4 \given #5}}%
+				{\IfValueT{#4}{\cprob*{#4}}}%
 		}%
 }
 
@@ -916,27 +917,28 @@
 % \E[X] : \mathbb{E}\left[{X}\right]
 % \E_{p}[X] or \E{p}[X] : \mathbb{E}_{p}\left[{X}\right]
 % \E[X \given Y] or \E[X @| Y] or \E[X]{Y} : \mathbb{E}\left[{X}\, \middle| \, {Y}\right]. 
-% \E_{p}[X \given Y] or \E_{p}[X @| Y] or \E{p}[X]{Y} : \mathbb{E}_{p}\left[{X}\, \middle| \, {Y}\right]
+% \E_{p}[X \given Y] or \E_{p}[X @| Y] : \mathbb{E}_{p}\left[{X}\, \middle| \, {Y}\right]
 % Caveats: Iterated expressions do not work well with \E[X @| Y] notation
-% \E[\E[X @| Y] @| Z] does not work, use \E[\E[X \given Y]} \given Z] 
+% \E[\E[X @| Y] @| Z] does not work, use \E[\E[X \given Y] \given Z] 
 % Starred version \E* does not use \left and \right. Maybe used in inline equations. 
-\DeclareDocumentCommand \E { s e{_} >{\SplitArgument{ 1 }{ @| }}d[] g } {%
+\DeclareDocumentCommand \E { s e{_^} >{\SplitArgument{ 1 }{ @| }}d[] g } {%
 	\mathbb{E}%
 	\IfBooleanTF{#1}%
 		{
 			\IfValueT{#2}{_{#2}}%
-			\IfValueTF{#4}%
-				{\cexp{#3 \given #4}}%
-				{\IfValueT{#3}{\cexp{#3}}}%
+			\IfValueT{#3}{^{#3}}%
+			\IfValueTF{#5}%
+				{\cexp{#4 \given #5}}%
+				{\IfValueT{#4}{\cexp{#4}}}%
 		}%
 		{
 			\IfValueT{#2}{_{#2}}%
-			\IfValueTF{#4}%
-				{\cexp*{#3 \given #4}}%
-				{\IfValueT{#3}{\cexp*{#3}}}%
+			\IfValueT{#3}{^{#3}}%			
+			\IfValueTF{#5}%
+				{\cexp*{#4 \given #5}}%
+				{\IfValueT{#4}{\cexp*{#4}}}%
 		}%
 }
-
 
 % General distribution 
 % E.g., \dist{Beta}[a,b][x] gives Beta(x | a,b); \dist{Beta}[a,b] gives Beta(a,b)

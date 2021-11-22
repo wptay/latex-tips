@@ -7,8 +7,8 @@ REM
 set /P target=Enter target: 
 set lrefaux=lref-%target%.aux
 set lrefbbl=lref-%target%.bbl
-@ECHO %lrefaux%, %lrefbbl%
-pause
+REM @ECHO %lrefaux%, %lrefbbl%
+REM pause
 
 latex %target%
 bibtex lref.aux
@@ -20,3 +20,4 @@ latex %target%
 latex %target%
 latex %target%
 pdflatex -synctex=-1 -interaction=nonstopmode %target%
+del %target%.dvi

@@ -958,7 +958,6 @@
 \ifcondp#1
 }
 
-
 % Allows the use of 
 % \P : \mathbb{P}
 % \P(X) : \mathbb{P}\left({X}\right)
@@ -968,20 +967,22 @@
 % Caveats: Iterated expressions do not work well with \P(X @| Y) notation
 % \P(\P(X @| Y) @| Z) does not work, use \P(\P(X \given Y) \given Z) 
 % Starred version \P* does not use \left and \right. Maybe used in inline equations. 
-\DeclareDocumentCommand \P { s e{_} >{\SplitArgument{ 1 }{ @| }}d() g } {%
+\DeclareDocumentCommand \P { s e{_^} >{\SplitArgument{ 1 }{ @| }}d() g } {%
 	\mathbb{P}%
 	\IfBooleanTF{#1}%
 		{
 			\IfValueT{#2}{_{#2}}%
-			\IfValueTF{#4}%
-				{\cprob{#3 \given #4}}%
-				{\IfValueT{#3}{\cprob{#3}}}%
+			\IfValueT{#3}{^{#3}}%
+			\IfValueTF{#5}%
+				{\cprob{#4 \given #5}}%
+				{\IfValueT{#4}{\cprob{#4}}}%
 		}%
 		{
 			\IfValueT{#2}{_{#2}}%
-			\IfValueTF{#4}%
-				{\cprob*{#3 \given #4}}%
-				{\IfValueT{#3}{\cprob*{#3}}}%
+			\IfValueT{#3}{^{#3}}%
+			\IfValueTF{#5}%
+				{\cprob*{#4 \given #5}}%
+				{\IfValueT{#4}{\cprob*{#4}}}%
 		}%
 }
 
@@ -994,20 +995,22 @@
 % Caveats: Iterated expressions do not work well with \E[X @| Y] notation
 % \E[\E[X @| Y] @| Z] does not work, use \E[\E[X \given Y] \given Z] 
 % Starred version \E* does not use \left and \right. Maybe used in inline equations. 
-\DeclareDocumentCommand \E { s e{_} >{\SplitArgument{ 1 }{ @| }}d[] g } {%
+\DeclareDocumentCommand \E { s e{_^} >{\SplitArgument{ 1 }{ @| }}d[] g } {%
 	\mathbb{E}%
 	\IfBooleanTF{#1}%
 		{
 			\IfValueT{#2}{_{#2}}%
-			\IfValueTF{#4}%
-				{\cexp{#3 \given #4}}%
-				{\IfValueT{#3}{\cexp{#3}}}%
+			\IfValueT{#3}{^{#3}}%
+			\IfValueTF{#5}%
+				{\cexp{#4 \given #5}}%
+				{\IfValueT{#4}{\cexp{#4}}}%
 		}%
 		{
 			\IfValueT{#2}{_{#2}}%
-			\IfValueTF{#4}%
-				{\cexp*{#3 \given #4}}%
-				{\IfValueT{#3}{\cexp*{#3}}}%
+			\IfValueT{#3}{^{#3}}%			
+			\IfValueTF{#5}%
+				{\cexp*{#4 \given #5}}%
+				{\IfValueT{#4}{\cexp*{#4}}}%
 		}%
 }
 
