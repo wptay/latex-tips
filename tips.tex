@@ -289,6 +289,7 @@ breaklines=true
 	\item In \cref{fig:tandem}, we use the subfigure environment to create \cref{fig:network,fig:regions}.
 	\item I highly recommend Ipe (\url{http://ipe.otfried.org/}) for preparing your graphics. The advantage is that you can directly input latex symbols into your graphics using Ipe. Graphics can be saved directly in pdf. For example, you can open tandem.pdf in the Figures folder using the Ipe program and edit that! There is also an Ipelet that allows you to convert Ipe to tikz if you prefer the latter. If you use another graphics program, the font may not be the same as your latex document. In that case, you may need to use psfrag to replace your labels.
 	\item Please use ``!htb'' or ``!htbp'' as options in your figures environment.
+	\item Use the subcaption package for the subfigure environment. Do not use the subfig package as it does not work with the hyperref package. See example in \cref{fig:tandem}.
 \end{enumerate}
 
 \begin{figure}[!htpb]
