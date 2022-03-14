@@ -154,6 +154,7 @@
 \makeatother
 
 \newcounter{eqcounter}
+\renewcommand{\theequation}{\docprefix\arabic{equation}}
 \newcommand{\revision}[1]{
   \setcounter{eqcounter}{\value{equation}}%
   \renewcommand{\theequation}{\arabic{equation}}%
@@ -162,7 +163,7 @@
     \ExecuteMetaData[\maintext]{#1}%
   \end{mdframed}%
   \setcounter{equation}{\value{eqcounter}}%
-  \renewcommand{\theequation}{\docprefix-\arabic{equation}}%
+  \renewcommand{\theequation}{\docprefix\arabic{equation}}%
 }
 
 % Usage example: 
@@ -197,8 +198,7 @@ We sincerely thank all the reviewers for their helpful comments. We have revised
   \item ...
   \item ...
 \end{enumerate}
-Major changes are highlighted in \blue{blue} in our revised manuscript.
-
+Major changes are highlighted in \blue{blue} in our revised manuscript. The references like equation numbers refer to those in the main paper, except for those prefixed by ``\docprefix''. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -214,20 +214,22 @@ A lot of comments.
 \begin{response}
   Thank you for your comment. Please always use the formal ``thank you'' instead of ``thanks''. Please always start your response politely and in a conciliatory tone even if you are frustrated with the comment. We can be firm, friendly and respectful. After all, the reviewer has sacrificed his or her precious time to read our manuscript and provide comments, which he or she is not obligated to do.
 
-  Using the xr package, I can reference \cref{sect:General} and \cref{eq:X} of tips.tex. To do this, you need to build response.tex in the same folder containing tips.aux.
+  Using the xr package, I can reference \cref{sect:General} and \cref{eq:X} of the main paper tips.tex. To do this, you need to build response.tex in the same folder containing tips.aux. 
 
-  Next, I cite \cite{LenTayQui:J16,Str:93}. The references displayed are from tips.aux and tips.bbl thanks to xr. Finally, the catchfilebetweentags package allows me to quote the following from \cref{sect:Response} in tips.tex:
+  Next, I cite \cite{LenTayQui:J16,Str:93}, which are in the main paper. The references displayed are from tips.aux and tips.bbl thanks to xr. Finally, the catchfilebetweentags package allows me to quote the following from \cref{sect:Response} in tips.tex:
   \revision{tag:catch}
 
   Note that the tag name cannot include underscores. Another quote from tips.tex:
   \revision{tag:equation}
+
+  The equation numbers shown here are the same as those in the main paper, which is great!
 \end{response}
 
 \begin{comment}
 Do something.
 \end{comment}
 \begin{response}
-  Thank you for your suggestion. I will now cite some references that appear only in the bibliography for this response using \lcite{AceDahLobOzd:11,ChePap:95,Cov:69}. The steps to be taken are:
+  Thank you for your suggestion. I will now cite some additional references that appear only in the bibliography for this response using \lcite{AceDahLobOzd:11,ChePap:95,Cov:69}. These are not in the main paper. The steps to be taken are:
   \begin{enumerate}[i)]
     \item latex response
     \item bibtex lref.aux
@@ -249,17 +251,14 @@ Do something.
 \noindent\textbf{Recommendation:} Major Revision
 
 \begin{comment}
-Improve the paper.
+Why does this hold?
 \end{comment}
 \begin{response}
-  Thank you for your comment. Please refer to \cite{LenTayQui:J16,Str:93}. The following revision is made in \cref{sect:Response}:
-  \revision{tag:catch}
-
-  Please refer to the following equation:
+  Thank you for your question. Please refer to the following equation:
   \begin{align}
   f(x) &= \sum_{i>0} y_i. \label{eq:test}
   \end{align}
-  From \cref{eq:test}, the result follows immediately.
+  Note the prefix ``\docprefix'' in the equation that is in this response. From \cref{eq:test} and \cref{eq:Lambda_SGLR} in the main paper, the result follows immediately.
 
 \end{response}
 
@@ -269,6 +268,8 @@ A lot of comments.
 \begin{response}
   Thank you for your comment. Repeated quote from tips.tex:
   \revision{tag:equation}
+  
+  The equation numbers shown here are the same as those in the main paper, which is great! The command $\backslash$revision takes care of this. But it has limitations. See the following examples. 
 \end{response}
 
 

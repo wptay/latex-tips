@@ -26,8 +26,10 @@
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \usepackage[font=footnotesize]{subcaption}
+
 \usepackage{glossaries}
 \makeatletter
+\sfcode`\.1006
 % copy old \gls and \glspl
 \let\oldgls\gls
 \let\oldglspl\glspl
