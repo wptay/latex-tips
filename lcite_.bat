@@ -21,3 +21,6 @@ latex %target%
 latex %target%
 pdflatex -synctex=-1 -interaction=nonstopmode %target%
 del %target%.dvi
+del lref.aux
+del lref.bbl
+del lref.blg

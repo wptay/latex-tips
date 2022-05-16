@@ -17,6 +17,7 @@
 \usepackage{amsthm}
 \usepackage{scalerel}
 \usepackage{nicefrac}
+\usepackage{microtype} 
 \usepackage[shortlabels]{enumitem}
 \usepackage{graphicx}
 \usepackage{epstopdf}
@@ -1105,11 +1106,17 @@
 \ifx\nohighlights\undefined
 	\newcommand{\red}[1]{{\color{red} #1}}
 	\newcommand{\blue}[1]{{{\color{blue} #1}}}
+	\newcommand{\magenta}[1]{{\color#2{magenta} #1}}
+	\newcommand{\orange}[1]{{\color#2{Orange} #1}}
+	\newcommand{\cyan}[1]{{\color#2{Cyan} #1}}
 	\newcommand{\msout}[1]{\text{\color{green} \sout{\ensuremath{#1}}}}
 	\newcommand{\del}[1]{{\color{green}\ifmmode \msout{#1}\else\sout{#1}\fi}}
 \else
 	\newcommand{\red}[1]{#1}
 	\newcommand{\blue}[1]{#1}
+	\newcommand{\magenta}[1]{#1}
+	\newcommand{\orange}[1]{#1}
+	\newcommand{\cyan}[1]{#1}
 	\newcommand{\msout}[1]{#1}
 	\newcommand{\del}[1]{#1}
 \fi

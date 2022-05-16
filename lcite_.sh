@@ -23,3 +23,6 @@ latex $target
 latex $target
 pdflatex -synctex=-1 -interaction=nonstopmode $target
 rm $target.dvi
+rm lref.aux
+rm lref.bbl
+rm lref.blg
