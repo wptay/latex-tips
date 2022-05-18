@@ -189,7 +189,21 @@ breaklines=true
   \item\label{it:myitem} Tip: items can also be labeled! Example is this reference \ref{it:myitem}. 
   \item Do not over label! For equations, tables, figures and most ``objects'', we usually label only those that we need to refer to in another part of the text. In some cases, you may also label important equations although you may not refer to these in any part of your text. This makes it easier for readers to refer to your equations. However, do this judiciously.
   \item You should try to use the cleveref package to reference labels. It is smart enough to know what you are referencing, e.g., \cref{sect:General}, \cref{sect:General,sect:Labels,sect:Equations}, and \cref{eq:X} all use the same cref command. Otherwise, you have put a tilde like ``Section~\ref{sect:General}'' to avoid line breaks immediately after ``Section''.
+  \item Refer to \cref{algo:mini}. 
 \end{enumerate}
+
+\begin{algorithm}[!htb]
+	\caption{Minibatch stochastic gradient algorithm}\label{algo:mini}
+	\begin{algorithmic}[1]
+		\State Initialize $\btheta,\bphi$.
+		\State Set $\by=f(\btheta)\bphi$.
+		\Repeat
+			\State Draw a mini-batch data points $\set*{(\bx_{j_i},\bs_{j_i})\given i=1,\ldots,M}$ from the training dataset and $M$ \gls{iid} noise samples $\set*{\bxi_i\given i=1,\ldots,M}$ from $\N{\bzero}{\bI}$. \Comment{This is a comment.}
+			\State Estimate $\by$ by using the $M$ data points $\set*{(\bx_{j_i},\bs_{j_i}) \given i=1,\ldots,M}$. 
+			\State Update $\btheta,\bphi$ by applying stochastic gradient descent to optimize \cref{eq:X}.
+		\Until $\btheta$ converges
+	\end{algorithmic}
+\end{algorithm}
 
 
 \section{Equations}\label{sect:Equations}
@@ -275,7 +289,7 @@ breaklines=true
 	\item Example of a simple new command is $\Real$. See the provided preamble.tex file for more examples!
 	\item Example of a more complex new command is $\E_{0}[f(X)]$. \textbf{As we use $\E$ and $\P$ very frequently, please figure out how I have defined these commands in the preamble.tex and use them appropriately.} Examples are:
 	\begin{align*}
-		f(\btheta) &= \E_{X \sim p_{\btheta}}[\frac{f(X)}{g(X,Y)} \given Y],\\
+		f(\btheta) &= \E_{X \sim p_{\btheta}}^{\beta}[\frac{f(X)}{g(X,Y)} \given Y],\\
 		f(\btheta) &= \E_{X \sim p_{\btheta}}[\frac{f(X)}{g(X,Y)}]{Y},\qquad \text{(this will be deprecated, use \textbackslash given)}\\
 		\P(A \given B) &= \P(\set*{\omega\in\Omega \given \ofrac{2}X(\omega) > b} \given \limsup_{n\to\infty} X_n(\omega) = a).
 	\end{align*}
