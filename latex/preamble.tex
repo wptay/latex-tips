@@ -858,6 +858,29 @@
 \DeclarePairedDelimiterX\ceil[1]{\lceil}{\rceil}{\ifbcdot{#1}}
 \DeclarePairedDelimiterX\floor[1]{\lfloor}{\rfloor}{\ifbcdot{#1}}
 
+% Math symbol font matha
+\DeclareFontFamily{U}{matha}{\hyphenchar\font45}
+\DeclareFontShape{U}{matha}{m}{n}{
+      <5> <6> <7> <8> <9> <10> gen * matha
+      <10.95> matha10 <12> <14.4> <17.28> <20.74> <24.88> matha12
+      }{}
+\DeclareSymbolFont{matha}{U}{matha}{m}{n}
+\DeclareFontSubstitution{U}{matha}{m}{n}
+
+% Math symbol font mathb
+\DeclareFontFamily{U}{mathx}{\hyphenchar\font45}
+\DeclareFontShape{U}{mathx}{m}{n}{
+      <5> <6> <7> <8> <9> <10>
+      <10.95> <12> <14.4> <17.28> <20.74> <24.88>
+      mathx10
+      }{}
+\DeclareSymbolFont{mathx}{U}{mathx}{m}{n}
+\DeclareFontSubstitution{U}{mathx}{m}{n}
+
+% Symbol definition
+\DeclareMathDelimiter{\vvvert}{0}{matha}{"7E}{mathx}{"17}
+\DeclarePairedDelimiterX\vertiii[1]{\vvvert}{\vvvert}{\ifbcdot{#1}}
+
 \DeclarePairedDelimiterXPP\trace[1]{\operatorname{Tr}}{(}{)}{}{\ifbcdot{#1}} % column vector
 \DeclarePairedDelimiterXPP\col[1]{\operatorname{col}}{\{}{\}}{}{\ifbcdot{#1}} % column vector
 \DeclarePairedDelimiterXPP\row[1]{\operatorname{row}}{\{}{\}}{}{\ifbcdot{#1}} % row vector
