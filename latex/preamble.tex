@@ -919,11 +919,22 @@
 \DeclarePairedDelimiterXPP\indicate[1]{{\bf 1}}{\{}{\}}{}{\ifbcdot{#1}}
 \newcommand{\indicator}[1]{{\bf 1}_{\braces*{\ifbcdot{#1}}}}
 \newcommand{\indicatore}[1]{{\bf 1}_{#1}}
-\newcommand{\ofrac}[1]{{\dfrac{1}{#1}}}
-\newcommand{\odfrac}[1]{{\dfrac{1}{#1}}}
-\newcommand{\ddfrac}[2]{{\dfrac{\mathrm{d} {#1}}{\mathrm{d} {#2}}}}
-\newcommand{\ppfrac}[2]{\dfrac{\partial {#1}}{\partial {#2}}}
 \newcommand{\tc}[1]{^{(#1)}}
+\NewDocumentCommand\ofrac{s m}{%
+	\IfBooleanTF#1%
+	{\dfrac{1}{#2}}%
+	{\frac{1}{#2}}%
+}
+\NewDocumentCommand\ddfrac{s m m}{%
+	\IfBooleanTF#1%
+	{\dfrac{\mathrm{d} {#2}}{\mathrm{d} {#3}}}%
+	{\frac{\mathrm{d} {#2}}{\mathrm{d} {#3}}}%
+}
+\NewDocumentCommand\ppfrac{s m m}{%
+	\IfBooleanTF#1%
+	{\dfrac{\partial {#2}}{\partial {#3}}}%
+	{\frac{\partial {#2}}{\partial {#3}}}%
+}
 
 \newcommand{\bmat}[1]{\begin{bmatrix} #1 \end{bmatrix}}
 \newcommand{\smat}[1]{\left[\begin{smallmatrix} #1 \end{smallmatrix}\right]}
