@@ -269,11 +269,18 @@ breaklines=true
 		       & x + y = w.
 	      \end{align*}
 
-	\item When to use \textbackslash text and \textbackslash mathrm? From tex.stackexchange:
-	      \begin{lstlisting}
+	\item When to use \textbackslash text and \textbackslash mathrm? From tex.stackexchange:%
+\begin{lstlisting}
 \text{divides} and \mathrm{divides} might give the same result, but they are conceptually different (and can actually be printed in different ways, depending on the math fonts used). Spaces in the argument of \mathrm are ignored, for example. Moreover, \text honors the font of the surrounding environment: it will print in italics in the statement of a theorem.
 \end{lstlisting}
-	      You should use $\mathrm{abc}$ if abc is part of a math symbol but $\text{abc}$ if abc is text like in a conditional clause in a math environment.
+				You should use $\mathrm{abc}$ if abc is part of a math symbol but $\text{abc}$ if abc is text like in a conditional clause in a math environment. An example is as follows: $\mathrm{Exp}$ is in mathrm while ``if'' and ``otherwise'' are in text. 
+				\begin{align}
+				f_{\mathrm{Exp}}(x) = 
+				\left\{\begin{array}{ll}
+				\lambda e^{-\lambda x} &\ \text{if}\ x > 0,\\
+				0 &\ \text{otherwise}. 
+				\end{array}\right.
+				\end{align}
 
 	\item Please refrain from using the ``\$\$ ... \$\$'' or ``\textbackslash [ ... \textbackslash ]'' environment for equation displays. It makes the latex hard for me to read and makes it difficult to add labeling later on. Tip: If you find it a hassle to type the begin and end tags, set up some keyboard shortcuts! You should have keyboard shortcuts for the commonly used environments and commands to improve your writing efficiency. A useful tool is AutoHotkey.
 
