@@ -276,10 +276,10 @@ breaklines=true
 				You should use $\mathrm{abc}$ if abc is part of a math symbol but $\text{abc}$ if abc is text like in a conditional clause in a math environment. An example is as follows: $\mathrm{Exp}$ is in mathrm while ``if'' and ``otherwise'' are in text. 
 				\begin{align}
 				f_{\mathrm{Exp}}(x) = 
-				\left\{\begin{array}{ll}
-				\lambda e^{-\lambda x} &\ \text{if}\ x > 0,\\
-				0 &\ \text{otherwise}. 
-				\end{array}\right.
+				\begin{cases}
+				\lambda e^{-\lambda x} & \text{if}\ x > 0,\\
+				0 & \text{otherwise}. 
+				\end{cases}
 				\end{align}
 
 	\item Please refrain from using the ``\$\$ ... \$\$'' or ``\textbackslash [ ... \textbackslash ]'' environment for equation displays. It makes the latex hard for me to read and makes it difficult to add labeling later on. Tip: If you find it a hassle to type the begin and end tags, set up some keyboard shortcuts! You should have keyboard shortcuts for the commonly used environments and commands to improve your writing efficiency. A useful tool is AutoHotkey.
@@ -331,6 +331,18 @@ breaklines=true
 	\caption{A tandem network and its decision regions.}
 	\label{fig:tandem}
 \end{figure}
+
+\section{Scientific Writing}
+\begin{enumerate}
+\item Break long sentences into multiple short sentences, especially when mathematical notations are involved.
+\item Write linearly with the cause coming before the effect. E.g., instead of writing ``We have $f(x)>0$ since $x>0$,'' say ``Since $x>0$, we have $f(x)>0$.''
+\item The word ``including'' means that the following list is non-exhaustive. Therefore, it is redundant and incorrect to write ``etc.'' at the end. E.g., ``GNNs have applications in many areas, including chemistry, finance, social networks, etc.'' should be written as ``GNNs have applications in many areas, including chemistry, finance, and social networks.''
+\item Do not start a sentence with a mathematical symbol or citation number. Use ``The paper [1] proposes \dots'' or ``The matrix $\bA$ is positive definite \dots''.
+\item Know when you need to use commas after Latin abbreviations. We write ``e.g., a dog'' and ``i.e., it is red'' but ``cf.\ Section 3'' and ``Sun et al.\ proved Theorem 1''.
+\item Refrain from starting a sentence with ``and''. This is informal language and appears in formal writing only very rarely to emphasize the connection between two sentences. E.g., ``We have proven that nitrogen cures cancers. And it is widely available.''
+\item Try not to use phrases like ``easy to show'' and ``it is obvious that''. Instead, say ``it can be shown that'' after satisfying yourself that it indeed can be shown. Historically, some ``obvious'' things have proven to be very difficult to show rigorously.  
+\item We write $x_1 + x_2 + \cdots + x_n$ and $(x_1, x_2, \ldots, x_n)$. Note the difference between $\cdots$ and $\ldots$. You can also use $\dots$ from amsmath package if unsure which to use.
+\end{enumerate}
 
 
 \section{Paper Editing Process}\label{sect:editing}
