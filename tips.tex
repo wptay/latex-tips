@@ -113,14 +113,14 @@ breaklines=true
 	\item There are many good \LaTeX\ tutorials online. A good starting point is \url{http://tobi.oetiker.ch/lshort/lshort.pdf}.
 	\item There are many tex editors you can use. I highly recommend VSCode (with git integration), which you can use for other coding purposes as well. More traditional latex-centric editors are TeXstudio or TeXnicCenter. You can also make use of online latex platforms like Overleaf. In this case, please ensure that you always have a local updated backup copy. The server can crash right before a paper deadline leaving you with no access (it has happened before and will happen again!). 
 	\item Use IEEEtran draftcls as in this tex file for drafts (editing stage). See also \url{http://www.michaelshell.org/tex/ieeetran/} for faqs.
-	\item I recommend the use of pdflatex instead of latex. This means your figures should be in pdf or png format instead of eps. The reason is that typical dvi viewers are not very stable and responsive. However, if you insist on using latex, that is also fine. I recommend using the latexmk toolchain ("latexmk -synctex=1 -interaction=nonstopmode -file-line-error -pdf") to automatically perform the necessary multiple pdflatex runs.
+	\item I recommend the use of pdflatex instead of latex. This means your figures should be in pdf or png format instead of eps. The reason is that typical dvi viewers are not very stable and responsive. However, if you insist on using latex, that is also fine. I recommend using the latexmk toolchain (``latexmk -synctex=1 -interaction=nonstopmode -file-line-error -pdf'') to automatically perform the necessary multiple pdflatex runs.
 	      %\item Together with pdflatex, I recommend the use of SumatraPDF as the viewer. This allows you to use synctex, which lets you sync the pdf file to your tex file (double-clicking in the pdf file brings you directly to the right place in the tex file and vice versa when opening pdf from tex).
 	      %\item However, synctex does not allow file names with spaces. Please use an underscore ``\_'' if you need to have spaces.
 	\item After running pdflatex or latexmk, \textbf{\red{please look through the warnings and resolve them}}. These are very helpful to catch errors like defining same labels multiple times.
 	\item I have provided a preamble.tex that you can include into your tex file using the \textbackslash input command (see the beginning of this tex file). This preamble.tex file includes all the commonly used packages, declarations and aliases. \textbf{Look through the preamble.tex file first before you define your own newcommands to avoid duplication. The most updated preamble.tex file is always available on \url{https://gitlab.com/wptay/latex-tips}.} I will always use the most updated preamble.tex file, so there is no need for you to include a copy in your workspace (you can keep a global copy somewhere and configure your Latex to point to it or include a path in latexmkrc). If you find some useful things to add to preamble.tex, please let me know.
 	\item A typical working tree looks like that in \cref{fig:working-tree}. 
 	\item You can use this tex file as a starting template when writing your papers.
-	\item Upload all references you have used in your paper to Google Drive, except for books. If you have referenced a paper, you should have at least read its abstract and the relevant parts that you have referenced.
+	\item Upload all references, except for books, you have used in your paper to Google Drive or OneDrive and share with me. If you have referenced a paper, you should have at least read its abstract and the relevant parts that you have referenced.
 	\item Please ensure that you embed all your fonts into the pdf before you submit to a journal or conference.
 \end{enumerate}
 
@@ -220,20 +220,21 @@ breaklines=true
 		      X & = \int_{a}^b f(x) \ud x \\
 		        & = z                     \\
 		        & = w \\
-						& = \norm*{\sum_{t=0}^\infty e^{tA}}. 
+						& = \norm*{\sum_{t=0}^\infty e^{t\bA}}. 
 	      \end{align*}
 	      %<*tag:equation>
-				Another example is
+				Other examples are as follows:
 				\begin{align}
 				\Lambda_{\mathrm{SGLR}}(k,t) & =\max\left\{\Lambda(k,t),\Lambda_n(k,t)\right\}, \label{eq:Lambda_SGLR}    \\
 				\tau_{\mathrm{SGLR}}(b)      & =\min\{\tau(b),\tau_n(b)\}, \label{eq:tau_SGLR2}                           \\
 				\tau_{\mathrm{W-SGLR}}(b)    & =\min\{\widetilde{\tau}(b),\widetilde{\tau_n}(b)\}, \label{eq:tau_WSGLR2}  \\
 				\Phi_i                       & = \tau_{\mathrm{W-SGLR}}(b) + i^2,\ \text{for $i=1,\ldots,N$},         \nn
 				\tbC                         & = \onehot{\tbL}, \label{eq:tbC}                                            \\
+				\bx &= \bB\Herm\bSigma\bM\T\bPhi\bM\bA\T,\nn
 				d                            & = \KLD*{p_X}{p_{Z}}. \nonumber
 				\end{align}
 	      %</tag:equation>
-	      \textbf{Note when punctuation marks like ``,'' and ``.'' are required in the equations.} Observe also how text is written in math environments.
+	      \textbf{Note when punctuation marks like ``,'' and ``.'' are required in the equations.} 
 
 	\item Please put \& before the binary operators like $=$, $\leq$ and $\geq$. You can see why by comparing the following example with that above. Do you see that the spacing behind $=$ is now missing? 
 	      \begin{align*}
@@ -298,7 +299,7 @@ breaklines=true
 	\item Example of a more complex new command is $\E_{0}[f(X)]$. \textbf{As we use $\E$ and $\P$ very frequently, please figure out how I have defined these commands in the preamble.tex and use them appropriately.} Examples are:
 	\begin{align*}
 		f(\btheta) &= \E_{X \sim p_{\btheta}}^{\beta}[\frac{f(X)}{g(X,Y)} \given Y],\\
-		f(\btheta) &= \E_{X \sim p_{\btheta}}[\frac{f(X)}{g(X,Y)}]{Y},\qquad \text{(this will be deprecated, use \textbackslash given)}\\
+		f(\btheta) &= \E_{X \sim p_{\btheta}}[\frac{f(X)}{g(X,Y)}]{Y},\qquad \text{(this will be deprecated, use \textbackslash given as above)}\\
 		\P(A \given B) &= \P(\set*{\omega\in\Omega \given \ofrac{2}X(\omega) > b} \given \limsup_{n\to\infty} X_n(\omega) = a).
 	\end{align*}
 \end{enumerate}
