@@ -1087,7 +1087,6 @@
 	\endgroup% 
 }
 
-
 \let\oldforall\forall
 \renewcommand{\forall}{\oldforall \, }
 
@@ -1096,6 +1095,20 @@
 
 \newcommand\existu{\oldexist! \, }
 
+% Tables
+\newcommand{\udcloser}[1]{\underline{\smash{#1}}}
+\DeclareDocumentCommand \sd { s m } {%
+	\IfBooleanTF{#1}%
+		{
+			{\pm #2}
+		}
+		{
+			{\scriptstyle \pm #2}
+		}
+}
+\newcommand{\first}[1]{\red{#1}}
+\newcommand{\second}[1]{\blue{#1}}
+\newcommand{\third}[1]{\cyan{#1}}
 
 % Figures
 %\renewcommand{\figurename}{Fig.}
