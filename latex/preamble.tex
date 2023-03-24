@@ -1156,24 +1156,31 @@
 
 % Editing
 \definecolor{gray90}{gray}{0.9}
+\def\colorlist{red,blue,brown,cyan,darkgray,gray,lightgray,green,lime,magenta,olive,orange,pink,purple,teal,violet,white,yellow}
 
+% Define the \createcolor macro
 \ifx\nohighlights\undefined
-	\newcommand{\red}[1]{{\color{red} #1}}
-	\newcommand{\blue}[1]{{{\color{blue} #1}}}
-	\newcommand{\magenta}[1]{{\color{magenta} #1}}
-	\newcommand{\orange}[1]{{\color{Orange} #1}}
-	\newcommand{\cyan}[1]{{\color{Cyan} #1}}
+	\newcommand{\createcolor}[1]{%
+			\expandafter\newcommand\csname #1\endcsname[1]{\textcolor{#1}{##1}}%
+	}
 	\newcommand{\msout}[1]{\text{\color{green} \sout{\ensuremath{#1}}}}
 	\newcommand{\del}[1]{{\color{green}\ifmmode \msout{#1}\else\sout{#1}\fi}}
 \else
-	\newcommand{\red}[1]{#1}
-	\newcommand{\blue}[1]{#1}
-	\newcommand{\magenta}[1]{#1}
-	\newcommand{\orange}[1]{#1}
-	\newcommand{\cyan}[1]{#1}
+	\newcommand{\createcolor}[1]{%
+			\expandafter\newcommand\csname #1\endcsname[1]{##1}%
+	}
 	\newcommand{\msout}[1]{#1}
 	\newcommand{\del}[1]{#1}
 \fi
+\makeatletter
+\def\@tempa#1,{%
+    \ifx\relax#1\relax\else
+        \createcolor{#1}%
+        \expandafter\@tempa
+    \fi
+}
+\expandafter\@tempa\colorlist,\relax,
+\makeatother
 
 \newcommand{\old}[1]{{\color{green} [\textrm{DELETED: }#1]}}
 \newcommand{\hhide}[1]{}
