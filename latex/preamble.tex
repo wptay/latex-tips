@@ -1161,7 +1161,7 @@
 % Define the \createcolor macro
 \ifx\nohighlights\undefined
 	\newcommand{\createcolor}[1]{%
-			\expandafter\newcommand\csname #1\endcsname[1]{\textcolor{#1}{##1}}%
+			\expandafter\newcommand\csname #1\endcsname[1]{{\color{#1} ##1}}%
 	}
 	\newcommand{\msout}[1]{\text{\color{green} \sout{\ensuremath{#1}}}}
 	\newcommand{\del}[1]{{\color{green}\ifmmode \msout{#1}\else\sout{#1}\fi}}

@@ -118,14 +118,15 @@
 \theoremstyle{respstyle}
 \newtheorem{response}{Response}[reviewer]
 
-\newcommand{\PbPResponseHeader}{%
-  \clearpage%
+\NewDocumentCommand\PbPResponseHeader{s}{%
+	\IfBooleanTF#1%
+  {\par }%
+	{\clearpage }%
   \refstepcounter{reviewer}%
   \begin{center}%
     \huge \textbf{Response to Reviewer \thereviewer}%
   \end{center}%
 }
-
 
 \usepackage{mdframed}
 \mdfsetup{
@@ -198,7 +199,9 @@ We sincerely thank the Associate Editor and all reviewers for their helpful comm
   \item ...
   \item ...
 \end{enumerate}
-Major changes are highlighted in \blue{blue} in our revised manuscript. The references like equation numbers refer to those in the main paper, except for those prefixed by ``\docprefix''. 
+\medskip
+
+Major changes are highlighted in \blue{blue} in our revised manuscript. The references like equation numbers refer to those in the manuscript, except for those prefixed by ``\docprefix''. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -296,6 +299,7 @@ Note the use of $\backslash$xrcounterref to set the numbering of environments co
 \end{response}
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Used by \lcite, if you do not have any local cites, comment this out.
 \clearpage
 \bibliographystylelref{IEEEtran}
