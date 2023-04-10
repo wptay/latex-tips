@@ -34,7 +34,7 @@
 \usepackage{multirow}
 \usepackage[table,dvipsnames]{xcolor}
 \usepackage[normalem]{ulem}
-\usepackage{xparse}
+\usepackage{xparse, xstring}
 \usepackage{calc}
 \usepackage{etoolbox}
 
@@ -1159,6 +1159,8 @@
 \def\colorlist{red,blue,brown,cyan,darkgray,gray,lightgray,green,lime,magenta,olive,orange,pink,purple,teal,violet,white,yellow}
 
 % Define the \createcolor macro
+\makeatletter
+\def\startcomment{[}
 \ifx\nohighlights\undefined
 	\newcommand{\createcolor}[1]{%
 			\expandafter\newcommand\csname #1\endcsname[1]{{\color{#1} ##1}}%
@@ -1167,12 +1169,20 @@
 	\newcommand{\del}[1]{{\color{green}\ifmmode \msout{#1}\else\sout{#1}\fi}}
 \else
 	\newcommand{\createcolor}[1]{%
-			\expandafter\newcommand\csname #1\endcsname[1]{##1}%
+			\expandafter\newcommand\csname #1\endcsname[1]{%
+				\noexpandarg%
+				\StrChar{##1}{1}[\firstletter]%
+				\if\firstletter\startcomment%
+					\relax
+				\else%
+					##1
+				\fi
+			}%
 	}
-	\newcommand{\msout}[1]{#1}
-	\newcommand{\del}[1]{#1}
+	\newcommand{\msout}[1]{}
+	\newcommand{\del}[1]{}
 \fi
-\makeatletter
+
 \def\@tempa#1,{%
     \ifx\relax#1\relax\else
         \createcolor{#1}%
