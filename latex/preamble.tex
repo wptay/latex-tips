@@ -1046,6 +1046,40 @@
 		}%
 }
 
+
+\DeclareDocumentCommand \Var { s e{_^} d() g } {%
+	\var%
+	\IfBooleanTF{#1}%
+		{
+			\IfValueT{#2}{_{#2}}%
+			\IfValueT{#3}{^{#3}}%
+			\IfValueTF{#5}{\cprob{#4 \given #5}}{\IfValueT{#4}{\cprob{#4}}}%
+		}%
+		{
+			\IfValueT{#2}{_{#2}}%
+			\IfValueT{#3}{^{#3}}%	
+			\IfValueTF{#5}{\cprob*{#4 \given #5}}{\IfValueT{#4}{\cprob*{#4}}}%		
+			%\IfValueT{#4}{\cprob*{#4}}%
+		}%
+}
+
+\DeclareDocumentCommand \Cov { s e{_^} d() g } {%
+	\cov%
+	\IfBooleanTF{#1}%
+		{
+			\IfValueT{#2}{_{#2}}%
+			\IfValueT{#3}{^{#3}}%
+			\IfValueTF{#5}{\cprob{#4 \given #5}}{\IfValueT{#4}{\cprob{#4}}}%
+		}%
+		{
+			\IfValueT{#2}{_{#2}}%
+			\IfValueT{#3}{^{#3}}%	
+			\IfValueTF{#5}{\cprob*{#4 \given #5}}{\IfValueT{#4}{\cprob*{#4}}}%		
+			%\IfValueT{#4}{\cprob*{#4}}%
+		}%
+}
+
+
 % General distribution 
 % E.g., \dist{Beta}[a,b][x] gives Beta(x | a,b); \dist{Beta}[a,b] gives Beta(a,b)
 \ExplSyntaxOn
