@@ -118,11 +118,11 @@
 \theoremstyle{respstyle}
 \newtheorem{response}{Response}[reviewer]
 
-\NewDocumentCommand\PbPResponseHeader{s}{%
+\NewDocumentCommand\PbPResponseHeader{s o}{%
 	\IfBooleanTF#1%
   {\par }%
 	{\clearpage }%
-  \refstepcounter{reviewer}%
+  \IfValueTF{#2}{\setcounter{reviewer}{#2}}{\refstepcounter{reviewer}}%
   \begin{center}%
     \huge \textbf{Response to Reviewer \thereviewer}%
   \end{center}%
@@ -175,12 +175,14 @@
   \addtocounter{#1}{-1}
 }
 
+
 \myexternaldocument{\maintext}
 
 % Used by \lcite, if you do not have any local cites, comment this out.
 \externaldocument[\docprefix-]{lref-response}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -271,8 +273,13 @@ A lot of comments.
 \begin{response}
   Thank you for your comment. Repeated quote from tips.tex:
   \revision{tag:equation}
-  
   The equation numbers shown here are the same as those in the main paper, which is great! The command $\backslash$revision takes care of this. But it has limitations. See the following examples. 
+
+  We remark that it can be shown that
+  \begin{align}
+  \Lambda(k) = \int_\Omega \tau(b) \ud{\nu(b)}.
+  \end{align}
+
 \end{response}
 
 
@@ -280,7 +287,7 @@ A lot of comments.
 Some other comments.
 \end{comment}
 \begin{response}
-We provide the following example, reproduced here:   
+Thank you for your comment. Please refer to \cref{fig:tandem}. We provide the following example, reproduced here:   
 \xrcounterref{Example}{eg:subGSP}
 \revision{tag:ex}
 
