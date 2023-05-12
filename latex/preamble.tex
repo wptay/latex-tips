@@ -32,7 +32,7 @@
 \usepackage{colortbl}
 \usepackage{booktabs}
 \usepackage{multirow}
-\usepackage[table,dvipsnames]{xcolor}
+\usepackage{xcolor}
 \usepackage[normalem]{ulem}
 \usepackage{xparse, xstring}
 \usepackage{calc}
@@ -307,7 +307,6 @@
 
 \newcommand{\ml}[1]{\begin{multlined}[t]#1\end{multlined}}
 \newcommand{\nn}{\nonumber\\ }
-
 
 % Move down subscripts for some symbols like \chi
 \NewDocumentCommand{\movedownsub}{e{^_}}{%
@@ -1130,19 +1129,32 @@
 \newcommand\existu{\oldexist! \, }
 
 % Tables
+\makeatletter
 \newcommand{\udcloser}[1]{\underline{\smash{#1}}}
-\DeclareDocumentCommand \sd { s m } {%
-	\IfBooleanTF{#1}%
-		{
-			{\pm #2}
-		}
-		{
-			{\scriptstyle \pm #2}
-		}
+\newcommand{\sd}[1]{{\scriptstyle \pm #1}}
+\newcommand{\rankcolor}[2]{%
+	\expandafter\renewcommand\csname #1\endcsname[1]{%
+		\ifblank{##1}{%
+			{\color{#2} \textbf{#2}}%
+		}{%
+			\ifmmode
+				\textcolor{#2}{\bm{##1}}%
+			\else%
+				{\color{#2} \textbf{##1}}%
+			\fi	
+		}%
+	}
 }
-\newcommand{\first}[1]{\red{#1}}
-\newcommand{\second}[1]{\blue{#1}}
-\newcommand{\third}[1]{\purple{#1}}
+
+\providecommand{\first}{}
+\providecommand{\second}{}
+\providecommand{\third}{}
+
+% You can redefine these using \rankcolor if necessary.
+\rankcolor{first}{red}
+\rankcolor{second}{blue}
+\rankcolor{third}{cyan}
+\makeatother
 
 % Figures
 %\renewcommand{\figurename}{Fig.}
