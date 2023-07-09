@@ -119,7 +119,7 @@ breaklines=true
 	      %\item Together with pdflatex, I recommend the use of SumatraPDF as the viewer. This allows you to use synctex, which lets you sync the pdf file to your tex file (double-clicking in the pdf file brings you directly to the right place in the tex file and vice versa when opening pdf from tex).
 	      %\item However, synctex does not allow file names with spaces. Please use an underscore ``\_'' if you need to have spaces.
 	\item After running pdflatex or latexmk, \textbf{\red{please look through the warnings and resolve them}}. These are very helpful to catch errors like defining same labels multiple times.
-	\item I have provided a preamble.tex that you can include into your tex file using the \textbackslash input command (see the beginning of this tex file). This preamble.tex file includes all the commonly used packages, declarations and aliases. \textbf{Look through the preamble.tex file first before you define your own newcommands to avoid duplication. The most updated preamble.tex file is always available on \url{https://gitlab.com/wptay/latex-tips}.} I will always use the most updated preamble.tex file, so there is no need for you to include a copy in your workspace (you can keep a global copy somewhere and configure your Latex to point to it or include a path in latexmkrc). If you find some useful things to add to preamble.tex, please let me know.
+	\item I have provided a preamble.tex that you can include into your tex file using the \verb|\input| command (see the beginning of this tex file). This preamble.tex file includes all the commonly used packages, declarations and aliases. \textbf{Look through the preamble.tex file first before you define your own newcommands to avoid duplication. The most updated preamble.tex file is always available on \url{https://gitlab.com/wptay/latex-tips}.} I will always use the most updated preamble.tex file, so there is no need for you to include a copy in your workspace (you can keep a global copy somewhere and configure your Latex to point to it or include a path in latexmkrc). If you find some useful things to add to preamble.tex, please let me know.
 	\item A typical working tree looks like that in \cref{fig:working-tree}. 
 	\item You can use this tex file as a starting template when writing your papers.
 	\item Upload all references, except for books, you have used in your paper to Google Drive or OneDrive and share with me. If you have referenced a paper, you should have at least read its abstract and the relevant parts that you have referenced.
@@ -272,7 +272,7 @@ breaklines=true
 		       & x + y = w.
 	      \end{align*}
 
-	\item When to use \textbackslash text and \textbackslash mathrm? From tex.stackexchange:%
+	\item When to use \verb|\text| and \verb|\mathrm|? From tex.stackexchange:%
 \begin{lstlisting}
 \text{divides} and \mathrm{divides} might give the same result, but they are conceptually different (and can actually be printed in different ways, depending on the math fonts used). Spaces in the argument of \mathrm are ignored, for example. Moreover, \text honors the font of the surrounding environment: it will print in italics in the statement of a theorem.
 \end{lstlisting}
@@ -285,7 +285,7 @@ breaklines=true
 				\end{cases}
 				\end{align}
 
-	\item Please refrain from using the ``\$\$ ... \$\$'' or ``\textbackslash [ ... \textbackslash ]'' environment for equation displays. It makes the latex hard for me to read and makes it difficult to add labeling later on. Tip: If you find it a hassle to type the begin and end tags, set up some keyboard shortcuts! You should have keyboard shortcuts for the commonly used environments and commands to improve your writing efficiency. A useful tool is AutoHotkey.
+	\item Please refrain from using the \verb|$$ ... $$| or \verb|\[ ... \]| environment for equation displays. It makes the latex hard for me to read and makes it difficult to add labeling later on. Tip: If you find it a hassle to type the begin and end tags, set up some keyboard shortcuts! You should have keyboard shortcuts for the commonly used environments and commands to improve your writing efficiency. A useful tool is AutoHotkey.
 
 	\item An interesting package is breqn, which provides special equation environments that can perform line breaks \emph{automatically}. This is very useful if you need to produce both single- and double-column versions of the same paper. Do check it out! As there are still some bugs in this package, I recommend that you use the breqn environments only for those few long equations, while sticking to align and align* for the rest.
 
@@ -309,7 +309,7 @@ breaklines=true
 	\item Example of a more complex new command is $\E_{0}[f(X)]$. \textbf{As we use $\E$ and $\P$ very frequently, please figure out how I have defined these commands in the preamble.tex and use them appropriately.} Examples are:
 	\begin{align*}
 		f(\btheta) &= \E_{X \sim p_{\btheta}}^{\beta}[\frac{f(X)}{g(X,Y)} \given Y],\\
-		f(\btheta) &= \E_{X \sim p_{\btheta}}[\frac{f(X)}{g(X,Y)}]{Y},\qquad \text{(this will be deprecated, use \textbackslash given as above)}\\
+		f(\btheta) &= \E_{X \sim p_{\btheta}}[\frac{f(X)}{g(X,Y)}]{Y},\qquad \text{(this will be deprecated, use given as above)}\\
 		\P(A \given B) &= \P(\set*{\omega\in\Omega \given \ofrac{2}X(\omega) > b} \given \limsup_{n\to\infty} X_n(\omega) = a).
 	\end{align*}
 \end{enumerate}
@@ -318,7 +318,7 @@ breaklines=true
 
 \begin{enumerate}
 	\item Put your figures into a subfolder called ``Figures''.
-	\item You can set the graphics path in tex using ``\textbackslash graphicspath'' (this has been done in the preamble.tex file). Then \LaTeX\ will look for the right figure in the folder you have provided in the graphics path. See \cref{fig:tandem} for an example.
+	\item You can set the graphics path in tex using \verb|\graphicspath| (this has been done in the preamble.tex file). Then \LaTeX\ will look for the right figure in the folder you have provided in the graphics path. See \cref{fig:tandem} for an example.
 	\item In \cref{fig:tandem}, we use the subfigure environment to create \cref{fig:network,fig:regions}.
 	\item I highly recommend Ipe (\url{http://ipe.otfried.org/}) for preparing your graphics. The advantage is that you can directly input latex symbols into your graphics using Ipe. Graphics can be saved directly in pdf. For example, you can open tandem.pdf in the Figures folder using the Ipe program and edit that! There is also an Ipelet that allows you to convert Ipe to tikz if you prefer the latter. If you use another graphics program, the font may not be the same as your latex document. In that case, you may need to use psfrag to replace your labels.
 	\item Please use ``!htb'' or ``!htbp'' as options in your figures environment.
@@ -418,7 +418,7 @@ HamGNN  & $\second{99.73\sd{0.26}}$                          &$\first{99.99\sd{0
 Therefore, we have shown that $P \ne NP$.
 %</tag:NP>
 \end{verbatim}
-and use ``\textbackslash revision\{tag:NP\}'' in your response.tex, the sentence between the two tags will be quoted in your response. 
+and use \verb|\revision{tag:NP}| in your response.tex, the sentence between the two tags will be quoted in your response. 
 %<*tag:catch>
 This ensures that whatever changes you make in the tex file are reflected in the response. Examples given below are used in response.tex.
 %</tag:catch>
