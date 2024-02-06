@@ -146,6 +146,56 @@
 \fi
 
 \usepackage[capitalize]{cleveref}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 2023-12: recent updates to hyperref and xr-hyper breaks cleveref.
+% The following lines fix the issue. https://tex.stackexchange.com/questions/708441/cleveref-mistakenly-showing-filename-in-external-references
+\makeatletter
+\def\cref@getref#1#2{%
+  \expandafter\let\expandafter#2\csname r@#1@cref\endcsname%
+  \expandafter\expandafter\expandafter\def%
+    \expandafter\expandafter\expandafter#2%
+    \expandafter\expandafter\expandafter{%
+      \expandafter\@firstoffive#2}}% <-------- five
+\def\cpageref@getref#1#2{%
+  \expandafter\let\expandafter#2\csname r@#1@cref\endcsname%
+  \expandafter\expandafter\expandafter\def%
+    \expandafter\expandafter\expandafter#2%
+    \expandafter\expandafter\expandafter{%
+      \expandafter\@secondoffive#2}}% <----------- five
+      
+\AtBeginDocument{%
+   \def\label@noarg#1{%
+    \cref@old@label{#1}%
+    \@bsphack%
+    \edef\@tempa{{page}{\the\c@page}}%
+    \setcounter{page}{1}%
+    \edef\@tempb{\thepage}%
+    \expandafter\setcounter\@tempa%
+    \cref@constructprefix{page}{\cref@result}%
+    \protected@write\@auxout{}%
+      {\string\newlabel{#1@cref}{{\cref@currentlabel}%
+      {[\@tempb][\arabic{page}][\cref@result]\thepage}{}{}{}}}% <----- five
+    \@esphack}%
+  \def\label@optarg[#1]#2{%
+    \cref@old@label{#2}%
+    \@bsphack%
+    \edef\@tempa{{page}{\the\c@page}}%
+    \setcounter{page}{1}%
+    \edef\@tempb{\thepage}%
+    \expandafter\setcounter\@tempa%
+    \cref@constructprefix{page}{\cref@result}%
+    \protected@edef\cref@currentlabel{%
+      \expandafter\cref@override@label@type%
+        \cref@currentlabel\@nil{#1}}%
+    \protected@write\@auxout{}%
+      {\string\newlabel{#2@cref}{{\cref@currentlabel}%
+      {[\@tempb][\arabic{page}][\cref@result]\thepage}{}{}{}}}% <------- five
+    \@esphack}%
+    }  
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 \crefname{equation}{}{}
 \Crefname{equation}{}{}
 \crefname{claim}{claim}{claims}
@@ -155,6 +205,7 @@
 \crefname{dmath}{}{}
 \crefname{dseries}{}{}
 \crefname{dgroup}{}{}
+\crefname{page}{page}{pages}
 
 \crefname{Problem}{Problem}{Problems}
 \crefformat{Problem}{Problem~#2#1#3}

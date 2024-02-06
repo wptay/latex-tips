@@ -20,16 +20,9 @@
 % Used by \lcite. If you do not have any local cites, comment this out.
 \newcites{lref}{Supplementary References}
 
-% if hyperref is used in \maintext, then it has to be used here as well
-% \notloadhyperref tells preamble.tex not to load hyperref package.
-%\def\notloadhyperref{}
-\ifx\notloadhyperref\undefined
-	\usepackage{xr-hyper}
-\else
-	\usepackage{xr}
-\fi
-
+\usepackage{xr-hyper}
 \input{preamble.tex}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -108,7 +101,7 @@
 \begin{document}
 \maketitle
 
-This is the supplementary material to ``Tips on Writing Papers in \LaTeX''. The references like equation numbers refer to those in the main paper, except for those prefixed by ``\docprefix''. For example, we can reference \cref{sect:General} and equation \cref{eq:Lambda_SGLR} from the main paper but \cref{eq:f} is from this supplementary material. Similarly, we can cite \cite{LenTayQui:J16}, which is from the bibliography of the main paper. 
+This is the supplementary material to ``Tips on Writing Papers in \LaTeX''. The references like equation numbers refer to those in the main paper, except for those prefixed by ``\docprefix''. For example, we can reference \cref{sect:General} and \cref{eq:Lambda_SGLR} from the main paper but \cref{eq:f} is from this supplementary material. Similarly, we can cite \cite{LenTayQui:J16}, which is from the bibliography of the main paper. 
 
 \section{Preliminaries}\label{supp:Preliminaries}
 

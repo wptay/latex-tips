@@ -40,15 +40,7 @@
 }% \CatchFBT@sanitize
 \makeatother
 
-% if hyperref is used in \maintext, then it has to be used here as well
-% \notloadhyperref tells preamble.tex not to load hyperref package.
-%\def\notloadhyperref{}
-\ifx\notloadhyperref\undefined
-	\usepackage{xr-hyper}
-\else
-	\usepackage{xr}
-\fi
-
+\usepackage{xr-hyper}
 \input{preamble.tex}
 
 
@@ -219,7 +211,7 @@ A lot of comments.
 \begin{response}
   Thank you for your comment. Please always use the formal ``thank you'' instead of ``thanks''. Please always start your response politely and in a conciliatory tone even if you are frustrated with the comment. We can be firm, friendly and respectful. After all, the reviewer has sacrificed his or her precious time to read our manuscript and provide comments, which he or she is not obligated to do.
 
-  Using the xr package, I can reference \cref{sect:General} and \cref{eq:X} of the main paper tips.tex. To do this, you need to build response.tex in the same folder containing tips.aux. 
+  Using the xr package, I can reference \cref{sect:General}, \cref{fig:network} and \cref{eq:X} of the main paper tips.tex. To do this, you need to build response.tex in the same folder containing tips.aux. 
 
   Next, I cite \cite{LenTayQui:J16,Str:93}, which are in the main paper. The references displayed are from tips.aux and tips.bbl thanks to xr. Finally, the catchfilebetweentags package allows me to quote the following from \cref{sect:Response} in tips.tex:
   \revision{tag:catch}
