@@ -101,7 +101,22 @@
 \begin{document}
 \maketitle
 
-This is the supplementary material to ``Tips on Writing Papers in \LaTeX''. The references like equation numbers refer to those in the main paper, except for those prefixed by ``\docprefix''. For example, we can reference \cref{sect:General} and \cref{eq:Lambda_SGLR} from the main paper but \cref{eq:f} is from this supplementary material. Similarly, we can cite \cite{LenTayQui:J16}, which is from the bibliography of the main paper. 
+This is the supplementary material to ``Tips on Writing Papers in \LaTeX''. The references like equation numbers refer to those in the main paper, except for those prefixed by ``\docprefix''. For example, we can reference \cref{sect:General} and \cref{eq:Lambda_SGLR} from the main paper but \cref{eq:f} is from this supplementary material. 
+
+Similarly, we can cite \cite{LenTayQui:J16}, which is from the bibliography of the main paper. 
+To include local citations like \lcite{WanSonTay:J21} that appear only in this supplementary, the steps to be taken are:
+  \begin{enumerate}[i)]
+    \item latex supplementary
+    \item bibtex lref.aux
+    \item latex supplementary
+    \item bibtex lref.aux
+    \item\label{it:rename} copy lref.aux to lref-supplementary.aux, and lref.bbl to lref-supplementary.bbl
+    \item latex supplementary
+    \item latex supplementary
+    \item latex supplementary
+  \end{enumerate}
+  These steps are automated in the lcite\_.bat or lcite\_.sh file. \textbf{If anyone can figure out a better solution, please let me know.}
+
 
 \section{Preliminaries}\label{supp:Preliminaries}
 
@@ -111,7 +126,7 @@ This is a section in the supplementary material. From a result in \lcite[Theorem
 		\P(A \given B) &= \P(\set*{\omega\in\Omega \given \ofrac{2}X(\omega) > b} \given \limsup_{n\to\infty} X_n(\omega) = a). \label{eq:AB}
 \end{align}
 
-\section{Proof of \cref{thm:Gamma}}\label{proof:thm:Gamma}
+\section{Proof of Theorem \ref{thm:Gamma}}\label{proof:thm:Gamma}
 
 The proof follows from \cref{eq:AB}.
 
