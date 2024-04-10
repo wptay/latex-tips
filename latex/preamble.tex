@@ -1000,7 +1000,8 @@
 \newcommand{\Lh}[1]{\ell_{#1}}
 \newcommand{\LLh}[1]{\log{\Lh{#1}}}
 
-% just to make sure it exists
+% Default is :. Use \renewcommand{\setgiven}{\vert} to change.
+\newcommand{\setgiven}{:}
 \providecommand\given{}
 % can be useful to refer to this outside \set
 \newcommand\SetSymbol[2][]{%
@@ -1010,21 +1011,21 @@
 	\mathopen{}}
 
 \DeclarePairedDelimiterX\Set[2]\{\}{%
-\renewcommand\given{\SetSymbol[\delimsize]{#1}}
+	\if#1:%
+		\renewcommand\given{\SetSymbol{:}}%
+	\else%
+		\renewcommand\given{\SetSymbol[\delimsize]{#1}}%
+	\fi%
 #2
-}
-\DeclarePairedDelimiterX\Setc[1]\{\}{%
-\renewcommand\given{\SetSymbol{:}}
-#1
 }
 
 % \set{x \given f(x)=1} gives \{x : f(x)=1\}
 % \set[\vert]{x \given f(x)=1} gives \{x \vert f(x)=1\}
 % Starred version uses \left and \right
-\NewDocumentCommand\set{s o m}{%
+\NewDocumentCommand\set{s O{\setgiven} m}{%
 	\IfBooleanTF#1%
-	{\IfValueTF{#2}{\Set*{#2}{#3}}{\Setc*{#3}}}%
-	{\IfValueTF{#2}{\Set{#2}{#3}}{\Setc{#3}}}%
+	{\Set*{#2}{#3}}%
+	{\Set{#2}{#3}}%
 }
 
 %\NewDocumentCommand\set{s m t| m}{%
