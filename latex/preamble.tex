@@ -224,11 +224,15 @@
 \crefname{Appendix}{Appendix}{Appendices}
 \crefname{Supplement}{Supplement}{Supplements}
 \crefname{Exercise}{Exercise}{Exercises}
-\crefname{Theorem_A}{Theorem}{Theorems}
-\crefname{Corollary_A}{Corollary}{Corollaries}
-\crefname{Proposition_A}{Proposition}{Propositions}
-\crefname{Lemma_A}{Lemma}{Lemmas}
-\crefname{Definition_A}{Definition}{Definitions}
+\crefname{TheoremA}{Theorem}{Theorems}
+\crefname{CorollaryA}{Corollary}{Corollaries}
+\crefname{PropositionA}{Proposition}{Propositions}
+\crefname{LemmaA}{Lemma}{Lemmas}
+\crefname{DefinitionA}{Definition}{Definitions}
+\crefname{ExampleA}{Example}{Examples}
+\crefname{RemarkA}{Remark}{Remarks}
+\crefname{AssumptionA}{Assumption}{Assumptions}
+\crefname{ExerciseA}{Exercise}{Exercises}
 
 \usepackage{crossreftools}
 \ifx\notloadhyperref\undefined
@@ -294,15 +298,15 @@
 	\newtheorem{Problem}{Problem}
 
 	% for use in the appendix
-	\newtheorem{Theorem_A}{Theorem}[section]
-	\newtheorem{Corollary_A}{Corollary}[section]
-	\newtheorem{Proposition_A}{Proposition}[section]
-	\newtheorem{Lemma_A}{Lemma}[section]
-	\newtheorem{Definition_A}{Definition}[section]
-	\newtheorem{Example_A}{Example}[section]
-	\newtheorem{Remark_A}{Remark}[section]
-	\newtheorem{Assumption_A}{Assumption}[section]
-	\newtheorem{Exercise_A}{Exercise}[section]
+	\newtheorem{TheoremA}{Theorem}[section]
+	\newtheorem{CorollaryA}{Corollary}[section]
+	\newtheorem{PropositionA}{Proposition}[section]
+	\newtheorem{LemmaA}{Lemma}[section]
+	\newtheorem{DefinitionA}{Definition}[section]
+	\newtheorem{ExampleA}{Example}[section]
+	\newtheorem{RemarkA}{Remark}[section]
+	\newtheorem{AssumptionA}{Assumption}[section]
+	\newtheorem{ExerciseA}{Exercise}[section]
 \fi
 
 % Remarks
@@ -1309,10 +1313,4 @@
 		\def\reserved@a{#3}\expandafter \ifx \csname #1@#2\endcsname
 			\reserved@a  \else
 			\typeout{^^Jlabel #2 changed:^^J%
-				\meaning\reserved@a^^J%
-				\expandafter\meaning\csname #1@#2\endcsname^^J}%
-			\@tempswatrue \fi}
-	\makeatother
-\fi
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+				\mea
