@@ -40,6 +40,12 @@ breaklines=true
 \def\loadbibentry{} %comment out, usually not used in your paper
 \usepackage{xr}
 \input{preamble.tex}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=orange,
+}
 
 % Comment out this whole part if not referencing any supplementary material 
 % in the file supplementary.tex
@@ -101,11 +107,20 @@ Tips, suggestions, best practices.
 \textbf{Please see the tex file for actual implementation of the examples in this note. You will not learn anything by just reading the pdf file.} This tex file includes some of the more commonly used packages and settings. It also illustrates the use of some packages, e.g., the enumitem package allows customization of the item listing. For details, read the documentation of the packages for different options. discrete set $\{1,2,\ldots, n\}$. 
 
 \begin{enumerate}
-\item Windows tex distribution: MiKTeX.
+\item Windows tex distribution: \href{https://miktex.org/}{MiKTeX}.
 \item There are many good \LaTeX\ tutorials online. A good starting point is \url{http://tobi.oetiker.ch/lshort/lshort.pdf}.
-\item There are many tex editors you can use. I highly recommend VS Code (install the Latex Workshop extension), which you can use for other coding purposes as well. 
+\item There are many tex editors you can use. I highly recommend \href{https://code.visualstudio.com/}{VS Code} (install the \href{https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop}{Latex Workshop} extension), which you can use for other coding purposes as well. 
 %More traditional latex-centric editors are TeXstudio or TeXnicCenter. 
-You can also make use of online latex platforms like Overleaf. In this case, please ensure that you always have a local updated backup copy. The server can crash right before a paper deadline leaving you with no access (it has happened before and will happen again!). I recommend using git for version control. For Overleaf, you need a premium account to use git or you can install Overleaf Workshop in VS Code (this has the option to create a local copy, which can then sync to Github). 
+I recommend using \href{https://git-scm.com/}{git} for version control. 
+
+\item You can also make use of the online latex platform \href{https://www.overleaf.com/project}{Overleaf}. In this case, please ensure that you always have a local updated backup copy. The server can crash right before a paper deadline leaving you with no access (it has happened before and will happen again!). For Overleaf, you need a premium account (you can use mine) to use git. You should consider to use \href{https://marketplace.visualstudio.com/items?itemName=iamhyc.overleaf-workshop}{Overleaf Workshop} in VS Code to make use of the many functionalities available in various VS Code extensions:
+\begin{itemize}
+\item Intellisense for autocompletion and various editor tricks like multiple cursors.
+\item GitHub Copilot (sign up for \href{https://github.com/education}{GitHub Education}).
+\item Grammarly extension for spelling and grammar checking.
+\item Others.
+\end{itemize} 
+
 \item Use IEEEtran draftcls as in this tex file for drafts (editing stage). See also \url{http://www.michaelshell.org/tex/ieeetran/} for faqs.
 \item I recommend using the latexmk toolchain (``latexmk -synctex=1 -interaction=nonstopmode -file-line-error -pdf'') to automatically perform the necessary multiple pdflatex runs.
 %\item Together with pdflatex, I recommend the use of SumatraPDF as the viewer. This allows you to use synctex, which lets you sync the pdf file to your tex file (double-clicking in the pdf file brings you directly to the right place in the tex file and vice versa when opening pdf from tex).
