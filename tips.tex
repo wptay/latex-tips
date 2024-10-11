@@ -431,7 +431,13 @@ You can use tools like ChatGPT or GitHub Copilot to polish your writing. If you 
 \section{Responding to Paper Reviews}\label{sect:Response}
 \begin{enumerate}
 \item You can use the response.tex as a starting template. I have defined some useful environments for use there in your responses to reviewers' comments.
-\item Check out the use of the packages catchfilebetweentags and xr (or xr-hyper if the hyperref package is used). These packages make life much easier when you need to cross-reference a label or citation from your manuscript tex file in your response file. It also allows you to quote a chunk of tex directly from your manuscript tex file. How cool is that?
+\item Check out the use of the packages catchfilebetweentags and xr. These packages make life much easier when you need to cross-reference a label (e.g., \cref{supp:Preliminaries} from the supplementary) or citation from one tex file in another tex file. It also allows you to quote a chunk of tex directly from your manuscript tex file. 
+
+\olive{
+\begin{Remark}
+If you are using Overleaf and find that the xr package is not working, you are missing information in the latexmkrc file. See \href{https://www.overleaf.com/learn/how-to/Cross_referencing_with_the_xr_package_in_Overleaf}{this link} for more information.
+\end{Remark}    
+}
 
 \item In the response.tex file, replace manuscript-filename with your .tex filename (without the ``.tex''). Add tags in your .tex file to reproduce the same chunk between the tags in your response. E.g., if you add the tags in your tex file:
 \begin{verbatim}
