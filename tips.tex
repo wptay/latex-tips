@@ -19,15 +19,9 @@
 \WarningFilter{caption}{Unsupported document class}
 \WarningFilter{caption}{Unknown document class}
 
-\usepackage{listings}
-\lstset{
-columns=flexible,
-breaklines=true
-}
 \usepackage{babel}
 \usepackage{lipsum}
 \usepackage{forest}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -127,7 +121,7 @@ I recommend using \href{https://git-scm.com/}{git} for version control.
 %\item Together with pdflatex, I recommend the use of SumatraPDF as the viewer. This allows you to use synctex, which lets you sync the pdf file to your tex file (double-clicking in the pdf file brings you directly to the right place in the tex file and vice versa when opening pdf from tex).
 %\item However, synctex does not allow file names with spaces. Please use an underscore ``\_'' if you need to have spaces.
 \item After running latexmk, \textbf{\red{please look through the warnings and resolve them}}. These are very helpful to catch errors like defining same labels multiple times.
-\item I have provided a preamble.tex that you can include into your tex file using the \verb|\input| command (see the beginning of this tex file). This preamble.tex file includes all the commonly used packages, declarations and aliases. \textbf{Look through the preamble.tex file first before you define your own newcommands to avoid duplication. The most updated preamble.tex file is always available on \url{https://gitlab.com/wptay/latex-tips}.} I will always use the most updated preamble.tex file, so there is no need for you to include a copy in your workspace (you can keep a global copy somewhere and configure your Latex to point to it or include a path in a latexmkrc file). If you find some useful things to add to preamble.tex, please let me know.
+\item I have provided a \blue{preamble.tex} (look under the \verb|latex\local| folder) that you can include into your tex file using the \verb|\input| command (see the beginning of this tex file). This preamble.tex file includes all the commonly used packages, declarations and aliases. \textbf{Look through the preamble.tex file first before you define your own newcommands to avoid duplication. The most updated preamble.tex file is always available on \url{https://gitlab.com/wptay/latex-tips}.} I will always use the most updated preamble.tex file, so there is no need for you to include a copy in your workspace (you can keep a global copy somewhere and configure your Latex to point to it (see \href{https://miktex.org/kb/texmf-roots}{TEXMF}) or include a path in a latexmkrc file). If you find some useful things to add to preamble.tex, please let me know.
 \item A typical working tree looks like that in \cref{fig:working-tree}. 
 \item You can use this tex file as a starting template when writing your papers.
 \item Upload all references, except for books, you have used in your paper to Google Drive or OneDrive and share with me. If you have referenced a paper, you should have at least read its abstract and the relevant parts that you have referenced.
@@ -192,9 +186,9 @@ before computing xy={l=15pt},
 \begin{enumerate}[(a)]
 \item Use meaningful labels for your sections, equations, inequalities, figures, tables, and others. For example, use something like ``sect:Labels'' to label your section so that you know that this label is for a section. Later on in your text, you can then easily refer to it via something like ``\cref{sect:Labels}''. 
 
-\begin{Example}\label{eg:lipsum}
-\lipsum[1] 
-\end{Example}
+% \begin{Example}\label{eg:lipsum}
+% \lipsum[1] 
+% \end{Example}
 
 \item\label{it:myitem} Tip: items can also be labeled! Example is this reference \ref{it:myitem}. 
 \item Do not over label! For equations, tables, figures and most ``objects'', we usually label only those that we need to refer to in another part of the text. In some cases, you may also label important equations although you may not refer to these in any part of your text. This makes it easier for readers to refer to your equations. However, do this judiciously.
@@ -280,10 +274,8 @@ Alternatively, use the intertext command:
 & x + y = w.
 \end{align*}
 
-\item When to use \verb|\text| and \verb|\mathrm|? From tex.stackexchange:%
-\begin{lstlisting}
-\text{divides} and \mathrm{divides} might give the same result, but they are conceptually different (and can actually be printed in different ways, depending on the math fonts used). Spaces in the argument of \mathrm are ignored, for example. Moreover, \text honors the font of the surrounding environment: it will print in italics in the statement of a theorem.
-\end{lstlisting}
+\item When to use \verb|\text| and \verb|\mathrm|? From tex.stackexchange: ``\verb|\text{divides}| and \verb|\mathrm{divides}| might give the same result, but they are conceptually different (and can actually be printed in different ways, depending on the math fonts used). Spaces in the argument of \verb|\mathrm| are ignored, for example. Moreover, \verb|\text| honors the font of the surrounding environment: it will print in italics in the statement of a theorem.''
+
 You should use $\mathrm{abc}$ if abc is part of a math symbol but $\text{abc}$ if abc is text like in a conditional clause in a math environment. An example is as follows: $\mathrm{Exp}$ is in mathrm while ``if'' and ``otherwise'' are in text. 
 \begin{align}
 f_{\mathrm{Exp}}(x) = 
@@ -433,7 +425,7 @@ You can use tools like ChatGPT or GitHub Copilot to polish your writing. If you 
 \item You can use the response.tex as a starting template. I have defined some useful environments for use there in your responses to reviewers' comments.
 \item Check out the use of the packages catchfilebetweentags and xr. These packages make life much easier when you need to cross-reference a label (e.g., \cref{supp:Preliminaries} from the supplementary) or citation from one tex file in another tex file. It also allows you to quote a chunk of tex directly from your manuscript tex file. 
 
-\olive{
+\teal{
 \begin{Remark}
 If you are using Overleaf and find that the xr package is not working, you are missing information in the latexmkrc file. See \href{https://www.overleaf.com/learn/how-to/Cross_referencing_with_the_xr_package_in_Overleaf}{this link} for more information.
 \end{Remark}    
@@ -479,7 +471,7 @@ Suppose $T\subset\Real$ is a finite or a bounded interval. If almost surely ever
 \nobibliography*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\red{The statement ``\textbackslash def\textbackslash loadbibentry'' allows the bib entries to be printed as below. Remove or comment this out in your paper.}
+\red{The statement ``\textbackslash def\textbackslash loadbibentry'' in the preamble allows the bib entries to be printed as below. Remove or comment this out in your paper.}
 
 \begin{enumerate}
 \item Use bibtex to keep track of your references.
