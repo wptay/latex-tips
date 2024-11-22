@@ -244,16 +244,6 @@
 \crefname{subsection}{Section}{Sections}
 \crefname{subsubsection}{Section}{Sections}
 
-\usepackage{crossreftools}
-\ifx\notloadhyperref\undefined
-	\pdfstringdefDisableCommands{%
-		\let\Cref\crtCref
-		\let\cref\crtcref
-	}
-\else
-	\relax
-\fi
-
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 
