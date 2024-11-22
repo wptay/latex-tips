@@ -458,10 +458,17 @@ See \cref{proof:thm:Gamma} in the supplementary material.
 
 %<*tag:thm>
 The following is another theorem.
-\begin{Theorem}\label{thm:poly}
-Suppose $T\subset\Real$ is a finite or a bounded interval. If almost surely every $x \in X$ has no repeated eigenvalues and has uniformly bounded operator norm, then every convolution filter is a bi-polynomial filter.
+\begin{Theorem}\label{thm:limit_var}
+The limit posterior covariance of $f(v_0,\bt)$ over $\calT_0$ converges:
+\begin{align}\label{eq:limit_var}
+\lim_{M_0\rightarrow\infty}\int_{\calT_0}\Var(f(v_0,\bt) \given \by(M_0)) \ud \tau(\bt) 
+= \int_{\calT_0} \Var(f(v_0,\bt) \given \bz)\ud \tau(\bt).
+\end{align}
 \end{Theorem}
 %</tag:thm>
+\begin{IEEEproof}
+See \cref{proof:thm:limit_var}.
+\end{IEEEproof}
 
 
 \section{Bibliography}\label{sect:Bibliography}
@@ -516,9 +523,25 @@ Suppose $T\subset\Real$ is a finite or a bounded interval. If almost surely ever
 \end{itemize}
 \end{enumerate}
 
-
-
 \end{enumerate}
+
+
+\appendices
+
+\section{Proof of Theorem~\ref{thm:limit_var}}\label[Appendix]{proof:thm:limit_var}
+
+We have 
+\begin{align}\label{eq:cov_operators}
+	\begin{aligned}
+		\bC_{\bz\bz}:L^2(\calJ_S)&\to L^2(\calJ_S)\\
+		g(\cdot)&\mapsto
+		%\int_{\calJ_S} k(\cdot,\bxi)g(\bxi) \ud \zeta(\bxi)\\
+		\int_{\calT} \sum_{u\in\set{v_0}\setcomp} k_G(v,u)k_\calT(\bt,\bs)g(u,\bs)\ud \tau(\bs),\\
+		\bC_{\bz \bx_0}:L^2(\calT_0)&\to L^2(\calJ_S) \\
+		g(\cdot)&\mapsto \int_{\calT_0}k_G(v_0,v)k_\calT(\bt,\bs)g(v_0,\bs) \ud \tau(\bs).
+	\end{aligned}
+\end{align}
+The proof is now complete.
 
 %%% This is normally used for papers instead of bibentry
 \bibliographystyle{IEEEtran}
