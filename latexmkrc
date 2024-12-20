@@ -1,10 +1,14 @@
 ensure_path( 'BIBINPUTS', './bib//' );
 ensure_path( 'TEXINPUTS', './latex/local//' ); # E.g., path to directory containing your preamble.tex
 
-# For use in Overleaf with xr package
+##########################################
+# #For use in Overleaf with xr package
+##########################################
+
 # $sub_doc_output = 'output-subdoc';
 
-# @sub_doc_options = ();
+# # Options to supply to latexmk for compilation of external documents:
+# @sub_doc_options = ('-cd', '-interaction=nonstopmode', '-file-line-error');
 
 # push @sub_doc_options, '-pdf'; # Use pdflatex for compilation of external documents.
 # # Replace '-pdf' by '-pdfdvi', 'pdfxe', or 'pdflua' if needed.
@@ -30,3 +34,6 @@ ensure_path( 'TEXINPUTS', './latex/local//' ); # E.g., path to directory contain
 #         return $return;
 #    }
 # }
+
+##########################################
+##########################################

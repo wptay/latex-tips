@@ -39,7 +39,7 @@
     linkcolor=black,
     citecolor=black,
     filecolor=magenta,      
-    urlcolor=orange,
+    urlcolor=purple,
 }
 
 % Comment out this whole part if not referencing any supplementary material 
@@ -117,11 +117,11 @@ I recommend using \href{https://git-scm.com/}{git} for version control.
 \end{itemize} 
 
 \item Use IEEEtran draftcls as in this tex file for drafts (editing stage). See also \url{http://www.michaelshell.org/tex/ieeetran/} for faqs.
-\item I recommend using the latexmk toolchain (``latexmk -synctex=1 -interaction=nonstopmode -file-line-error -pdf'') to automatically perform the necessary multiple pdflatex runs.
+\item I recommend using the latexmk toolchain (``latexmk -synctex=1 -interaction=nonstopmode -file-line-error -pdf'') to automatically perform the necessary multiple pdflatex runs. Use the provided latexmkrc file in this repository. If you are using Overleaf, uncomment the part in the latexmkrc file that is for Overleaf.
 %\item Together with pdflatex, I recommend the use of SumatraPDF as the viewer. This allows you to use synctex, which lets you sync the pdf file to your tex file (double-clicking in the pdf file brings you directly to the right place in the tex file and vice versa when opening pdf from tex).
 %\item However, synctex does not allow file names with spaces. Please use an underscore ``\_'' if you need to have spaces.
 \item After running latexmk, \textbf{\red{please look through the warnings and resolve them}}. These are very helpful to catch errors like defining same labels multiple times.
-\item I have provided a \blue{preamble.tex} (look under the \verb|latex\local| folder) that you can include into your tex file using the \verb|\input| command (see the beginning of this tex file). This preamble.tex file includes all the commonly used packages, declarations and aliases. \textbf{Look through the preamble.tex file first before you define your own newcommands to avoid duplication. The most updated preamble.tex file is always available on \url{https://gitlab.com/wptay/latex-tips}.} I will always use the most updated preamble.tex file, so there is no need for you to include a copy in your workspace (you can keep a global copy somewhere and configure your Latex to point to it (see \href{https://miktex.org/kb/texmf-roots}{TEXMF}) or include a path in a latexmkrc file). If you find some useful things to add to preamble.tex, please let me know.
+\item I have provided a \blue{preamble.tex} (look under the \verb|latex\local| folder) that you can include into your tex file using the \verb|\input| command (see the beginning of this tex file). This preamble.tex file includes all the commonly used packages, declarations and aliases. \textbf{Look through the preamble.tex file first before you define your own newcommands to avoid duplication. The most updated preamble.tex file is always available on \url{https://gitlab.com/wptay/latex-tips}.} I will always use the most updated preamble.tex file, so there is no need for you to include a copy in your workspace (you can keep a global copy somewhere and configure your Latex to point to it (see \href{https://miktex.org/kb/texmf-roots}{TEXMF}) or include a path in a latexmkrc file). If you find some useful things to add to preamble.tex, please let me know. {Hint: if you prefer some other definition of a command defined in preamble.tex, you can redefine it in your tex file after the \verb|\input{preamble.tex}| command using \olive{\texttt{renewcommand}}.}
 \item A typical working tree looks like that in \cref{fig:working-tree}. 
 \item You can use this tex file as a starting template when writing your papers.
 \item Upload all references, except for books, you have used in your paper to Google Drive or OneDrive and share with me. If you have referenced a paper, you should have at least read its abstract and the relevant parts that you have referenced.
@@ -321,7 +321,7 @@ f(\btheta) &= \E_{X \sim p_{\btheta}}^{\beta}[\frac{f(X)}{g(X,Y)} \given Y],\\
 \item In \cref{fig:tandem}, we use the subfigure environment to create \cref{fig:network,fig:regions}.
 \item I highly recommend Ipe (\url{http://ipe.otfried.org/}) for preparing your graphics. The advantage is that you can directly input latex symbols into your graphics using Ipe. Graphics can be saved directly in pdf. For example, you can open tandem.pdf in the Figures folder using the Ipe program and edit that! There is also an Ipelet that allows you to convert Ipe to tikz if you prefer the latter. Another popular graphics program with Latex capability is Inkscape~(\url{https://inkscape.org/}) with the textext extension. If you use any other graphics program, the font may not be the same as your latex document. In that case, you may need to use psfrag to replace your labels.
 \item Please use ``!htb'' or ``!htbp'' as options in your figure and table environments.
-\item Use the subcaption package for the subfigure environment. Do not use the subfig package as it does not work with the hyperref package. See example in \cref{fig:tandem}.
+\item Use the subcaption package for the subfigure environment. Do not use the subfig package as it does not work with the hyperref package. See example in \cref{fig:tandem}. 
 \item An example of a table is shown in \cref{tab:linkresults}. Note the use of \verb|\toprule|, \verb|\midrule|, and \verb|\bottomrule| from the booktabs package instead of the ugly \verb|\hline| command. The advice from the booktabs package is to ``Never, ever use vertical rules.'' and ``Never use double rules.'' 
 \item To have fixed column widths with text wrapping in your table column, use the \verb|L{width}|, \verb|C{width}|, or \verb|R{width}| column types from the preamble.tex.
 \end{enumerate}
