@@ -17,12 +17,12 @@
 \WarningFilter{caption}{Unknown document class}
 \WarningFilter{latex}{No \author given}
 
-%\usepackage{empheq}
-%\usepackage{fancyvrb}
-\usepackage{multibib}
 
-% Used by \lcite, if you do not have any local cites, comment this out.
-\newcites{lref}{Additional References}
+\usepackage[labeled,resetlabels]{multibib}
+
+% Used by additional references. If you do not have any local cites, comment this out.
+% Cite additional references using \citeA. 
+\newcites{A}{Additional References}
 
 \usepackage{catchfilebetweentags}
 %%%% usage in manuscript
@@ -58,40 +58,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Newcommands - do not change
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% For citing references that appear only in this response, use \lcite{...}.
-% The steps to be taken are:
-%		latex response
-%		bibtex lref.aux
-%		copy lref.aux to lref-response.aux, and lref.bbl to lref-response.bbl
-%		latex response
-%		latex response
-%		latex response
-% For convenience, lcite_.bat (Windows) and lcite_.sh (Linux) are provided.
-
-\makeatletter
-\renewcommand{\@biblabel}[1]{\hfill[\textrm{\docprefix}-#1]}
-\makeatother
-\newcounter{itemcount}
-\DeclareDocumentCommand{\rcite} { o m }
-{%
-	\def\rlist{}%
-	\def\citeform##1{\docprefix-##1}%
-	\setcounter{itemcount}{0}%
-  	\renewcommand*{\do}[1]{\stepcounter{itemcount}%
-      \ifnumcomp{\value{itemcount}}{=}{1}{}{\appto\rlist{, }}%
-      \appto\rlist{\docprefix-##1}%
-    }% How to process each item
-  	\docsvlist{#2}% Process list
-	\IfValueTF{#1}{\cite[#1]{\rlist}}{\cite{\rlist}}%
-	\def\citeform##1{##1}%
-}
-\DeclareDocumentCommand{\lcite} { o m } {%
-	\nocitelref{#2}%
-	\rcite[#1]{#2}%
-}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcounter{reviewer}
 
@@ -170,9 +136,6 @@
 
 \myexternaldocument{\maintext}
 
-% Used by \lcite, if you do not have any local cites, comment this out.
-\externaldocument[\docprefix-]{lref-response}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -226,19 +189,7 @@ A lot of comments.
 Do something.
 \end{comment}
 \begin{response}
-  Thank you for your suggestion. I will now cite some additional references that appear only in the bibliography for this response using \lcite{AceDahLobOzd:11,ChePap:95,Cov:69}. These are not in the main paper. The steps to be taken are:
-  \begin{enumerate}[i)]
-    \item latex response
-    \item bibtex lref.aux
-    \item latex response
-    \item bibtex lref.aux
-    \item\label{it:rename} copy lref.aux to lref-response.aux, and lref.bbl to lref-response.bbl
-    \item latex response
-    \item latex response
-    \item latex response
-  \end{enumerate}
-  These steps are automated in the lcite\_.bat, lcite\_.ps1, or lcite\_.sh file. \textbf{If anyone can figure out a better solution, please let me know.} If you are using Overleaf, you need to copy the lref-response.aux and lref-response.bbl files to the Overleaf project folder.
-
+  Thank you for your suggestion. I will now cite some additional references that appear only in the bibliography for this response using \citeA{AceDahLobOzd:11,ChePap:95,Cov:69} and \citeA[Thm 1]{JiaTayEld:J24}. Note that we use \verb|\citeA| to cite these references, while \verb|\cite| will cite references from the main paper.
 \end{response}
 
 
@@ -301,7 +252,11 @@ Note the use of $\backslash$xrcounterref to set the numbering of environments co
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Used by \lcite, if you do not have any local cites, comment this out.
 \clearpage
-\bibliographystylelref{IEEEtran}
-\bibliographylref{IEEEabrv,StringDefinitions,refs}
+% \bibliographystylelref{IEEEtran}
+% \bibliographylref{IEEEabrv,StringDefinitions,refs}
+
+\bibliographystyleA{IEEEtran}
+\bibliographyA{IEEEabrv,StringDefinitions,refs}
+
 
 \end{document}

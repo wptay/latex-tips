@@ -15,12 +15,14 @@
 \WarningFilter{caption}{Unknown document class}
 \WarningFilter{latex}{No \author given}
 
-\usepackage{multibib}
+\usepackage[labeled,resetlabels]{multibib}
 
-% Used by \lcite. If you do not have any local cites, comment this out.
-\newcites{lref}{Supplementary References}
+% Used by additional references. If you do not have any local cites, comment this out.
+% Cite additional references using \citeSR. 
+\newcites{SR}{Supplementary References}
 
-\usepackage{xr-hyper}
+
+\usepackage{xr}
 \input{preamble.tex}
 
 
@@ -40,39 +42,6 @@
 % Newcommands - do not change
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% For citing references that appear only in this response, use \lcite{...}.
-% The steps to be taken are:
-%		latex supplementary
-%		bibtex lref.aux
-%		copy lref.aux to lref-supplementary.aux, and lref.bbl to lref-supplementary.bbl
-%		latex supplementary
-%		latex supplementary
-%		latex supplementary
-% For convenience, lcite_.bat (Windows) and lcite_.sh (Linux) are provided.
-
-\makeatletter
-\renewcommand{\@biblabel}[1]{\hfill[\textrm{\docprefix}-#1]}
-\makeatother
-\newcounter{itemcount}
-\DeclareDocumentCommand{\rcite} { o m }
-{%
-	\def\rlist{}%
-	\def\citeform##1{\docprefix-##1}%
-	\setcounter{itemcount}{0}%
-  	\renewcommand*{\do}[1]{\stepcounter{itemcount}%
-      \ifnumcomp{\value{itemcount}}{=}{1}{}{\appto\rlist{, }}%
-      \appto\rlist{\docprefix-##1}%
-    }% How to process each item
-  	\docsvlist{#2}% Process list
-	\IfValueTF{#1}{\cite[#1]{\rlist}}{\cite{\rlist}}%
-	\def\citeform##1{##1}%
-}
-\DeclareDocumentCommand{\lcite} { o m } {%
-	\nocitelref{#2}%
-	\rcite[#1]{#2}%
-}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \renewcommand{\thesection}{\docprefix\Roman{section}}
 \renewcommand{\thesectiondis}{\docprefix\Roman{section}.}
@@ -90,8 +59,6 @@
 
 \myexternaldocument{\maintext}
 
-% Used by \lcite. If you do not have any local cites, comment this out.
-\externaldocument[\docprefix-]{lref-supplementary}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -104,23 +71,12 @@
 This is the supplementary material to ``Tips on Writing Papers in \LaTeX''. The references like equation numbers refer to those in the main paper, except for those prefixed by ``\docprefix''. For example, we can reference \cref{sect:General} and \cref{eq:Lambda_SGLR} from the main paper but \cref{eq:f} is from this supplementary material. 
 
 Similarly, we can cite \cite{LenTayQui:J16}, which is from the bibliography of the main paper. 
-To include local citations like \lcite{WanSonTay:J21} that appear only in this supplementary, the steps to be taken are:
-  \begin{enumerate}[i)]
-    \item latex supplementary
-    \item bibtex lref.aux
-    \item latex supplementary
-    \item bibtex lref.aux
-    \item\label{it:rename} copy lref.aux to lref-supplementary.aux, and lref.bbl to lref-supplementary.bbl
-    \item latex supplementary
-    \item latex supplementary
-    \item latex supplementary
-  \end{enumerate}
-  These steps are automated in the lcite\_.bat, lcite\_.ps1, or lcite\_.sh file. \textbf{If anyone can figure out a better solution, please let me know.} If you are using Overleaf, you need to copy the lref-response.aux and lref-response.bbl files to the Overleaf project folder.
+To include local citations like \citeSR{WanSonTay:J21} that appear only in this supplementary. Note that we use \verb|\citeSR| to cite these references, while \verb|\cite| will cite references from the main paper.
 
 
 \section{Preliminaries}\label{supp:Preliminaries}
 
-This is a section in the supplementary material. From a result in \lcite[Theorem 1]{WanSonTay:J21} (note that this is a local citation that does not appear in the main paper), we have
+This is a section in the supplementary material. From a result in \citeSR[Theorem 1]{WanSonTay:J21} (note that this is a local citation that does not appear in the main paper), we have
 \begin{align}
 		f(\btheta) &= \E_{X \sim p_{\btheta}}[\frac{f(X)}{g(X,Y)} \given Y], \label{eq:f}\\
 		\P(A \given B) &= \P(\set*{\omega\in\Omega \given \ofrac{2}X(\omega) > b} \given \limsup_{n\to\infty} X_n(\omega) = a). \label{eq:AB}
@@ -131,7 +87,7 @@ This is a section in the supplementary material. From a result in \lcite[Theorem
 The proof follows from \cref{eq:AB}.
 
 % Used by \lcite. If you do not have any local cites, comment this out.
-\bibliographystylelref{IEEEtran}
-\bibliographylref{IEEEabrv,StringDefinitions,refs}
+\bibliographystyleSR{IEEEtran}
+\bibliographySR{IEEEabrv,StringDefinitions,refs}
 
 \end{document}
