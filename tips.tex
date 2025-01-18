@@ -108,7 +108,7 @@ Tips, suggestions, best practices.
 %More traditional latex-centric editors are TeXstudio or TeXnicCenter. 
 I recommend using \href{https://git-scm.com/}{git} for version control. 
 
-\item You can also make use of the online latex platform \href{https://www.overleaf.com/project}{Overleaf}. In this case, please ensure that you always have a local updated backup copy. The server can crash right before a paper deadline leaving you with no access (it has happened before and will happen again!). For Overleaf, you need a premium account (you can use mine) to use git. You should consider to use \href{https://marketplace.visualstudio.com/items?itemName=iamhyc.overleaf-workshop}{Overleaf Workshop} in VS Code to make use of the many functionalities available in various VS Code extensions:
+\item You can also make use of the online latex platform \href{https://www.overleaf.com/project}{Overleaf}. In this case, please ensure that you always have a \red{local updated backup copy}. The server can crash right before a paper deadline leaving you with no access (it has happened before and will happen again!). For Overleaf, you need a premium account (you can use mine by making me the project owner) to use git. You should consider to use \href{https://marketplace.visualstudio.com/items?itemName=iamhyc.overleaf-workshop}{Overleaf Workshop} in VS Code to make use of the many functionalities available in various VS Code extensions:
 \begin{itemize}
 \item Intellisense for autocompletion and various editor tricks like multiple cursors.
 \item GitHub Copilot (sign up for \href{https://github.com/education}{GitHub Education}).
@@ -413,11 +413,12 @@ You can use tools like ChatGPT or GitHub Copilot to polish your writing. If you 
 \begin{enumerate}
 \item After you have written your paper, put it aside for a day and revise it with a fresh mind in order to improve it. \textbf{This includes checking the bibliography for errors.} See \cref{sect:Bibliography}.
 \item Please send me your paper for editing only after you have gone over it \textbf{several times} to correct any errors and improve it. You should send the paper to me only after you feel fully satisfied with the version that you have. Typically, this will be the fourth or fifth version.
-\item Share your tex files with me through \emph{private repositories} on Gitlab, GitHub, Gitee or BitBucket and add me as a member or collaborator.  Git takes care of version control so that we do not have to resort to manual version control. Alternatively, you can share an Overleaf project with me. I prefer the git repository as it allows me to use my own editor (with many more useful features and keyboard shortcuts!) than the web interface editor of Overleaf. The free version of Overleaf also does not come with version control beyond the 24-hour window. 
+\item Share your Overleaf project with me and give me edit permission. 
+\item Alternatively, share your tex files with me through \emph{private repositories} on Gitlab, GitHub, Gitee or BitBucket and add me as a member or collaborator.  Git takes care of version control so that we do not have to resort to manual version control.  
 \item I will highlight my major edits in \blue{blue} and \red{red}, where the latter color usually indicates something that requires your action or special attention. Deleted text for your attention is shown as \del{deleted}. Please go through all my edits to check for errors (never assume that I am always correct; I do make errors too!). If you are satisfied with an edit, remove the highlight and return the file to me, with your own edits highlighted in blue. We will iterate this process until the paper reaches a satisfactory stage.
-\item Please note that sometimes \textbf{NOT} all my edits are highlighted. Those highlighted are for your attention and checking. Some are for you to compare with your previous version so that you can learn from the change. Do not manually transfer the changes to your previous tex file. Use the tex file I send you for your next iteration.
-\item Other available colors are \brown{brown}, \cyan{cyan}, \darkgray{darkgray}, \gray{gray}, \lightgray{lightgray}, \green{green}, \lime{lime}, \magenta{magenta}, \olive{olive}, \orange{orange}, \pink{pink}, \purple{purple}, \teal{teal}, \violet{violet}, and \yellow{yellow}.
-\item By defining nohighlights before inputting preamble.tex, you get a clean copy without color highlights and comments. Comments are assumed to be surrounded by square brackets [ and ].
+\item Please note that sometimes \textbf{NOT} all my edits are highlighted. Those highlighted are for your attention and checking. Some are for you to compare with your previous version so that you can learn from the change. Do not manually transfer the changes to your previous tex file. 
+\item Other available colors are \brown{brown}, \cyan{cyan}, \darkgray{darkgray}, \gray{gray}, \lightgray{lightgray}, \green{green}, \lime{lime}, \magenta{magenta}, \olive{olive}, \orange{orange}, \pink{pink}, \purple{purple}, \teal{teal}, \violet{violet}, and \yellow{yellow}. You should check out how these color commands are defined in the preamble.tex file.
+\item By defining nohighlights before inputting preamble.tex, you get a clean copy without color highlights and comments. Comments are assumed to start with the square bracket ``[''.
 \end{enumerate}
 
 \section{Responding to Paper Reviews}\label{sect:Response}
@@ -444,7 +445,7 @@ This ensures that whatever changes you make in the tex file are reflected in the
 \end{enumerate}
 
 \begin{Example}\label{eg:GSP}
-In practice, the data associated with each vertex can have additional structure. For example, on each vertex, the observation may be a discrete-time signal of length $T$.
+In practice, the data associated with each vertex can have additional structure. For example, on each vertex, the observation may be a discrete-time signal of length $T$. The spatial-time structure is modeled by a Cartesian product graph, and the Fourier transform and filters are then generalized to this graph. To be specific, the Cartesian product graph is constructed by the underlying graph and the cyclic graph with $T$ vertices, the latter of which represents time steps.
 \end{Example}
 
 
