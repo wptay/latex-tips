@@ -1251,10 +1251,10 @@
 }
 \makeatother
 
-\newcommand*{\myexternaldocument}[1]{%
-    \externaldocument{#1}%
-    \addFileDependency{#1.tex}%
-    \addFileDependency{#1.aux}%
+\newcommand*{\myexternaldocument}[2][]{%
+    \externaldocument[#1]{#2}%
+    \addFileDependency{#2.tex}%
+    \addFileDependency{#2.aux}%
 }
 
 % Editing
