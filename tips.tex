@@ -30,7 +30,6 @@
 % \def\loadbibentry by itself loads the bibentry package (this is usually not required for your paper)
 % If hyperref is loaded, \loadbibentry modifies \@bibitem to make bibentry package compatible with hyperref
 
-
 \def\loadbibentry{} %comment out, usually not used in your paper
 \usepackage{xr}
 \input{preamble.tex}
@@ -58,6 +57,14 @@
 \newcommand{\tbC}{\widetilde{\bC}}
 \newcommand{\tbL}{\widetilde{\bL}}
 \newcommand{\onehot}[1]{\mathrm{one\_hot}\left(#1\right)}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Acronyms
+% Some standard ones have been defined in preamble.tex
+
+\newacronym{KLD}{KLD}{Kullbeck-Leibler divergence}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -93,6 +100,8 @@ This work was supported by the xxxxx. Preliminary versions of parts of this pape
 \begin{abstract}
 We list some best practices and tips for writing technical papers in \LaTeX.
 \end{abstract}
+\glsresetall{}
+
 
 \begin{IEEEkeywords}
 Tips, suggestions, best practices.
@@ -311,6 +320,7 @@ Note the use of aligned environment here.
 f(\btheta) &= \E_{X \sim p_{\btheta}}^{\beta}[\frac{f(X)}{g(X,Y)} \given Y],\\
 \P(A \given B) &= \P(\set*{\omega\in\Omega \given \ofrac{2}X(\omega) > b} \given \limsup_{n\to\infty} X_n(\omega) = a).
 \end{align*}
+\item You can define newacronym so that you do not have to remember if you have already used them. For example, this is ``\gls{KLD}'' at first use, and this is ``\gls{KLD}'' at second use. Acronyms should be reset immediately after the abstract as we do not consider the abstract as being part of the main paper. Use \verb|\glsresetall{}| to do this.
 \end{enumerate}
 
 \section{Figures and Tables}\label{sect:Graphics}
@@ -395,9 +405,9 @@ HamGNN  & $\second{99.73\sd{0.26}}$                          &$\first{99.99\sd{0
 \item Please write in formal language and refrain from using flowery words. Do not use short forms, e.g., ``it's'' should be written as ``it is'', ``we've'' should be written as ``we have'', and ``thanks very much for your comment'' should be rephrased as ``thank you for your comment''. Avoid descriptions such as ``innovative'' and ``pioneering'' when describing your own work. These are judgments to be made by other researchers years later.
 \item Write in the \textbf{active present tense}. E.g., 
 \begin{itemize}
-\item ``In this paper, we \cyan{shall show} that $A=B$.'' reads better as ``In this paper, we \cyan{show} that $A=B$.''
-\item  ``In our experiments, we \cyan{divided} the data into training and testing sets.'' reads better as ``In our experiments, we \cyan{divide} the data into training and testing sets.''
-\item ``In \cite{kipf2016semi}, the authors \cyan{used} a GCN model to classify the nodes.'' reads better as ``In \cite{kipf2016semi}, the authors \cyan{use} a GCN model to classify the nodes.''
+\item ``In this paper, we \olive{shall show} that $A=B$.'' reads better as ``In this paper, we \cyan{show} that $A=B$.''
+\item  ``In our experiments, we \olive{divided} the data into training and testing sets.'' reads better as ``In our experiments, we \cyan{divide} the data into training and testing sets.''
+\item ``In \cite{kipf2016semi}, the authors \olive{used} a GCN model to classify the nodes.'' reads better as ``In \cite{kipf2016semi}, the authors \cyan{use} a GCN model to classify the nodes.''
 \end{itemize}
 \end{enumerate}
 
