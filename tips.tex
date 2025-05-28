@@ -336,6 +336,7 @@ f(\btheta) &= \E_{X \sim p_{\btheta}}^{\beta}[\frac{f(X)}{g(X,Y)} \given Y],\\
 \item To have fixed column widths with text wrapping in your table column, use the \verb|L{width}|, \verb|C{width}|, or \verb|R{width}| column types from the preamble.tex. 
 \end{enumerate}
 
+%<*tag:afigure>
 \begin{figure}[!htpb]
 \centering
 \begin{subfigure}[b]{0.4\textwidth}
@@ -353,6 +354,8 @@ f(\btheta) &= \E_{X \sim p_{\btheta}}^{\beta}[\frac{f(X)}{g(X,Y)} \given Y],\\
 \caption{A tandem network and its decision regions.}
 \label{fig:tandem}
 \end{figure}
+%</tag:afigure>
+
 
 \begin{table}[!htb]
 \centering
@@ -391,6 +394,29 @@ HamGNN  & $\second{99.73\sd{0.26}}$                          &$\first{99.99\sd{0
 \bottomrule
 \end{tabular}}
 \end{table}
+
+%<*tag:atable>
+\begin{table}[!htb]
+\caption{Comparison with base models on homophilic datasets}
+\label{tab.Frond_com}
+\centering
+\begin{tabular}{ccccc}
+\toprule
+Dataset  & F-GRAND          & L-F-GRAND         & P-F-GRAND         & R-F-GRAND \\
+\midrule
+Cora     & 84.68$\pm$1.01   & 84.73$\pm$1.12    & \second{84.76$\pm$1.10}    & \first{85.16$\pm$1.18}\\
+\midrule
+Citeseer & 73.71$\pm$1.00   & \second{73.75$\pm$1.64}    & 73.72$\pm$1.67    & \first{74.05$\pm$1.60}\\
+\midrule
+Pubmed   & 79.14$\pm$1.68   & \second{79.29$\pm$2.09}   & 79.19$\pm$1.55    & \first{79.38$\pm$1.59}\\
+\midrule
+Photo    & 92.54$\pm$1.36   & 92.55$\pm$1.26    & \second{92.70$\pm$1.31}    & \first{93.16$\pm$1.33}\\
+\midrule
+CS       & 92.93$\pm$0.25   & \second{93.02$\pm$0.24}    & 92.98$\pm$0.21    & \first{93.37$\pm$0.25}\\
+\bottomrule
+\end{tabular}
+\end{table}
+%</tag:atable>
 
 \section{Scientific Writing}
 \begin{enumerate}

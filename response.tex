@@ -114,7 +114,7 @@
 
 \newcounter{eqcounter}
 \renewcommand{\theequation}{\docprefix\arabic{equation}}
-\newcommand{\revision}[1]{
+\newcommand{\revisionframe}[1]{
   \setcounter{eqcounter}{\value{equation}}%
   \renewcommand{\theequation}{\arabic{equation}}%
   \par%
@@ -125,11 +125,30 @@
   \renewcommand{\theequation}{\docprefix\arabic{equation}}%
 }
 
+% Starred version for floats like figures and tables without a frame.
+\DeclareDocumentCommand{\revision}{ s m o o }{%
+  \IfBooleanTF{#1}{%
+    \IfValueT{#3}{%
+      \xrcounterref{#3}{#4}
+    }
+    \ExecuteMetaData[\maintext]{#2}%%
+  }{%
+    \revisionframe{#2}%
+  }%
+}
+
+
 % Usage example: 
-% If the tex that you transfer over using \revision contains a \label{thmname} for an environment (e.g., Theorem, Lemma, Definition), it will not have the same numbering as that in \maintext. 
+% If the tex that you transfer over using \revision contains a \label{thmname} for an environment (e.g., Theorem, Lemma, Definition, table, figure), it will not have the same numbering as that in \maintext. 
 % Call \xrcounterref{environment_name}{thmname} before \revision to fix this. 
 \newcommand{\xrcounterref}[2]{
-  \setcounter{#1}{\getrefnumber{#2}}
+  \edef\x{\getrefnumber{#2}}%
+  \expandafter\ifrmnum\expandafter{\x}{%
+    \setcounter{#1}{\expandafter\rmntonum\expandafter{\x}}%
+  }{%
+    \setcounter{#1}{\getrefnumber{#2}}
+  }
+  %\setcounter{#1}{\getrefnumber{#2}}
   \addtocounter{#1}{-1}
 }
 
@@ -247,6 +266,16 @@ We provide the following theorem, reproduced here:
 
 Note the use of $\backslash$xrcounterref to set the numbering of environments correctly. \textbf{If you know how to make this automatic, let me know.}
 \end{response}
+
+\begin{comment}
+Some other comments.
+\end{comment}
+\begin{response}
+Floats like tables and figures are reproduced using the starred version of the \verb|\revision| command. For example, the following figure and tables from the main text are reproduced here:
+\revision*{tag:afigure}[figure][fig:tandem]
+\revision*{tag:atable}[table][tab.Frond_com]
+\end{response}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
