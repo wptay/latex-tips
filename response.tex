@@ -125,19 +125,6 @@
   \renewcommand{\theequation}{\docprefix\arabic{equation}}%
 }
 
-% Starred version for floats like figures and tables without a frame.
-\DeclareDocumentCommand{\revision}{ s m o o }{%
-  \IfBooleanTF{#1}{%
-    \IfValueT{#3}{%
-      \xrcounterref{#3}{#4}
-    }
-    \ExecuteMetaData[\maintext]{#2}%%
-  }{%
-    \revisionframe{#2}%
-  }%
-}
-
-
 % Usage example: 
 % If the tex that you transfer over using \revision contains a \label{thmname} for an environment (e.g., Theorem, Lemma, Definition, table, figure), it will not have the same numbering as that in \maintext. 
 % Call \xrcounterref{environment_name}{thmname} before \revision to fix this. 
@@ -152,6 +139,61 @@
   \addtocounter{#1}{-1}
 }
 
+\DeclareDocumentCommand{\xrcounters}{ > { \SplitArgument{1}{>} } m }{%
+  \xrcounterref #1
+}
+
+% Starred version to copy using \copybox, see below.
+\DeclareDocumentCommand{\revision}{ s m > { \SplitList{;} } o }{%
+  % Locally patch figure and table to always use [H] inside the box
+  \begingroup
+    \let\origfigure\figure
+    \let\endorigfigure\endfigure
+    \renewenvironment{figure}[1][]%
+      {\origfigure[H]}%
+      {\endorigfigure}
+    \let\origtable\table
+    \let\endorigtable\endtable
+    \renewenvironment{table}[1][]%
+      {\origtable[H]}%
+      {\endorigtable}
+    \IfValueT{#3}{%
+      \ProcessList {#3}{%
+        \xrcounters
+      }%
+    }
+    \IfBooleanTF{#1}{%
+      \copybox{#2}%
+    }{%
+      \revisionframe{#2}%
+    }%
+  \endgroup
+}
+
+% Read the clipboard package documentation for more details.
+% For the cases where nested tags are not supported by catchfilebetweentags.
+% Need to include the following in the main file preamble:
+% \usepackage{clipboard}
+% \newclipboard{output-myclipboard}
+% Ensure that the main file is compiled first and check that output-myclipboard.cpy file has content.
+\usepackage{clipboard}
+\newcommand{\copybox}[1]{%
+  \openclipboard{output-myclipboard}
+  \begin{mdframed}[
+    userdefinedwidth=0.98\linewidth,
+    align=center,
+    skipabove=0.5em,       % Space above the box
+    skipbelow=0.5em,       % Space below the box
+    innertopmargin=6pt,    % Inner padding
+    innerbottommargin=6pt,
+    innerleftmargin=10pt,
+    innerrightmargin=10pt,
+    linewidth=0.5pt,       % Border thickness
+    frametitlealignment=center % Title alignment (if used)
+  ]
+  \Paste{#1}%
+  \end{mdframed}%
+}
 
 \myexternaldocument{\maintext}
 
@@ -235,13 +277,13 @@ A lot of comments.
 \begin{response}
   Thank you for your comment. Repeated quote from tips.tex:
   \revision{tag:equation}
-  The equation numbers shown here are the same as those in the main paper, which is great! The command $\backslash$revision takes care of this. But it has limitations. See the following examples. 
-
   We remark that it can be shown that
   \begin{align}
-  \Lambda(k) = \int_\Omega \tau(b) \ud{\nu(b)}.
+  \Lambda(k) &= \int_\Omega \tau(b) \ud{\nu(b)},\\
+  \Gamma(k) &= \int_{\calA} f(x) \ud{\mu(x)}.
   \end{align}
 
+  The equation numbers shown in the box are the same as those in the main paper, which is great! The command \verb|\revision| takes care of this. But it has limitations. See the following examples. 
 \end{response}
 
 
@@ -250,10 +292,11 @@ Some other comments.
 \end{comment}
 \begin{response}
 Thank you for your comment. Please refer to \cref{fig:tandem}. We provide the following example, reproduced here:   
-\xrcounterref{Example}{eg:subGSP}
-\revision{tag:ex}
+\revision{tag:ex}[Example>eg:subGSP;figure>fig:fractal]
 
-Note the use of $\backslash$xrcounterref to set the numbering of environments correctly. \textbf{If you know how to make this automatic, let me know.}
+Note the use of \verb|\xrcounterref| in the macro \verb|\revision| to set the numbering of environments correctly. \textbf{If you know how to make this automatic, let me know.}
+
+The macro \verb|\revision| takes in an optional list of pairs of environment name and label, separated by semicolons ;. Each pair is of the form \verb|environment_name>label|. The environment name can be figure, table, Theorem, Lemma, Example, etc. The label is the label of the environment in the main paper. For example, in the above example, we have \verb|Example>eg:subGSP;figure>fig:fractal|.  
 \end{response}
 
 \begin{comment}
@@ -261,20 +304,32 @@ Some other comments.
 \end{comment}
 \begin{response}
 We provide the following theorem, reproduced here:
-\xrcounterref{Theorem}{thm:limit_var}
-\revision{tag:thm}
 
-Note the use of $\backslash$xrcounterref to set the numbering of environments correctly. \textbf{If you know how to make this automatic, let me know.}
+\revision{tag:thm}[Theorem>thm:limit_var;Corollary>cor:limit_var]
+
+Note that the theorem and corollary numbers shown in the box are the same as those in the main paper.
 \end{response}
 
 \begin{comment}
 Some other comments.
 \end{comment}
 \begin{response}
-Floats like tables and figures are reproduced using the starred version of the \verb|\revision| command. For example, the following figure and tables from the main text are reproduced here:
-\revision*{tag:afigure}[figure][fig:tandem]
-\revision*{tag:atable}[table][tab.Frond_com]
+Thank you for your comment. Blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah. 
+
+In the macro \verb|\revision|, floats like tables and figures have their placement options replaced with ``H''. For example, the following figure and tables from the main text are reproduced here:
+\revision{tag:afigure}[figure>fig:tandem]
+\revision{tag:atable}[table>tab.Frond_com]
 \end{response}
+
+
+\begin{comment}
+Some other comments.
+\end{comment}
+\begin{response}
+Unfortunately, the catchfilebetweentags package does not support nested tags, so we have to use the starred version of \verb|\revision| (using the clipboard package) to copy and paste the parts of the latex content we want. See the following example:
+\revision*{tag:kernelGSP}
+\end{response}
+
 
 
 
