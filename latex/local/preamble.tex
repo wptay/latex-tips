@@ -63,6 +63,7 @@
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
+
 \makeatletter
 \let\MYcaption\@makecaption
 \makeatother
@@ -244,8 +245,10 @@
 \crefname{subsection}{Section}{Sections}
 \crefname{subsubsection}{Section}{Sections}
 
+\ifx\notloadalgorithm\undefined
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+\fi
 
 %may cause conflict with some packages like tikz, include manually if desired
 %load after hyperref
