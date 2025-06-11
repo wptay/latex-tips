@@ -5,35 +5,35 @@ ensure_path( 'TEXINPUTS', './latex/local//' ); # E.g., path to directory contain
 # #For use in Overleaf with xr package
 ##########################################
 
-# $sub_doc_output = 'output-subdoc';
+$sub_doc_output = 'output-subdoc';
 
-# # Options to supply to latexmk for compilation of external documents:
-# @sub_doc_options = ('-cd', '-interaction=nonstopmode', '-file-line-error');
+# Options to supply to latexmk for compilation of external documents:
+@sub_doc_options = ('-cd', '-interaction=nonstopmode', '-file-line-error');
 
-# push @sub_doc_options, '-pdf'; # Use pdflatex for compilation of external documents.
-# # Replace '-pdf' by '-pdfdvi', 'pdfxe', or 'pdflua' if needed.
+push @sub_doc_options, '-pdf'; # Use pdflatex for compilation of external documents.
+# Replace '-pdf' by '-pdfdvi', 'pdfxe', or 'pdflua' if needed.
 
-# push @file_not_found, '^No file\\s*(.+)\s*$';
+push @file_not_found, '^No file\\s*(.+)\s*$';
 
-# add_cus_dep( 'tex', 'aux', 0, 'makeexternaldocument' );
-# sub makeexternaldocument {
-#     if ( $root_filename ne $_[0] )  {
-#         my ($base_name, $path) = fileparse( $_[0] );
-#         pushd $path;
-#         my $return = system "latexmk",
-#                             @sub_doc_options,
-#                             "-aux-directory=$sub_doc_output",
-#                             "-output-directory=$sub_doc_output",
-#                             $base_name;
-#         if ( ($sub_doc_output ne '') && ($sub_doc_output ne '.') ) {
+add_cus_dep( 'tex', 'aux', 0, 'makeexternaldocument' );
+sub makeexternaldocument {
+    if ( $root_filename ne $_[0] )  {
+        my ($base_name, $path) = fileparse( $_[0] );
+        pushd $path;
+        my $return = system "latexmk",
+                            @sub_doc_options,
+                            "-aux-directory=$sub_doc_output",
+                            "-output-directory=$sub_doc_output",
+                            $base_name;
+        if ( ($sub_doc_output ne '') && ($sub_doc_output ne '.') ) {
 
-#              rdb_add_generated( "$sub_doc_output/$base_name.aux" );
-#              copy "$sub_doc_output/$base_name.aux", ".";
-#         }
-#         popd;
-#         return $return;
-#    }
-# }
+             rdb_add_generated( "$sub_doc_output/$base_name.aux" );
+             copy "$sub_doc_output/$base_name.aux", ".";
+        }
+        popd;
+        return $return;
+   }
+}
 
 ##########################################
 ##########################################
