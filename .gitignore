@@ -1,5 +1,11 @@
-desktop.ini
-snippets.tex
+**/desktop.ini
+**/.DS_Store
+**/Thumbs.db
+*.code-workspace
+.olauth
+.overleaf/
+.vscode/
+*-SAVE-ERROR
 
 #######################################
 # Latex                               #
@@ -17,6 +23,7 @@ snippets.tex
 *.fot
 *.cb
 *.cb2
+*.cpy
 .*.lb
 
 ## Intermediate documents:
@@ -26,7 +33,6 @@ snippets.tex
 
 ## Generated if empty string is given at "Please type another file name for output:"
 .pdf
-
 
 ## Bibliography auxiliary files (bibtex/biblatex/biber):
 *.bbl
@@ -43,11 +49,13 @@ snippets.tex
 *.synctex(busy)
 *.synctex.gz
 *.synctex.gz(busy)
+*.synctex(busy).gz
 *.pdfsync
 
 ## Build tool directories for auxiliary files
 # latexrun
 latex.out/
+output-subdoc/
 
 ## Auxiliary and intermediate files from other packages:
 # algorithms
@@ -341,3 +349,13 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+#######################################
+# Jupyter                             #
+#######################################
+
+# ipynb_checkpoints
+.ipynb_checkpoints/
+*-checkpoint.ipynb
+
+

@@ -9,33 +9,23 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\usepackage{expl3}
+% Used by additional references. If you do not have any local cites, comment this out.
+% Cite additional references using \citeSR. 
+\usepackage[labeled,resetlabels]{multibib}
+\newcites{SR}{Supplementary References}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \usepackage{silence}
 \WarningFilter{caption}{Unsupported document class}
 \WarningFilter{caption}{Unknown document class}
 \WarningFilter{latex}{No \author given}
 
-\usepackage[labeled,resetlabels]{multibib}
+\usepackage{signalpreamble} 
 
-% Used by additional references. If you do not have any local cites, comment this out.
-% Cite additional references using \citeSR. 
-\newcites{SR}{Supplementary References}
-
-
-\usepackage{xr}
-\input{preamble.tex}
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Add newcommands from \maintext here
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newcommand{\tbC}{\widetilde{\bC}}
-\newcommand{\tbL}{\widetilde{\bL}}
-\newcommand{\onehot}[1]{\mathrm{one\_hot}\left(#1\right)}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -67,6 +57,7 @@
 
 \begin{document}
 \maketitle
+\ExecuteMetaData[\maintext]{tag:commands-main}
 
 This is the supplementary material to ``Tips on Writing Papers in \LaTeX''. The references like equation numbers refer to those in the main paper, except for those prefixed by ``\docprefix''. For example, we can reference \cref{sect:General} and \cref{eq:Lambda_SGLR} from the main paper but \cref{eq:f} is from this supplementary material. 
 
@@ -76,7 +67,7 @@ To include local citations like \citeSR{WanSonTay:J21} that appear only in this 
 
 \section{Preliminaries}\label{supp:Preliminaries}
 
-This is a section in the supplementary material. From a result in \citeSR[Theorem 1]{WanSonTay:J21} (note that this is a local citation that does not appear in the main paper), we have
+This is a section in the supplementary material. From a result in \citeSR[Theorem 2]{WanSonTay:J21} (note that this is a local citation that does not appear in the main paper), we have
 \begin{align}
 		f(\btheta) &= \E_{X \sim p_{\btheta}}[\frac{f(X)}{g(X,Y)} \given Y], \label{eq:f}\\
 		\P(A \given B) &= \P(\set*{\omega\in\Omega \given \ofrac{2}X(\omega) > b} \given \limsup_{n\to\infty} X_n(\omega) = a). \label{eq:AB}
@@ -84,7 +75,7 @@ This is a section in the supplementary material. From a result in \citeSR[Theore
 
 \section{Proof of Theorem \ref{thm:Gamma}}\label{proof:thm:Gamma}
 
-The proof follows from \cref{eq:AB}.
+Note that \cref{thm:Gamma} is stated in the main file. We can reference \cref{eq:X} from the main file, or \cref{eq:AB}, a local equation in this supplementary.
 
 % Used by \citeSR. If you do not have any local cites, comment this out.
 \bibliographystyleSR{IEEEtran}

@@ -1,56 +1,88 @@
 
-% Note: this has been tested using MiKTeX 2.9. If you are getting errors, update your packages.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{signalpreamble}[2025/06/17 v1.0.0 SIGNAL Preamble]
+
+% Note: this has been tested using the latest Latex packages as of the version date. If you are getting errors, update your packages.
 % LTeX: enabled=false
 
 %%% Packages %%%
-%\usepackage{setspace} % Double spaces document. Footnotes,
-% figures, and tables will still be single spaced, however.
-%\doublespacing
-%\singlespacing
-%\onehalfspacing
-% \setstretch{1.5} % set double spacing to 1.5 or anything else.
 
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{
+  family=signalpreamble,
+	prefix=signalpreamble@
+}
+\DeclareBoolOption[true]{hyperref} % default is true;
+\DeclareBoolOption[false]{bibentry}
+\DeclareBoolOption[true]{algpseudocode}
+\DeclareBoolOption[true]{cleveref}
+\DeclareBoolOption[false]{breqn}
+\DeclareBoolOption[false]{owntheorems}
+\DeclareBoolOption[false]{useTheoremCounter}
+\DeclareBoolOption[true]{highlights}
+\DeclareBoolOption[false]{diagnoselabel}
+\DeclareBoolOption[false]{beamer}
+\DeclareBoolOption[false]{response}
 
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{mathtools}
+\ProcessKeyvalOptions*{} % process options
+
+%\makeatletter
+\ifsignalpreamble@beamer%
+	\signalpreamble@hyperreffalse % disable hyperref for beamer
+	\signalpreamble@clevereffalse % disable cleveref for beamer
+\fi
+
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{mathtools}
 
 \providecommand{\hmmax}{0}
 \providecommand{\bmmax}{0}
-\usepackage{amssymb,mathrsfs}% Typical maths resource packages
-\usepackage{amsthm}
-\usepackage{bm}
-\usepackage{scalerel}
-\usepackage{nicefrac}
-\usepackage{microtype} 
-\usepackage[shortlabels]{enumitem}
-\usepackage{graphicx}
-\usepackage{epstopdf}
+\RequirePackage{amssymb,mathrsfs}% Typical maths resource packages
+\RequirePackage{amsthm}
+\RequirePackage{bm}
+\RequirePackage{scalerel}
+\RequirePackage{nicefrac}
+\RequirePackage{microtype}
+
+\ifsignalpreamble@beamer
+\relax
+\else 
+\RequirePackage[shortlabels]{enumitem}
+\RequirePackage{graphicx}
+\fi
+
+\RequirePackage{epstopdf}
 \DeclareGraphicsExtensions{.eps,.png,.jpg,.pdf}
 
-\usepackage{url}
-\usepackage{colortbl}
-\usepackage{booktabs}
-\usepackage{multirow}
-\usepackage{colortbl,xcolor}
-\usepackage{soul}
-\usepackage{xparse,xstring}
-\usepackage{calc}
-\usepackage{etoolbox}
+\RequirePackage{url}
+\RequirePackage{colortbl}
+\RequirePackage{booktabs}
+\RequirePackage{multirow}
+\RequirePackage{xcolor}
+\RequirePackage{soul}
+\RequirePackage{xparse,xstring}
+\RequirePackage{calc}
+\RequirePackage{etoolbox}
 
-\makeatletter
+
+%\makeatletter
+\ifsignalpreamble@beamer
+\relax
+\else
 \@ifpackageloaded{natbib}{
 	\relax
 }{
-	\usepackage{cite}
+	\RequirePackage{cite}
 }
-\makeatother
+\fi
+%\makeatother
 
-%\usepackage{pstricks}
-%\usepackage{psfrag}
-%\usepackage{syntonly}
+%\RequirePackage{pstricks}
+%\RequirePackage{psfrag}
+%\RequirePackage{syntonly}
 %\syntaxonly
-%\usepackage[style=base]{caption}
+%\RequirePackage[style=base]{caption}
 %\captionsetup{
 %format = plain,
 %font = footnotesize,
@@ -58,22 +90,23 @@
 %}
 
 
-\usepackage{array}
+\RequirePackage{array}
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
 
-\makeatletter
+%\makeatletter
 \let\MYcaption\@makecaption
-\makeatother
-\usepackage[font=footnotesize]{subcaption}
-\makeatletter
+%\makeatother
+\RequirePackage[font=footnotesize]{subcaption}
+%\makeatletter 
+% Change the caption to IEEE style
 \let\@makecaption\MYcaption
-\makeatother
+%\makeatother
 
-\usepackage{glossaries}
-\makeatletter
+\RequirePackage{glossaries}
+%\makeatletter
 \sfcode`\.1006
 
 % copy old \gls and \glspl '
@@ -106,7 +139,425 @@
 % '
 \robustify{\gls}
 \robustify{\glspl}
-\makeatother
+%\makeatother
+
+%\makeatletter
+\ifsignalpreamble@beamer
+\relax
+\else
+%put the float package before hyperref and algorithm package after hyperref for hyperref to work correctly with algorithm
+\RequirePackage{float}
+\usepackage{xr}
+% If using TexLive 2024 (e.g., on Overleaf), use xr-hyper instead of xr.
+% \usepackage{xr-hyper}
+\fi
+
+\ifsignalpreamble@hyperref%
+  \ifsignalpreamble@bibentry%
+		\RequirePackage{bibentry}%
+		\let\saved@bibitem\@bibitem%
+		\RequirePackage[hidelinks,hypertexnames=false]{hyperref}%
+		\let\@bibitem\saved@bibitem%
+	\else%
+		\RequirePackage[hidelinks,hypertexnames=false]{hyperref}%
+	\fi%
+\else%
+	\ifsignalpreamble@bibentry%
+		\RequirePackage{bibentry}%
+	\fi%
+\fi
+
+\ifsignalpreamble@cleveref%
+	\RequirePackage{cleveref-forward}
+	% %% Temporary fix
+	% \AtBeginDocument
+	% {
+	% 	\def\ltx@label#1{\cref@label{#1}}%add braces
+	% 	\def\label@in@display@noarg#1{\cref@old@label@in@display{#1}}%remove braces
+	% 	\def\label@in@mmeasure@noarg#1{%
+	% 		\begingroup%
+	% 			\measuring@false%
+	% 			\cref@old@label@in@display{#1}%remove braces for multline
+	% 		\endgroup}%  
+	% } %
+
+	%%%%%%%%%%%%%%%
+	%\RequirePackage{cleveref}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% 2024-06: cleveref-forward is new updated package based on cleveref that fixes some issues with cleveref. To use on Overleaf, make sure you select the 2024 or later version of TeX Live via the menu.
+	% 2023-12: recent updates to hyperref and xr-hyper breaks cleveref.
+	% The following lines fix the issue. https://tex.stackexchange.com/questions/708441/cleveref-mistakenly-showing-filename-in-external-references
+	% This fix has not been incorporated into the latex kernel.
+	% However, Overleaf seems to have their own fix. Therefore comment this out if using Overleaf.
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% %\makeatletter
+	% \def\cref@getref#1#2{%
+	%   \expandafter\let\expandafter#2\csname r@#1@cref\endcsname%
+	%   \expandafter\expandafter\expandafter\def%
+	%     \expandafter\expandafter\expandafter#2%
+	%     \expandafter\expandafter\expandafter{%
+	%       \expandafter\@firstoffive#2}}% <-------- five
+	% \def\cpageref@getref#1#2{%
+	%   \expandafter\let\expandafter#2\csname r@#1@cref\endcsname%
+	%   \expandafter\expandafter\expandafter\def%
+	%     \expandafter\expandafter\expandafter#2%
+	%     \expandafter\expandafter\expandafter{%
+	%       \expandafter\@secondoffive#2}}% <----------- five
+				
+	% \AtBeginDocument{%
+	%    \def\label@noarg#1{%
+	%     \cref@old@label{#1}%
+	%     \@bsphack%
+	%     \edef\@tempa{{page}{\the\c@page}}%
+	%     \setcounter{page}{1}%
+	%     \edef\@tempb{\thepage}%
+	%     \expandafter\setcounter\@tempa%
+	%     \cref@constructprefix{page}{\cref@result}%
+	%     \protected@write\@auxout{}%
+	%       {\string\newlabel{#1@cref}{{\cref@currentlabel}%
+	%       {[\@tempb][\arabic{page}][\cref@result]\thepage}{}{}{}}}% <----- five
+	%     \@esphack}%
+	%   \def\label@optarg[#1]#2{%
+	%     \cref@old@label{#2}%
+	%     \@bsphack%
+	%     \edef\@tempa{{page}{\the\c@page}}%
+	%     \setcounter{page}{1}%
+	%     \edef\@tempb{\thepage}%
+	%     \expandafter\setcounter\@tempa%
+	%     \cref@constructprefix{page}{\cref@result}%
+	%     \protected@edef\cref@currentlabel{%
+	%       \expandafter\cref@override@label@type%
+	%         \cref@currentlabel\@nil{#1}}%
+	%     \protected@write\@auxout{}%
+	%       {\string\newlabel{#2@cref}{{\cref@currentlabel}%
+	%       {[\@tempb][\arabic{page}][\cref@result]\thepage}{}{}{}}}% <------- five
+	%     \@esphack}%
+	%     }  
+	% %\makeatother
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	\crefname{equation}{}{}
+	\Crefname{equation}{}{}
+	\crefname{claim}{claim}{claims}
+	\crefname{step}{step}{steps}
+	\crefname{line}{line}{lines}
+	\crefname{condition}{condition}{conditions}
+	\crefname{dmath}{}{}
+	\crefname{dseries}{}{}
+	\crefname{dgroup}{}{}
+	\crefname{page}{page}{pages}
+
+	\crefname{Problem}{Problem}{Problems}
+	\crefformat{Problem}{Problem~#2#1#3}
+	\crefrangeformat{Problem}{Problems~#3#1#4 to~#5#2#6}
+
+	\crefname{Theorem}{Theorem}{Theorems}
+	\crefname{Corollary}{Corollary}{Corollaries}
+	\crefname{Proposition}{Proposition}{Propositions}
+	\crefname{Lemma}{Lemma}{Lemmas}
+	\crefname{Definition}{Definition}{Definitions}
+	\crefname{Example}{Example}{Examples}
+	\crefname{Assumption}{Assumption}{Assumptions}
+	\crefname{Remark}{Remark}{Remarks}
+	\crefname{Rem}{Remark}{Remarks}
+	\crefname{remarks}{Remarks}{Remarks}
+	\crefname{Appendix}{Appendix}{Appendices}
+	\crefname{Supplement}{Supplement}{Supplements}
+	\crefname{Exercise}{Exercise}{Exercises}
+	\crefname{TheoremA}{Theorem}{Theorems}
+	\crefname{CorollaryA}{Corollary}{Corollaries}
+	\crefname{PropositionA}{Proposition}{Propositions}
+	\crefname{LemmaA}{Lemma}{Lemmas}
+	\crefname{DefinitionA}{Definition}{Definitions}
+	\crefname{ExampleA}{Example}{Examples}
+	\crefname{RemarkA}{Remark}{Remarks}
+	\crefname{AssumptionA}{Assumption}{Assumptions}
+	\crefname{ExerciseA}{Exercise}{Exercises}
+	\crefname{algorithm}{Algorithm}{Algorithms}
+	\crefname{figure}{Fig.}{Figs.}
+	\crefname{table}{Table}{Tables}
+	\crefname{section}{Section}{Sections}
+	\crefname{subsection}{Section}{Sections}
+	\crefname{subsubsection}{Section}{Sections}
+
+\fi %ifsignalpreamble@cleveref
+
+\RequirePackage{algorithm}
+\ifsignalpreamble@algpseudocode
+	\RequirePackage{algpseudocode}
+\fi
+
+%may cause conflict with some packages like tikz, include manually if desired
+%load after hyperref
+\ifsignalpreamble@breqn	
+	\RequirePackage{breqn}
+\fi
+
+\usepackage{catchfilebetweentags}
+%%%% usage in manuscript
+%::: %<*tag_name>
+%::: content
+%::: %</tag_name>
+%%%% usage in response
+%::: \revision{tag_name}
+%\makeatletter
+\patchcmd{\CatchFBT@Fin@l}{\endlinechar\m@ne}{}
+  {}{\typeout{Unsuccessful patch!}}
+%\makeatother
+
+
+\ifsignalpreamble@response
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Packages and commands for response
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcounter{reviewer}
+\theoremstyle{plain}\newtheorem{comment}{Comment}[reviewer]
+
+\newtheoremstyle{respstyle}%
+{3pt}% Space above
+{3pt}% Space below 
+{\normalfont\color{blue}}% Body font
+{}% Indent amount
+{\bfseries\color{blue}}% Theorem head font
+{.}% Punctuation after theorem head
+{.5em}% Space after theorem head 
+{}% Theorem head spec (can be left empty, meaning ‘normal’)
+
+\theoremstyle{respstyle}
+\newtheorem{response}{Response}[reviewer]
+
+\NewDocumentCommand\PbPResponseHeader{s o}{%
+	\IfBooleanTF#1%
+  {\par }%
+	{\clearpage }%
+  \IfValueTF{#2}{\setcounter{reviewer}{#2}}{\refstepcounter{reviewer}}%
+  \begin{center}%
+    \huge \textbf{Response to Reviewer \thereviewer}%
+  \end{center}%
+}
+
+\usepackage{mdframed}
+\mdfsetup{
+  fontcolor=blue,
+  linecolor=blue,
+}
+
+%\makeatletter
+\AtBeginDocument{
+  \let\oldlabel@in@display\label@in@display%
+  \let\oldlabel\label%
+}
+
+\newcounter{eqcounter}
+\newcounter{figcounter}
+\newcounter{tabcounter}
+\renewcommand{\theequation}{\docprefix\arabic{equation}}
+\renewcommand{\thefigure}{\docprefix\arabic{figure}}
+\renewcommand{\thetable}{\docprefix\Roman{table}}
+
+\newcounter{newdocumentimport}
+\newcommand{\labelimport}{%
+  \stepcounter{newdocumentimport}%
+  \def\label@in@display##1{%
+    \xrcounterref{equation}{##1}%
+    \oldlabel@in@display{\docprefix\thenewdocumentimport-##1}%
+  }%
+  \def\label##1{%
+    \oldlabel{\docprefix\thenewdocumentimport-##1}%
+  }%
+}
+
+\newcommand{\revisionframe}[1]{
+  \begingroup
+  \par%
+  \begin{mdframed}[userdefinedwidth=0.98\linewidth,align=center]%
+    \labelimport%
+    \ExecuteMetaData[\maintext]{#1}%
+  \end{mdframed}%
+  \endgroup
+}
+
+%\makeatother
+
+% Usage example: 
+% If the tex that you transfer over using \revision contains a \label{thmname} for an environment (e.g., Theorem, Lemma, Definition, table, figure), it will not have the same numbering as that in \maintext. 
+% Call \xrcounterref{environment_name}{thmname} before \revision to fix this. 
+\newcommand{\xrcounterref}[2]{
+  \edef\x{\getrefnumber{#2}}%
+  \expandafter\ifrmnum\expandafter{\x}{%
+    \setcounter{#1}{\expandafter\rmntonum\expandafter{\x}}%
+  }{%
+    \setcounter{#1}{\getrefnumber{#2}}
+  }
+  %\setcounter{#1}{\getrefnumber{#2}}
+  \addtocounter{#1}{-1}
+}
+
+\DeclareDocumentCommand{\xrcounters}{ >{\SplitArgument{1}{>}} m }{%
+  \xrcounterref #1
+}
+
+% Starred version to copy using \copybox, see below.
+\DeclareDocumentCommand{\revision}{ s m >{\SplitList{;}} o }{%
+  \setcounter{eqcounter}{\value{equation}}%
+  \setcounter{figcounter}{\value{figure}}%
+  \setcounter{tabcounter}{\value{table}}%
+  \begingroup
+    % Locally patch figure and table to always use [H] inside the box
+    \let\origfigure\figure
+    \let\endorigfigure\endfigure
+    \renewenvironment{figure}[1][]%
+      {\origfigure[H]}%
+      {\endorigfigure}
+    \let\origtable\table
+    \let\endorigtable\endtable
+    \renewenvironment{table}[1][]%
+      {\origtable[H]}%
+      {\endorigtable}
+    % Change back the numbering to arabic
+    \renewcommand{\theequation}{\arabic{equation}}%
+    \renewcommand{\thefigure}{\arabic{figure}}%
+    \renewcommand{\thetable}{\Roman{table}}%
+    % Process the optional argument list of environment names and labels
+    \IfValueT{#3}{%
+      \ProcessList {#3}{%
+        \xrcounters
+      }%
+    }
+    \IfBooleanTF{#1}{%
+      \copybox{#2}%
+    }{%
+      \revisionframe{#2}%
+    }%
+  \endgroup
+  \setcounter{equation}{\value{eqcounter}}%
+  \setcounter{figure}{\value{figcounter}}%  
+  \setcounter{table}{\value{tabcounter}}%
+}
+
+% Read the clipboard package documentation for more details.
+% For the cases that are not supported by catchfilebetweentags. May not be necessary now with the patch \patchcmd{\CatchFBT@Fin@l}.
+% Need to include the following in the main file preamble:
+% \usepackage{clipboard}
+% \newclipboard{output-myclipboard}
+% Ensure that the main file is compiled first and check that output-myclipboard.cpy file has content.
+\usepackage{clipboard}
+\newcommand{\copybox}[1]{%
+  \openclipboard{output-myclipboard}
+  \begin{mdframed}[
+    userdefinedwidth=0.98\linewidth,
+    align=center,
+    skipabove=0.5em,       % Space above the box
+    skipbelow=0.5em,       % Space below the box
+    innertopmargin=6pt,    % Inner padding
+    innerbottommargin=6pt,
+    innerleftmargin=10pt,
+    innerrightmargin=10pt,
+    linewidth=0.5pt,       % Border thickness
+    frametitlealignment=center % Title alignment (if used)
+  ]
+  \Paste{#1}%
+  \end{mdframed}%
+}
+
+\fi %ifsignalpreamble@response
+
+%\makeatother
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% End Packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Theorem declarations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Use option owntheorems if you want to define these theorem environments yourself.
+% Alternatively, call \clearthms
+
+%\makeatletter
+\def\cleartheorem#1{%
+    \expandafter\let\csname#1\endcsname\relax
+    \expandafter\let\csname c@#1\endcsname\relax
+}
+\def\clearthms#1{ \@for\tname:=#1\do{\cleartheorem\tname} }
+
+\ifsignalpreamble@owntheorems
+	\relax
+\else
+	\ifsignalpreamble@beamer
+		\newtheorem*{Proposition}{Proposition}
+		\newtheorem*{Remark}{Remark}
+		\newtheorem*{Assumption}{Assumption}
+		\newtheorem*{Exercise}{Exercise}
+	\else
+		% for use in main body
+		\ifsignalpreamble@useTheoremCounter
+			\newtheorem{Theorem}{Theorem}
+			\newtheorem{Corollary}[Theorem]{Corollary}
+			\newtheorem{Proposition}[Theorem]{Proposition}
+			\newtheorem{Lemma}[Theorem]{Lemma}
+		\else
+			\newtheorem{Theorem}{Theorem}
+			\newtheorem{Corollary}{Corollary}
+			\newtheorem{Proposition}{Proposition}
+			\newtheorem{Lemma}{Lemma}
+		\fi
+
+		\newtheorem{Definition}{Definition}
+		\newtheorem{Example}{Example}
+		\newtheorem{Remark}{Remark}
+		\newtheorem{Assumption}{Assumption}
+		\newtheorem{Exercise}{Exercise}
+		\newtheorem{Problem}{Problem}
+
+		% for use in the appendix
+		\newtheorem{TheoremA}{Theorem}[section]
+		\newtheorem{CorollaryA}{Corollary}[section]
+		\newtheorem{PropositionA}{Proposition}[section]
+		\newtheorem{LemmaA}{Lemma}[section]
+		\newtheorem{DefinitionA}{Definition}[section]
+		\newtheorem{ExampleA}{Example}[section]
+		\newtheorem{RemarkA}{Remark}[section]
+		\newtheorem{AssumptionA}{Assumption}[section]
+		\newtheorem{ExerciseA}{Exercise}[section]
+	\fi
+
+	% Remarks
+	\theoremstyle{remark}
+	\newtheorem{Rem}{Remark}
+	\theoremstyle{plain}
+
+	\newenvironment{remarks}{
+		\begin{list}{\textit{Remark} \arabic{Rem}:~}{
+				\setcounter{enumi}{\value{Rem}}
+				\usecounter{Rem}
+				\setcounter{Rem}{\value{enumi}}
+				\setlength\labelwidth{0in}
+				\setlength\labelsep{0in}
+				\setlength\leftmargin{0in}
+				\setlength\listparindent{0in}
+				\setlength\itemindent{15pt}
+			}
+			}{
+		\end{list}
+	}
+%	
+\fi
+
+\newcommand{\EndExample}{{$\square$}}
+%\renewcommand{\QED}{\QEDopen} % changes end of proof box to open box.
+
+\newcommand{\qednew}{\nobreak \ifvmode \relax \else
+		\ifdim\lastskip<1.5em \hskip-\lastskip
+			\hskip1.5em plus0em minus0.5em \fi \nobreak
+		\vrule height0.75em width0.5em depth0.25em\fi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Acronyms
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newacronym{wrt}{w.r.t.}{with respect to}
 \newacronym[plural={R.H.S.},\glsshortpluralkey={R.H.S.}]{RHS}{R.H.S.}{right-hand side}
@@ -125,232 +576,11 @@
 %\newacronym{GSP}{GSP}{graph signal processing}
 %\newacronym{ML}{ML}{machine learning}
 
-
-%put the float package before hyperref and algorithm package after hyperref for hyperref to work correctly with algorithm
-\usepackage{float}
-
-\ifx\notloadhyperref\undefined
-	\ifx\loadbibentry\undefined
-		\usepackage[hidelinks,hypertexnames=false]{hyperref}
-	\else
-		\usepackage{bibentry}
-		\makeatletter\let\saved@bibitem\@bibitem\makeatother
-		\usepackage[hidelinks,hypertexnames=false]{hyperref}
-		\makeatletter\let\@bibitem\saved@bibitem\makeatother
-	\fi
-\else
-	\ifx\loadbibentry\undefined
-		\relax
-	\else
-		\usepackage{bibentry}
-	\fi
-\fi
-
-\usepackage{cleveref-forward}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% 2024-06: cleveref-forward is new updated package based on cleveref that fixes some issues with cleveref. To use on Overleaf, make sure you select the 2024 or later version of TeX Live via the menu.
-% 2023-12: recent updates to hyperref and xr-hyper breaks cleveref.
-% The following lines fix the issue. https://tex.stackexchange.com/questions/708441/cleveref-mistakenly-showing-filename-in-external-references
-% This fix has not been incorporated into the latex kernel.
-% However, Overleaf seems to have their own fix. Therefore comment this out if using Overleaf.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \makeatletter
-% \def\cref@getref#1#2{%
-%   \expandafter\let\expandafter#2\csname r@#1@cref\endcsname%
-%   \expandafter\expandafter\expandafter\def%
-%     \expandafter\expandafter\expandafter#2%
-%     \expandafter\expandafter\expandafter{%
-%       \expandafter\@firstoffive#2}}% <-------- five
-% \def\cpageref@getref#1#2{%
-%   \expandafter\let\expandafter#2\csname r@#1@cref\endcsname%
-%   \expandafter\expandafter\expandafter\def%
-%     \expandafter\expandafter\expandafter#2%
-%     \expandafter\expandafter\expandafter{%
-%       \expandafter\@secondoffive#2}}% <----------- five
-      
-% \AtBeginDocument{%
-%    \def\label@noarg#1{%
-%     \cref@old@label{#1}%
-%     \@bsphack%
-%     \edef\@tempa{{page}{\the\c@page}}%
-%     \setcounter{page}{1}%
-%     \edef\@tempb{\thepage}%
-%     \expandafter\setcounter\@tempa%
-%     \cref@constructprefix{page}{\cref@result}%
-%     \protected@write\@auxout{}%
-%       {\string\newlabel{#1@cref}{{\cref@currentlabel}%
-%       {[\@tempb][\arabic{page}][\cref@result]\thepage}{}{}{}}}% <----- five
-%     \@esphack}%
-%   \def\label@optarg[#1]#2{%
-%     \cref@old@label{#2}%
-%     \@bsphack%
-%     \edef\@tempa{{page}{\the\c@page}}%
-%     \setcounter{page}{1}%
-%     \edef\@tempb{\thepage}%
-%     \expandafter\setcounter\@tempa%
-%     \cref@constructprefix{page}{\cref@result}%
-%     \protected@edef\cref@currentlabel{%
-%       \expandafter\cref@override@label@type%
-%         \cref@currentlabel\@nil{#1}}%
-%     \protected@write\@auxout{}%
-%       {\string\newlabel{#2@cref}{{\cref@currentlabel}%
-%       {[\@tempb][\arabic{page}][\cref@result]\thepage}{}{}{}}}% <------- five
-%     \@esphack}%
-%     }  
-% \makeatother
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-\crefname{equation}{}{}
-\Crefname{equation}{}{}
-\crefname{claim}{claim}{claims}
-\crefname{step}{step}{steps}
-\crefname{line}{line}{lines}
-\crefname{condition}{condition}{conditions}
-\crefname{dmath}{}{}
-\crefname{dseries}{}{}
-\crefname{dgroup}{}{}
-\crefname{page}{page}{pages}
-
-\crefname{Problem}{Problem}{Problems}
-\crefformat{Problem}{Problem~#2#1#3}
-\crefrangeformat{Problem}{Problems~#3#1#4 to~#5#2#6}
-
-\crefname{Theorem}{Theorem}{Theorems}
-\crefname{Corollary}{Corollary}{Corollaries}
-\crefname{Proposition}{Proposition}{Propositions}
-\crefname{Lemma}{Lemma}{Lemmas}
-\crefname{Definition}{Definition}{Definitions}
-\crefname{Example}{Example}{Examples}
-\crefname{Assumption}{Assumption}{Assumptions}
-\crefname{Remark}{Remark}{Remarks}
-\crefname{Rem}{Remark}{Remarks}
-\crefname{remarks}{Remarks}{Remarks}
-\crefname{Appendix}{Appendix}{Appendices}
-\crefname{Supplement}{Supplement}{Supplements}
-\crefname{Exercise}{Exercise}{Exercises}
-\crefname{TheoremA}{Theorem}{Theorems}
-\crefname{CorollaryA}{Corollary}{Corollaries}
-\crefname{PropositionA}{Proposition}{Propositions}
-\crefname{LemmaA}{Lemma}{Lemmas}
-\crefname{DefinitionA}{Definition}{Definitions}
-\crefname{ExampleA}{Example}{Examples}
-\crefname{RemarkA}{Remark}{Remarks}
-\crefname{AssumptionA}{Assumption}{Assumptions}
-\crefname{ExerciseA}{Exercise}{Exercises}
-\crefname{algorithm}{Algorithm}{Algorithms}
-\crefname{figure}{Fig.}{Figs.}
-\crefname{table}{Table}{Tables}
-\crefname{section}{Section}{Sections}
-\crefname{subsection}{Section}{Sections}
-\crefname{subsubsection}{Section}{Sections}
-
-\ifx\notloadalgorithm\undefined
-\usepackage{algorithm}
-\usepackage{algpseudocode}
-\fi
-
-%may cause conflict with some packages like tikz, include manually if desired
-%load after hyperref
-\ifx\loadbreqn\undefined
-	\relax
-\else
-	\usepackage{breqn}
-\fi
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-\interdisplaylinepenalty=2500   % To restore IEEEtran ability to automatically break
-% within multiline equations, when using amsmath.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%Theorem declarations
-% \def\renewtheorem in your document if you want to redefine these theorem environments.
-% Alternatively, call \clearthms
-
-\makeatletter
-\def\cleartheorem#1{%
-    \expandafter\let\csname#1\endcsname\relax
-    \expandafter\let\csname c@#1\endcsname\relax
-}
-\def\clearthms#1{ \@for\tname:=#1\do{\cleartheorem\tname} }
-\makeatother
-
-\ifx\renewtheorem\undefined
-	% for use in main body
-	\ifx\useTheoremCounter\undefined
-		\newtheorem{Theorem}{Theorem}
-		\newtheorem{Corollary}{Corollary}
-		\newtheorem{Proposition}{Proposition}
-		\newtheorem{Lemma}{Lemma}
-	\else
-		\newtheorem{Theorem}{Theorem}
-		\newtheorem{Corollary}[Theorem]{Corollary}
-		\newtheorem{Proposition}[Theorem]{Proposition}
-	\fi
-
-	\newtheorem{Definition}{Definition}
-	\newtheorem{Example}{Example}
-	\newtheorem{Remark}{Remark}
-	\newtheorem{Assumption}{Assumption}
-	\newtheorem{Exercise}{Exercise}
-	\newtheorem{Problem}{Problem}
-
-	% for use in the appendix
-	\newtheorem{TheoremA}{Theorem}[section]
-	\newtheorem{CorollaryA}{Corollary}[section]
-	\newtheorem{PropositionA}{Proposition}[section]
-	\newtheorem{LemmaA}{Lemma}[section]
-	\newtheorem{DefinitionA}{Definition}[section]
-	\newtheorem{ExampleA}{Example}[section]
-	\newtheorem{RemarkA}{Remark}[section]
-	\newtheorem{AssumptionA}{Assumption}[section]
-	\newtheorem{ExerciseA}{Exercise}[section]
-\fi
-
-% Remarks
-\theoremstyle{remark}
-\newtheorem{Rem}{Remark}
-\theoremstyle{plain}
-
-\newenvironment{remarks}{
-	\begin{list}{\textit{Remark} \arabic{Rem}:~}{
-			\setcounter{enumi}{\value{Rem}}
-			\usecounter{Rem}
-			\setcounter{Rem}{\value{enumi}}
-			\setlength\labelwidth{0in}
-			\setlength\labelsep{0in}
-			\setlength\leftmargin{0in}
-			\setlength\listparindent{0in}
-			\setlength\itemindent{15pt}
-		}
-		}{
-	\end{list}
-}
-
-
-% Special Headings
-%\newtheorem*{Prop1}{Proposition 1} %needs amsthm
-
-%\newtheoremstyle{nonum}{}{}{\itshape}{}{\bfseries}{.}{ }{#1 (\mdseries #3)}
-%\theoremstyle{nonum}
-%\newtheorem{Example**}{Example 1}
-
-\newcommand{\EndExample}{{$\square$}}
-%\renewcommand{\QED}{\QEDopen} % changes end of proof box to open box.
-
-\newcommand{\qednew}{\nobreak \ifvmode \relax \else
-		\ifdim\lastskip<1.5em \hskip-\lastskip
-			\hskip1.5em plus0em minus0.5em \fi \nobreak
-		\vrule height0.75em width0.5em depth0.25em\fi}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Macros
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % achieves the functionality of \tag for subequations environment
-\makeatletter
 \newenvironment{varsubequations}[1]
 {%
 	\addtocounter{equation}{-1}%
@@ -361,7 +591,7 @@
 		{%
 	\end{subequations}\ignorespacesafterend
 }
-\makeatother
+%\makeatother
 
 
 \newcommand{\ml}[1]{\begin{multlined}[t]#1\end{multlined}}
@@ -817,7 +1047,7 @@
 \newcommand{\hbXi}{\widehat{\bXi}}
 \newcommand{\hbLambda}{\widehat{\bLambda}}
 
-\makeatletter
+%\makeatletter
 \newcommand*\rel@kern[1]{\kern#1\dimexpr\macc@kerna}
 \newcommand*\widebar[1]{%
   \begingroup
@@ -834,7 +1064,7 @@
   \macc@nested@a\relax111{#1}%
   \endgroup
 }
-\makeatother
+%\makeatother
 
 \newcommand{\barbalpha}{\widebar{\balpha}}
 \newcommand{\barbbeta}{\widebar{\bbeta}}
@@ -1064,9 +1294,9 @@
 
 % Allows the use of 
 % \P : \mathbb{P}
-% \P(X) : \mathbb{P}\left({X}\right)
-% \P_{p}(X) : \mathbb{P}_{p}\left({X}\right)
-% \P(X \given Y) : \mathbb{P}\left({X}\, \middle| \, {Y}\right). 
+% \P(X) : \mathbb{P}\left( {X} \right)
+% \P_{p}(X) : \mathbb{P}_{p}\left( {X} \right)
+% \P(X \given Y) : \mathbb{P}\left( {X}\, \middle| \, {Y} \right). 
 % Starred version \P* does not use \left and \right. Maybe used in inline equations. 
 \DeclareDocumentCommand \P { s e{_^} d() g } {%
 	\mathbb{P}%
@@ -1085,9 +1315,9 @@
 
 % Allows the use of 
 % \E : \mathbb{E}
-% \E[X] : \mathbb{E}\left[{X}\right]
-% \E_{p}[X] or \E{p}[X] : \mathbb{E}_{p}\left[{X}\right]
-% \E[X \given Y]: \mathbb{E}\left[{X}\, \middle| \, {Y}\right]. 
+% \E[X] : \mathbb{E}\left[ {X} \right]
+% \E_{p}[X] : \mathbb{E}_{p}\left[ {X} \right]
+% \E[X \given Y]: \mathbb{E}\left[ {X}\, \middle| \, {Y} \right]. 
 % Starred version \E* does not use \left and \right. Maybe used in inline equations. 
 \DeclareDocumentCommand \E { s e{_^} o g } {%
 	\mathbb{E}%
@@ -1140,7 +1370,7 @@
 
 
 % General distribution 
-% E.g., \dist{Beta}[a,b][x] gives Beta(x | a,b); \dist{Beta}[a,b] gives Beta(a,b)
+% E.g., \dist{Beta}[a,b][x] gives Beta(x | a,b); \dist{Beta}[a,b][] gives Beta(\cdot | a,b); \dist{Beta}[a,b] gives Beta(a,b)
 \ExplSyntaxOn
 \NewDocumentCommand \dist {m o o} {%
 \mathrm{#1}\left(%
@@ -1189,7 +1419,7 @@
 \newcommand\existu{\oldexist! \, }
 
 % Tables
-\makeatletter
+%\makeatletter
 \newcommand{\udcloser}[1]{\underline{\smash{#1}}}
 \newcommand{\sd}[1]{{\scriptstyle \pm #1}}
 \newcommand{\rankcolor}[2]{%
@@ -1214,7 +1444,7 @@
 \rankcolor{first}{red}
 \rankcolor{second}{blue}
 \rankcolor{third}{cyan}
-\makeatother
+%\makeatother
 
 % Figures
 %\renewcommand{\figurename}{Fig.}
@@ -1245,14 +1475,14 @@
 	\renewcommand{\thefigure}{S\arabic{figure}}
 }
 
-% Use with xr-hyper
-\makeatletter
+% Use with xr
+%\makeatletter
 \newcommand*{\addFileDependency}[1]{% argument=file name and extension
   \typeout{(#1)}
   \@addtofilelist{#1}
   \IfFileExists{#1}{}{\typeout{No file #1.}}
 }
-\makeatother
+%\makeatother
 
 \newcommand*{\myexternaldocument}[2][]{%
     \externaldocument[#1]{#2}%
@@ -1260,14 +1490,117 @@
     \addFileDependency{#2.aux}%
 }
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Beamer/non-Beamer specific macros or packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\makeatletter
+\ifsignalpreamble@beamer
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer specific macros
+
+%\usepackage[style=ieee,backend=bibtex]{biblatex}
+%\newcommand{\ifprefchar}{\ifpunctmark{'}} %restore functionality with BibTeX as a work-around
+%\usepackage[backend=biber, citestyle=authoryear, maxcitenames=1,mincitenames=1,bibstyle=ieee, sorting=none]{biblatex}
+\usepackage[backend=biber, citestyle=numeric, bibstyle=ieee, sorting=none]{biblatex}
+
+%%\makeatletter%
+%\@addtoreset{footnote}{page}
+%\long\def\@makefnmark{%
+%\hbox {{\normalfont [\@thefnmark]}}}%
+%%\makeatother
+
+%\renewcommand{\thefootnote}{\ifcase\value{footnote}\or$\dagger$\or$\ddagger$\or$*$\or$\circ$\or$\diamond$\or$+$\or$\square$\or$\bot$\fi}
+%\newcommand<>{\ftcite}[1]{
+%\footnote#2{\fullcite{#1}}
+%}
+
+\setbeamertemplate{bibliography item}{\insertbiblabel}
+
+%\makeatletter
+\newcommand*{\mkblankfootnote}[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}%
+  \footnotetext{\bibfootnotewrapper{#1}}%
+  \endgroup
+}
+
+\newcommand*{\mkbibsupercite}[1]{%
+  \def\cbx@savedcites{\cbx@footfullcite}%
+  \mkbibbrackets{#1}%
+  \cbx@savedcites}
+
+\DeclareCiteCommand{\supercite}[\mkbibsupercite]
+{\gdef\cbx@savedkeys{}}
+{\usebibmacro{citeindex}%
+  \usebibmacro{cite}%
+  {}%
+  \xappto\cbx@savedkeys{\thefield{entrykey},}}
+{\supercitedelim}
+{\protected@xappto\cbx@savedcites{%
+    [\thefield{prenote}][\thefield{postnote}]{\cbx@savedkeys}}}
+
+\DeclareCiteCommand{\cbx@footfullcite}
+{}
+{\mkblankfootnote{%
+    \printtext[labelnumberwidth]{%
+      \usebibmacro{cite}%
+    }%
+    \setunit{\addspace}%
+    \usedriver
+    {\DeclareNameAlias{sortname}{default}}
+    {\thefield{entrytype}}}}
+{}
+{}
+%\makeatother
+\newcommand<>{\ftcite}[1]{\only#2{\supercite{#1}}}
+
+\newcommand{\backupbegin}{
+  \newcounter{framenumberappendix}
+  \setcounter{framenumberappendix}{\value{framenumber}}
+}
+\newcommand{\backupend}{
+  \addtocounter{framenumberappendix}{-\value{framenumber}}
+  \addtocounter{framenumber}{\value{framenumberappendix}}
+}
+
+\newcommand\Fontvi{\fontsize{10}{11}\selectfont}
+\newcommand\Fontvismall{\fontsize{8}{8}\selectfont}
+\newcommand\Fontvitiny{\fontsize{6}{6}\selectfont}
+\renewcommand\arraystretch{1.5}% (MyValue=1.0 is for standard spacing)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%colors
+\newcommand<>{\red}[1]{{\color#2{red} #1}}
+\newcommand<>{\blue}[1]{{{\color#2{blue} #1}}}
+\newcommand<>{\green}[1]{{\color#2{OliveGreen} #1}}
+\newcommand<>{\gray}[1]{{\color#2{gray} #1}}
+\newcommand<>{\magenta}[1]{{\color#2{magenta} #1}}
+\newcommand<>{\orange}[1]{{\color#2{Orange} #1}}
+\newcommand<>{\cyan}[1]{{\color#2{cyan} #1}}
+\newcommand<>{\lime}[1]{{\color#2{LimeGreen} #1}}
+\newcommand<>{\purple}[1]{{\color#2{purple} #1}}
+\newcommand<>{\teal}[1]{{\color#2{teal} #1}}
+\newcommand<>{\yellow}[1]{{\color#2{yellow} #1}}
+\newcommand<>{\BurntOrange}[1]{{\color#2{BurntOrange} #1}}
+
+\newcommand<>{\alertc}[2][red]{{\color#3{#1} #2}}
+
+\else
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Non-Beamer specific macros
+
 % Editing
 \definecolor{gray90}{gray}{0.9}
 \def\colorlist{red,blue,brown,cyan,darkgray,gray,lightgray,green,lime,magenta,olive,orange,pink,purple,teal,violet,white,yellow}
 
 % Define the \createcolor macro
-\makeatletter
 \def\startcomment{[}
-\ifx\nohighlights\undefined
+\ifsignalpreamble@highlights
 	\newcommand{\createcolor}[1]{%
 			\expandafter\newcommand\csname #1\endcsname[1]{{\color{#1} ##1}}%
 	}
@@ -1296,7 +1629,6 @@
     \fi
 }
 \expandafter\@tempa\colorlist,\relax,
-\makeatother
 
 \newcommand{\old}[1]{{\color{green} [\textrm{DELETED: }#1]}}
 \newcommand{\hhide}[1]{}
@@ -1304,14 +1636,23 @@
 
 \newcommand{\txp}[2]{\texorpdfstring{#1}{#2}}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\interdisplaylinepenalty=2500   % To restore IEEEtran ability to automatically break
+% within multiline equations, when using amsmath.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\fi % End of Beamer/non-Beamer specific packages
+%\makeatother
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % For diagnosis: if activated, will show what is causing 
 % LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\ifx\diagnoselabel\undefined
-	\relax
-\else
-	\makeatletter
+%\makeatletter
+\ifsignalpreamble@diagnoselabel
 	\def\@testdef #1#2#3{%
 		\def\reserved@a{#3}\expandafter \ifx \csname #1@#2\endcsname
 			\reserved@a  \else
@@ -1319,7 +1660,7 @@
 				\meaning\reserved@a^^J%
 				\expandafter\meaning\csname #1@#2\endcsname^^J}%
 			\@tempswatrue \fi}
-	\makeatother
 \fi
+%\makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

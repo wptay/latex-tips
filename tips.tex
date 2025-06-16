@@ -23,17 +23,18 @@
 \usepackage{lipsum}
 \usepackage{forest}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Load the preamble.tex
-% \def\notloadhyperref stops loading of the hyperref package 
-% \def\loadbibentry by itself loads the bibentry package (this is usually not required for your paper)
-% If hyperref is loaded, \loadbibentry modifies \@bibitem to make bibentry package compatible with hyperref
 
-\def\loadbibentry{} %comment out, usually not used in your paper
-\usepackage{xr}
-\input{preamble.tex}
-\hypersetup{
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Load the signalpreamble package
+% bibentry=true loads the bibentry package (this is usually not required for your paper)
+% If hyperref (by default) is loaded, bibentry modifies \@bibitem to make bibentry package compatible with hyperref
+
+\usepackage[bibentry]{signalpreamble} 
+
+
+% This is used only for this tips.tex file, not required for your paper.
+\hypersetup{%
     colorlinks=true,
     linkcolor=black,
     citecolor=black,
@@ -41,9 +42,10 @@
     urlcolor=purple,
 }
 
+
 % If using \Copy and \Paste commands, you need to load the clipboard package.
-\usepackage{clipboard}
-\newclipboard{output-myclipboard}
+% \usepackage{clipboard}
+% \newclipboard{output-myclipboard}
 
 % Comment out this whole part if not referencing any supplementary material 
 % in the file supplementary.tex
@@ -55,20 +57,16 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Additional newcommands not in preamble.tex, special to your paper.
-% Please remove and add your own ones.
+%% Additional newcommands and acronyms not in preamble.tex, special to your paper.
+%% Please remove and add your own ones.
 
+%<*tag:commands-main>
 \newcommand{\tbC}{\widetilde{\bC}}
 \newcommand{\tbL}{\widetilde{\bL}}
 \newcommand{\onehot}[1]{\mathrm{one\_hot}\left(#1\right)}
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Acronyms
-% Some standard ones have been defined in preamble.tex
-
 \newacronym{KLD}{KLD}{Kullbeck-Leibler divergence}
-
+%</tag:commands-main>
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -134,11 +132,6 @@ I recommend using \href{https://git-scm.com/}{git} for version control.
 %\item Together with pdflatex, I recommend the use of SumatraPDF as the viewer. This allows you to use synctex, which lets you sync the pdf file to your tex file (double-clicking in the pdf file brings you directly to the right place in the tex file and vice versa when opening pdf from tex).
 %\item However, synctex does not allow file names with spaces. Please use an underscore ``\_'' if you need to have spaces.
 \item After running latexmk, \textbf{\red{please look through the warnings and resolve them}}. These are very helpful to catch errors like defining same labels multiple times.
-\item I have provided a \blue{preamble.tex} (look under the \verb|latex\local| folder) that you can include into your tex file using the \verb|\input| command (see the beginning of this tex file). This preamble.tex file includes all the commonly used packages, declarations and aliases. \textbf{Look through the preamble.tex file first before you define your own newcommands to avoid duplication. The most updated preamble.tex file is always available on \url{https://gitlab.com/wptay/latex-tips}.} I will always use the most updated preamble.tex file, so there is no need for you to include a copy in your workspace (you can keep a global copy somewhere and configure your Latex to point to it (see \href{https://miktex.org/kb/texmf-roots}{TEXMF}) or include a path in a latexmkrc file). If you find some useful things to add to preamble.tex, please let me know. {Hint: if you prefer some other definition of a command defined in preamble.tex, you can redefine it in your tex file after the \verb|\input{preamble.tex}| command using \olive{\texttt{renewcommand}}.}
-\item A typical working tree looks like that in \cref{fig:working-tree}. 
-\item You can use this tex file as a starting template when writing your papers.
-\item Upload all references, except for books, you have used in your paper to Google Drive or OneDrive and share with me. If you have referenced a paper, you should have at least read its abstract and the relevant parts that you have referenced.
-\item Please ensure that you embed all your fonts into the pdf before you submit to a journal or conference.
 \end{enumerate}
 
 \begin{figure}[!htb] 
@@ -168,14 +161,14 @@ before computing xy={l=15pt},
 [abc.pdf]
 [xyz.png]
 ]
-[drafts (NOT required if using git)
-[papernameV1.tex]
-[papernameV1.pdf]
-[papernameV2.tex]
-[papernameV2.pdf]
-[responseR1.tex]
-[responseR1.pdf]
-]
+% [drafts (NOT required if using git)
+% [papernameV1.tex]
+% [papernameV1.pdf]
+% [papernameV2.tex]
+% [papernameV2.pdf]
+% [responseR1.tex]
+% [responseR1.pdf]
+% ]
 [conferencename (conference version)
 [latexmkrc (for BIBINPUTS and TEXINPUTS)]
 [papernameconf.tex]
@@ -196,22 +189,34 @@ before computing xy={l=15pt},
 \end{figure}
 
 
-\section{Labels}\label{sect:Labels}
+\section{The signalpreamble package}\label{sect:signalpreamble}
 
-\begin{enumerate}[(a)]
-\item Use meaningful labels for your sections, equations, inequalities, figures, tables, and others. For example, use something like ``sect:Labels'' to label your section so that you know that this label is for a section. Later on in your text, you can then easily refer to it via something like ``\cref{sect:Labels}''. 
+\begin{enumerate}
+\item I have provided a \blue{signalpreamble} package (look under the \verb|latex\local| folder for the \blue{signalpreamble.sty} file) that you \textbf{should} use in your preamble. This signalpreamble package includes all the commonly used packages, declarations and aliases. 
+\item Typical usage is to include the following line in the preamble of your tex file:
+\begin{center}
+\verb|\usepackage{signalpreamble}| 
+\end{center}
+\item The options available for the signalpreamble package are:
+\begin{itemize}
+\item hyperref: By default, this option is hyperref=true and will load the hyperref package with the options hidelinks, hypertexnames=false. If you do not want to use hyperref, set this option to false.
+\item algpseudocode: By default, this option is pseudocode=true and will load the algpseudocode package. The algorithm package is always loaded. The algpseudocode is the preferred way to write algorithms. 
+\item beamer: By default, this option is beamer=false. Set this to true if you are writing a beamer presentation. The packages hyperref (beamer loads hyperref internally with its specific options) and cleveref are not loaded by default in this case.
+\item Other options include: cleveref, bibentry, breqn, owntheorems, useTheoremCounter, highlights, diagnoselabel, response. Please read the signalpreamble.sty file for details.
+\end{itemize} 
 
-% \begin{Example}\label{eg:lipsum}
-% \lipsum[1] 
-% \end{Example}
+\item \textbf{Look through the signalpreamble.sty file first before you define your own newcommands to avoid duplication. The most updated signalpreamble.sty file is always available on \url{https://gitlab.com/wptay/latex-tips}.} I will always use the most updated signalpreamble.sty, so there is no need for you to include a copy in your workspace (you can keep a global copy somewhere and configure your Latex to point to it (see \href{https://miktex.org/kb/texmf-roots}{TEXMF}) or include a path in a latexmkrc file). If you find some useful things to add to the package, please let me know. {Hint: if you prefer some other definition of a command defined in signalpreamble.sty, you can redefine it in your tex file after the \verb|\usepackage{signalpreamble}| command using \olive{\texttt{renewcommand}}.}
+\item A typical working tree looks like that in \cref{fig:working-tree}. Note the inclusion of the \verb|latexmkrc| file, which is used by latexmk to set the BIBINPUTS and TEXINPUTS variables. For example, this allows you to have a separate subfolder for a conference version, while sharing the same figures, bib, and sty files.
 
-\item\label{it:myitem} Tip: items can also be labeled! Example is this reference \ref{it:myitem}. 
-\item Do not over label! For equations, tables, figures and most ``objects'', we usually label only those that we need to refer to in another part of the text. In some cases, you may also label important equations although you may not refer to these in any part of your text. This makes it easier for readers to refer to your equations. However, do this judiciously.
-\item You should try to use the cleveref-forward package to reference labels. It is smart enough to know what you are referencing, e.g., \cref{sect:General}, \cref{sect:General,sect:Labels,sect:Equations}, and \cref{eq:X} all use the same cref command. Otherwise, you have put a tilde like ``Section~\ref{sect:General}'' to avoid line breaks immediately after ``Section''.
-\item Refer to \cref{algo:mini}. 
+\item Hint: you can use this tex file (without the bibentry=true option in signalpreamble package) as a starting template when writing your papers.
+\item Please ensure that you embed all your fonts into the pdf before you submit to a journal or conference.
 \end{enumerate}
 
-\begin{algorithm}[!htb]
+
+
+\section{Labels}\label{sect:Labels}
+
+\begin{algorithm}[!tb]
 \caption{Minibatch stochastic gradient algorithm}\label{algo:mini}
 \begin{algorithmic}[1]
 \State Initialize $\btheta,\bphi$.
@@ -225,20 +230,35 @@ before computing xy={l=15pt},
 \end{algorithm}
 
 
+\begin{enumerate}[(a)]
+\item Use meaningful labels for your sections, equations, inequalities, figures, tables, and others. For example, use something like ``sect:Labels'' to label your section so that you know that this label is for a section. Later on in your text, you can then easily refer to it via something like ``\cref{sect:Labels}''. 
+
+% \begin{Example}\label{eg:lipsum}
+% \lipsum[1] 
+% \end{Example}
+
+\item\label{it:myitem} Tip: items can also be labeled! Example is this reference \ref{it:myitem}. 
+\item Do not over label! For equations, tables, figures and most ``objects'', we usually label only those that we need to refer to in another part of the text. In some cases, you may also label important equations although you may not refer to these in any part of your text. This makes it easier for readers to refer to your equations. However, do this judiciously.
+
+\item You should try to use the cleveref-forward package to reference labels. It is smart enough to know what you are referencing, e.g., \cref{sect:General}, \cref{sect:General,sect:Labels,sect:Equations}, and \cref{eq:X} all use the same cref command. Otherwise, you have put a tilde like ``Section~\ref{sect:General}'' to avoid line breaks immediately after ``Section''.
+
+\item \Cref{algo:mini} uses the algpseudocode package. 
+\end{enumerate}
+
+
 \section{Equations}\label{sect:Equations}
 
 \begin{enumerate}[1)]
 \item There are many ways to write equations, but I find that you really only need to use either the align or align* environments provided by amsmath. The environment align will have equation numbers at every line and align* has no equation numbers. See the tips on labeling to decide when to use align and align*. Examples are:
 \begin{align}
-X & = \sum_{i=1}^n y_i \label{eq:X} \\
-& = z \nn
-& = w,
+X & = \sum_{i=1}^n y_i \label{eq:X}\\
+& = \int_{a}^b f(x) \ud x \nn
+& = \norm*{\sum_{t=0}^\infty e^{t\bA}}. \label{eq:norm_sum}
 \end{align}
-and 
+The align* environment is used when you do not need to number the equations. For example, if you want to write the same equations as above but without numbering, you can use the align* environment:
 \begin{align*}
-X & = \int_{a}^b f(x) \ud x \\
-& = z                     \\
-& = w \\
+X & = \sum_{i=1}^n y_i \\
+& = \int_{a}^b f(x) \ud x \\
 & = \norm*{\sum_{t=0}^\infty e^{t\bA}}. 
 \end{align*}
 %<*tag:equation>
@@ -247,7 +267,7 @@ Other examples are as follows:
 \Lambda_{\mathrm{SGLR}}(k,t) & =\max\left\{\Lambda(k,t),\Lambda_n(k,t)\right\}, \label{eq:Lambda_SGLR}    \\
 \tau_{\mathrm{SGLR}}(b)      & =\min\{\tau(b),\tau_n(b)\}, \label{eq:tau_SGLR2}                           \\
 \tau_{\mathrm{W-SGLR}}(b)    & =\min\{\widetilde{\tau}(b),\widetilde{\tau_n}(b)\}, \label{eq:tau_WSGLR2}  \\
-\Phi_i                       & = \tau_{\mathrm{W-SGLR}}(b) + i^2,\ \text{for $i=1,\ldots,N$},         \nn
+\Phi_i                       & = \tau_{\mathrm{W-SGLR}}(b) + i^2,\ \text{for $i=1,\dots,N$},         \nn
 \tbC                         & = \onehot{\tbL}, \label{eq:tbC}                                            \\
 \bx &= \bB\Herm\bSigma\bM\T\bPhi\bM\bA\T,\nn
 d                            & = \KLD*{p_X}{p_{Z}}. \nonumber
@@ -255,7 +275,8 @@ d                            & = \KLD*{p_X}{p_{Z}}. \nonumber
 %</tag:equation>
 \textbf{Note when punctuation marks like ``,'' and ``.'' are required in the equations.} 
 
-\item Please put \& before the binary operators like $=$, $\leq$ and $\geq$. You can see why by comparing the following example with that above. Do you see that the spacing behind $=$ is now missing? 
+
+\item Please put \& before the binary operators like $=$, $\leq$ and $\geq$. You can see why by comparing the following example with that above. Do you see that the spacing behind $=$ is now missing?
 \begin{align*}
 X = & \int_{a}^b f(x) \ud x \\
 =   & z                     \\
@@ -331,14 +352,6 @@ f(\btheta) &= \E_{X \sim p_{\btheta}}^{\beta}[\frac{f(X)}{g(X,Y)} \given Y],\\
 
 \section{Figures and Tables}\label{sect:Graphics}
 
-\begin{enumerate}
-\item You can set the graphics path in tex using \verb|\graphicspath| (this has been done in the preamble.tex file) to the ``figures'' subfolder in which you keep your images. Then \LaTeX\ will look for the right figure in the folder you have provided in the graphics path. See \cref{fig:tandem} for an example.
-\item I highly recommend Ipe (\url{http://ipe.otfried.org/}) for preparing your graphics. The advantage is that you can directly input latex symbols into your graphics using Ipe. Graphics can be saved directly in pdf. For example, you can open tandem.pdf in the Figures folder using the Ipe program and edit that! There is also an Ipelet that allows you to convert Ipe to tikz if you prefer the latter. Another popular graphics program with Latex capability is Inkscape~(\url{https://inkscape.org/}) with the textext extension. If you use any other graphics program, the font may not be the same as your latex document. In that case, you may need to use psfrag to replace your labels.
-\item Please use ``!htb'' or ``!htbp'' as options in your figure and table environments.
-\item Use the subcaption package for the subfigure environment. See \cref{fig:tandem} for an example. Do not use the subfig package as it does not work with the hyperref package. \item An example of a table is shown in \cref{tab:linkresults}. Note the use of \verb|\toprule|, \verb|\midrule|, and \verb|\bottomrule| from the booktabs package instead of the ugly \verb|\hline| command. The advice from the booktabs package is to ``Never, ever use vertical rules.'' and ``Never use double rules.'' 
-\item To have fixed column widths with text wrapping in your table column, use the \verb|L{width}|, \verb|C{width}|, or \verb|R{width}| column types from the preamble.tex. 
-\end{enumerate}
-
 %<*tag:afigure>
 \begin{figure}[!htb]
 \centering
@@ -358,6 +371,16 @@ f(\btheta) &= \E_{X \sim p_{\btheta}}^{\beta}[\frac{f(X)}{g(X,Y)} \given Y],\\
 \label{fig:tandem}
 \end{figure}
 %</tag:afigure>
+
+\begin{enumerate}
+\item You can set the graphics path in tex using \verb|\graphicspath| (this has been done in the preamble.tex file) to the ``figures'' subfolder in which you keep your images. Then \LaTeX\ will look for the right figure in the folder you have provided in the graphics path. See \cref{fig:tandem} for an example.
+\item I highly recommend Ipe (\url{http://ipe.otfried.org/}) for preparing your graphics. The advantage is that you can directly input latex symbols into your graphics using Ipe. Graphics can be saved directly in pdf. For example, you can open tandem.pdf in the Figures folder using the Ipe program and edit that! There is also an Ipelet that allows you to convert Ipe to tikz if you prefer the latter. Another popular graphics program with Latex capability is Inkscape~(\url{https://inkscape.org/}) with the textext extension. If you use any other graphics program, the font may not be the same as your latex document. In that case, you may need to use psfrag to replace your labels.
+\item Please use ``!htb'' or ``!htbp'' as options in your figure and table environments.
+\item Use the subcaption package for the subfigure environment. See \cref{fig:tandem} for an example. Do not use the subfig package as it does not work with the hyperref package. \item An example of a table is shown in \cref{tab:linkresults}. Note the use of \verb|\toprule|, \verb|\midrule|, and \verb|\bottomrule| from the booktabs package instead of the ugly \verb|\hline| command. The advice from the booktabs package is to ``Never, ever use vertical rules.'' and ``Never use double rules.'' 
+\item To have fixed column widths with text wrapping in your table column, use the \verb|L{width}|, \verb|C{width}|, or \verb|R{width}| column types from the preamble.tex. 
+\end{enumerate}
+
+
 
 \begin{table}[!htb]
 \centering
@@ -461,12 +484,16 @@ You can use tools like ChatGPT or GitHub Copilot to polish your writing. If you 
 
 \section{Responding to Paper Reviews}\label{sect:Response}
 \begin{enumerate}
-\item You can use the response.tex as a starting template. I have defined some useful environments for use there in your responses to reviewers' comments.
+\item You can use the response.tex as a starting template. I have defined some useful environments for use there in your responses to reviewers' comments. Use 
+\begin{center}
+\verb|\usepackage[response]{signalpreamble}| 
+\end{center}
+
 \item Check out the use of the packages catchfilebetweentags and xr. These packages make life much easier when you need to cross-reference a label (e.g., \cref{supp:Preliminaries} from the supplementary) or citation from one tex file in another tex file. It also allows you to quote a chunk of tex directly from your manuscript tex file. 
 
 \teal{
 \begin{Remark}
-If you are using Overleaf and find that the xr package is not working, you are missing information in the latexmkrc file. See \href{https://www.overleaf.com/learn/how-to/Cross_referencing_with_the_xr_package_in_Overleaf}{this link} for more information.
+If you are using Overleaf and/or TexLive 2024 or earlier, change the xr package to the xr-hyper package. If you find that cross referencing is not working, you are missing information in the latexmkrc file. See \href{https://www.overleaf.com/learn/how-to/Cross_referencing_with_the_xr_package_in_Overleaf}{this link} for more information.
 \end{Remark}    
 }
 
@@ -491,7 +518,9 @@ In practice, the data associated with each vertex can have additional structure.
 \begin{Example}\label{eg:subGSP}
 Consider the subset of vertices $V_0$ of an unweighted directed graph $G$. Suppose that we consider the adjacency matrix $\bA_G$ as the graph shift operator for $G$. The adjacency matrix $\bA_{H_0}$ of the subgraph $H_0$ shown is a submatrix consisting of the even-indexed rows and columns of $\bA_G^2$. Any filter shift invariant \gls{wrt} $\bA_{H_0}$ can be viewed as a polynomial of $\bA_G^2$ composed with a projection to the vertices of $H_0$. See \cite{kipf2016semi} for more details.
 
-\Copy{tag:kernelGSP}{Kernel-based techniques have more flexibility in filtering and reconstruction, since they introduce nonlinearity and generalize existing approaches. The graph signal is modeled as a random nonlinear function of an arbitrary input with a specific covariance structure adapted to the graph. The covariance structure is based on a scalar-valued kernel for differentiating the inputs and the graph structure for regularizing the smoothness of the random graph signal.}
+%<*tag:kernelGSP>
+Kernel-based techniques have more flexibility in filtering and reconstruction, since they introduce nonlinearity and generalize existing approaches. The graph signal is modeled as a random nonlinear function of an arbitrary input with a specific covariance structure adapted to the graph. The covariance structure is based on a scalar-valued kernel for differentiating the inputs and the graph structure for regularizing the smoothness of the random graph signal.
+%</tag:kernelGSP>
 
 \begin{figure}[!htb]
 \centering
@@ -541,7 +570,7 @@ From \cref{thm:limit_var}, we have that the limit posterior covariance of $f(v_0
 \nobibliography*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\red{The statement ``\textbackslash def\textbackslash loadbibentry'' in the preamble allows the bib entries to be printed as below. Remove or comment this out in your paper.}
+\red{The option bibentry=true in the signalpreamble package allows the bib entries to be printed as below. Remove this option in your paper.}
 
 \begin{enumerate}
 \item Use bibtex to keep track of your references.

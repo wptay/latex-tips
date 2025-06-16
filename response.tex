@@ -19,186 +19,16 @@
 
 
 \usepackage[labeled,resetlabels]{multibib}
-
 % Used by additional references. If you do not have any local cites, comment this out.
 % Cite additional references using \citeA. 
 \newcites{A}{Additional References}
 
-\usepackage{catchfilebetweentags}
-%%%% usage in manuscript
-%::: %<*tag_name>
-%::: content
-%::: %</tag_name>
-%%%% usage in response
-%::: \revision{tag_name}
-\makeatletter
-\def\CatchFBT@sanitize{%
-   \@sanitize
-   \@makeother\{%
-   \@makeother\}%
-%   \endlinechar=`\^^J% <--- This line modified
-}% \CatchFBT@sanitize
-\makeatother
+\usepackage[response]{signalpreamble} 
 
-\usepackage{xr}
-\input{preamble.tex}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Add newcommands from \maintext here
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newcommand{\tbC}{\widetilde{\bC}}
-\newcommand{\tbL}{\widetilde{\bL}}
-\newcommand{\onehot}[1]{\mathrm{one\_hot}\left(#1\right)}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Newcommands - do not change
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newcounter{reviewer}
-
-\theoremstyle{plain}\newtheorem{comment}{Comment}[reviewer]
-
-\newtheoremstyle{respstyle}%
-{3pt}% Space above
-{3pt}% Space below 
-{\normalfont\color{blue}}% Body font
-{}% Indent amount
-{\bfseries\color{blue}}% Theorem head font
-{.}% Punctuation after theorem head
-{.5em}% Space after theorem head 
-{}% Theorem head spec (can be left empty, meaning ‘normal’)
-
-\theoremstyle{respstyle}
-\newtheorem{response}{Response}[reviewer]
-
-\NewDocumentCommand\PbPResponseHeader{s o}{%
-	\IfBooleanTF#1%
-  {\par }%
-	{\clearpage }%
-  \IfValueTF{#2}{\setcounter{reviewer}{#2}}{\refstepcounter{reviewer}}%
-  \begin{center}%
-    \huge \textbf{Response to Reviewer \thereviewer}%
-  \end{center}%
-}
-
-\usepackage{mdframed}
-\mdfsetup{
-  fontcolor=blue,
-  linecolor=blue,
-}
-
-\newcounter{newdocumentimport}
-\makeatletter
-\AtBeginDocument{
-  \let\oldlabel@in@display\label@in@display%
-  \let\oldlabel\label%
-}
-\newcommand{\labelimport}{%
-  \stepcounter{newdocumentimport}%
-  \def\label@in@display##1{%
-    \xrcounterref{equation}{##1}%
-    \oldlabel@in@display{\docprefix-\thenewdocumentimport-##1}%
-  }%
-  \def\label##1{%
-    \oldlabel{\docprefix-\thenewdocumentimport-##1}%
-  }%
-}
-\let\oldExecuteMetaData\ExecuteMetaData
-\renewcommand{\ExecuteMetaData}{\labelimport\oldExecuteMetaData}
-\makeatother
-
-\newcounter{eqcounter}
-\renewcommand{\theequation}{\docprefix\arabic{equation}}
-\newcommand{\revisionframe}[1]{
-  \setcounter{eqcounter}{\value{equation}}%
-  \renewcommand{\theequation}{\arabic{equation}}%
-  \par%
-  \begin{mdframed}[userdefinedwidth=0.98\linewidth,align=center]%
-    \ExecuteMetaData[\maintext]{#1}%
-  \end{mdframed}%
-  \setcounter{equation}{\value{eqcounter}}%
-  \renewcommand{\theequation}{\docprefix\arabic{equation}}%
-}
-
-% Usage example: 
-% If the tex that you transfer over using \revision contains a \label{thmname} for an environment (e.g., Theorem, Lemma, Definition, table, figure), it will not have the same numbering as that in \maintext. 
-% Call \xrcounterref{environment_name}{thmname} before \revision to fix this. 
-\newcommand{\xrcounterref}[2]{
-  \edef\x{\getrefnumber{#2}}%
-  \expandafter\ifrmnum\expandafter{\x}{%
-    \setcounter{#1}{\expandafter\rmntonum\expandafter{\x}}%
-  }{%
-    \setcounter{#1}{\getrefnumber{#2}}
-  }
-  %\setcounter{#1}{\getrefnumber{#2}}
-  \addtocounter{#1}{-1}
-}
-
-\DeclareDocumentCommand{\xrcounters}{ > { \SplitArgument{1}{>} } m }{%
-  \xrcounterref #1
-}
-
-% Starred version to copy using \copybox, see below.
-\DeclareDocumentCommand{\revision}{ s m > { \SplitList{;} } o }{%
-  % Locally patch figure and table to always use [H] inside the box
-  \begingroup
-    \let\origfigure\figure
-    \let\endorigfigure\endfigure
-    \renewenvironment{figure}[1][]%
-      {\origfigure[H]}%
-      {\endorigfigure}
-    \let\origtable\table
-    \let\endorigtable\endtable
-    \renewenvironment{table}[1][]%
-      {\origtable[H]}%
-      {\endorigtable}
-    \IfValueT{#3}{%
-      \ProcessList {#3}{%
-        \xrcounters
-      }%
-    }
-    \IfBooleanTF{#1}{%
-      \copybox{#2}%
-    }{%
-      \revisionframe{#2}%
-    }%
-  \endgroup
-}
-
-% Read the clipboard package documentation for more details.
-% For the cases where nested tags are not supported by catchfilebetweentags.
-% Need to include the following in the main file preamble:
-% \usepackage{clipboard}
-% \newclipboard{output-myclipboard}
-% Ensure that the main file is compiled first and check that output-myclipboard.cpy file has content.
-\usepackage{clipboard}
-\newcommand{\copybox}[1]{%
-  \openclipboard{output-myclipboard}
-  \begin{mdframed}[
-    userdefinedwidth=0.98\linewidth,
-    align=center,
-    skipabove=0.5em,       % Space above the box
-    skipbelow=0.5em,       % Space below the box
-    innertopmargin=6pt,    % Inner padding
-    innerbottommargin=6pt,
-    innerleftmargin=10pt,
-    innerrightmargin=10pt,
-    linewidth=0.5pt,       % Border thickness
-    frametitlealignment=center % Title alignment (if used)
-  ]
-  \Paste{#1}%
-  \end{mdframed}%
-}
 
 \myexternaldocument{\maintext}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -211,6 +41,10 @@
 
 \begin{document}
 \maketitle
+
+% This copies the new commands and acronyms from the main paper.
+\ExecuteMetaData[\maintext]{tag:commands-main}
+
 
 We sincerely thank the Associate Editor and all reviewers for their helpful comments and suggestions. We have revised the manuscript and included here a point-by-point response. The main changes are the following:
 \begin{enumerate}
@@ -265,9 +99,9 @@ Why does this hold?
 \begin{response}
   Thank you for your question. Please refer to the following equation:
   \begin{align}
-  f(x) &= \sum_{i>0} y_i. \label{eq:test}
+  f(x) &= \sum_{i>0} y_i. \label{eq:ftest}
   \end{align}
-  Note the prefix ``\docprefix'' in the equation that is in this response. From \cref{eq:test} and \cref{eq:Lambda_SGLR} in the main paper, the result follows immediately.
+  Note the prefix ``\docprefix'' in the equation that is in this response. We can reference \cref{eq:ftest} as usual.
 
 \end{response}
 
@@ -275,15 +109,14 @@ Why does this hold?
 A lot of comments.
 \end{comment}
 \begin{response}
-  Thank you for your comment. Repeated quote from tips.tex:
+  Thank you for your comment. We have revised the manuscript as follows:
   \revision{tag:equation}
   We remark that it can be shown that
   \begin{align}
-  \Lambda(k) &= \int_\Omega \tau(b) \ud{\nu(b)},\\
-  \Gamma(k) &= \int_{\calA} f(x) \ud{\mu(x)}.
+  \Lambda(k) &= \int_\Omega \tau(b) \ud{\nu(b)}, \label{eq:Ltest}\\
+  \Gamma(k) &= \int_{\calA} f(x) \ud{\mu(x)}. \label{eq:Gtest}
   \end{align}
-
-  The equation numbers shown in the box are the same as those in the main paper, which is great! The command \verb|\revision| takes care of this. But it has limitations. See the following examples. 
+  The equation numbers like \cref{eq:Lambda_SGLR} shown in the box are the same as those in the main paper, which is great! The command \verb|\revision| takes care of this. But it has limitations. See the following examples. The local equations are \cref{eq:Ltest,eq:Gtest}.
 \end{response}
 
 
@@ -319,6 +152,25 @@ Thank you for your comment. Blah blah blah blah blah blah blah blah blah blah bl
 In the macro \verb|\revision|, floats like tables and figures have their placement options replaced with ``H''. For example, the following figure and tables from the main text are reproduced here:
 \revision{tag:afigure}[figure>fig:tandem]
 \revision{tag:atable}[table>tab.Frond_com]
+
+The following is a new \cref{tab:ablation} that is not in the main text, but is included here for demonstration purposes (notice that the table counter value is correctly set to I):
+
+\begin{table}[H]
+\centering
+\caption{Module ablation.}\label{tab:ablation}
+\begin{tabular}{l |c c c}
+\toprule
+Model &   \multicolumn{3}{c}{KITTI360-AG (Sat.)} \\
+   &  R@1 & R@5  & R@10 \\
+\midrule
+full & \first{32.0} & \first{47.6} & \first{54.9} \\
+full w/o stage 1 & 28.5 & 43.9 & 51.0 \\
+full w/o stage 2 & 30.6 & 45.3 & 53.0 \\
+full w/o $\ell_{\mathrm{MVMM}}$ & 30.9  & 45.2 & 51.7 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \end{response}
 
 
@@ -326,8 +178,9 @@ In the macro \verb|\revision|, floats like tables and figures have their placeme
 Some other comments.
 \end{comment}
 \begin{response}
-Unfortunately, the catchfilebetweentags package does not support nested tags, so we have to use the starred version of \verb|\revision| (using the clipboard package) to copy and paste the parts of the latex content we want. See the following example:
-\revision*{tag:kernelGSP}
+See the following example where the tag is nested inside another tag:
+\revision{tag:kernelGSP}
+
 \end{response}
 
 
