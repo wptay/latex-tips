@@ -200,7 +200,7 @@ before computing xy={l=15pt},
 \item The options available for the signalpreamble package are:
 \begin{itemize}
 \item hyperref: By default, this option is hyperref=true and will load the hyperref package with the options hidelinks, hypertexnames=false. If you do not want to use hyperref, set this option to false.
-\item algpseudocode: By default, this option is algpseudocode=true and will load the algpseudocode package. The algorithm package is always loaded. The algpseudocode is the preferred way to write algorithms. 
+\item algpseudocode: By default, this option is algpseudocode=true and will load the algpseudocode package. The algorithm package is loaded first. The algpseudocode is the preferred way to write algorithms. 
 \item beamer: By default, this option is beamer=false. Set this to true if you are writing a beamer presentation. The packages hyperref (beamer loads hyperref internally with its specific options) and cleveref are not loaded by default in this case.
 \item Other options include: subcaption, cleveref, response, bibentry, breqn, owntheorems, useTheoremCounter, highlights, diagnoselabel. Please read the signalpreamble.sty file for details.
 \end{itemize} 
