@@ -24,6 +24,8 @@
 \DeclareBoolOption[false]{diagnoselabel}
 \DeclareBoolOption[false]{beamer}
 \DeclareBoolOption[false]{response}
+\DeclareBoolOption[false]{xrhyper}
+
 
 \ProcessKeyvalOptions*{} % process options
 
@@ -149,9 +151,12 @@
 \else
 %put the float package before hyperref and algorithm package after hyperref for hyperref to work correctly with algorithm
 \RequirePackage{float}
-\usepackage{xr}
+
 % If using TexLive 2024 (e.g., on Overleaf), use xr-hyper instead of xr.
-% \usepackage{xr-hyper}
+\ifsignalpreamble@xrhyper
+	\RequirePackage{xr-hyper}
+\else
+	\RequirePackage{xr}
 \fi
 
 \ifsignalpreamble@hyperref%
@@ -295,7 +300,7 @@
 	\RequirePackage{breqn}
 \fi
 
-\usepackage{catchfilebetweentags}
+\RequirePackage{catchfilebetweentags}
 %%%% usage in manuscript
 %::: %<*tag_name>
 %::: content
@@ -339,7 +344,7 @@
   \end{center}%
 }
 
-\usepackage{mdframed}
+\RequirePackage{mdframed}
 \mdfsetup{
   fontcolor=blue,
   linecolor=blue,
@@ -441,10 +446,10 @@
 % Read the clipboard package documentation for more details.
 % For the cases that are not supported by catchfilebetweentags. May not be necessary now with the patch \patchcmd{\CatchFBT@Fin@l}.
 % Need to include the following in the main file preamble:
-% \usepackage{clipboard}
+% \RequirePackage{clipboard}
 % \newclipboard{output-myclipboard}
 % Ensure that the main file is compiled first and check that output-myclipboard.cpy file has content.
-\usepackage{clipboard}
+\RequirePackage{clipboard}
 \newcommand{\copybox}[1]{%
   \openclipboard{output-myclipboard}
   \begin{mdframed}[
@@ -1504,10 +1509,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Beamer specific macros
 
-%\usepackage[style=ieee,backend=bibtex]{biblatex}
+%\RequirePackage[style=ieee,backend=bibtex]{biblatex}
 %\newcommand{\ifprefchar}{\ifpunctmark{'}} %restore functionality with BibTeX as a work-around
-%\usepackage[backend=biber, citestyle=authoryear, maxcitenames=1,mincitenames=1,bibstyle=ieee, sorting=none]{biblatex}
-\usepackage[backend=biber, citestyle=numeric, bibstyle=ieee, sorting=none]{biblatex}
+%\RequirePackage[backend=biber, citestyle=authoryear, maxcitenames=1,mincitenames=1,bibstyle=ieee, sorting=none]{biblatex}
+\RequirePackage[backend=biber, citestyle=numeric, bibstyle=ieee, sorting=none]{biblatex}
 
 %%\makeatletter%
 %\@addtoreset{footnote}{page}
