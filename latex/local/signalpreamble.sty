@@ -16,6 +16,7 @@
 \DeclareBoolOption[false]{bibentry}
 \DeclareBoolOption[true]{algpseudocode}
 \DeclareBoolOption[true]{cleveref}
+\DeclareBoolOption[true]{subcaption}
 \DeclareBoolOption[false]{breqn}
 \DeclareBoolOption[false]{owntheorems}
 \DeclareBoolOption[false]{useTheoremCounter}
@@ -97,13 +98,14 @@
 
 
 %\makeatletter
+\ifsignalpreamble@subcaption
 \let\MYcaption\@makecaption
-%\makeatother
 \RequirePackage[font=footnotesize]{subcaption}
-%\makeatletter 
 % Change the caption to IEEE style
 \let\@makecaption\MYcaption
+\fi
 %\makeatother
+
 
 \RequirePackage{glossaries}
 %\makeatletter

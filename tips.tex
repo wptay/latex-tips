@@ -5,8 +5,8 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Load your additional packages not in preamble.tex. Please check these are indeed not there.
-% Put here because hyperref package in preamble.tex usually has to be one of the last packages to be loaded.
+% Load your additional packages not in signalpreamble.sty. Please check these are indeed not there.
+% Put here because hyperref package in signalpreamble.sty usually has to be one of the last packages to be loaded.
 
 
 
@@ -22,7 +22,7 @@
 \usepackage{babel}
 \usepackage{lipsum}
 \usepackage{forest}
-
+\usepackage{cprotect}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -57,7 +57,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Additional newcommands and acronyms not in preamble.tex, special to your paper.
+%% Additional newcommands and acronyms not in signalpreamble.sty, special to your paper.
 %% Please remove and add your own ones.
 
 %<*tag:commands-main>
@@ -200,13 +200,16 @@ before computing xy={l=15pt},
 \item The options available for the signalpreamble package are:
 \begin{itemize}
 \item hyperref: By default, this option is hyperref=true and will load the hyperref package with the options hidelinks, hypertexnames=false. If you do not want to use hyperref, set this option to false.
-\item algpseudocode: By default, this option is pseudocode=true and will load the algpseudocode package. The algorithm package is always loaded. The algpseudocode is the preferred way to write algorithms. 
+\item algpseudocode: By default, this option is algpseudocode=true and will load the algpseudocode package. The algorithm package is always loaded. The algpseudocode is the preferred way to write algorithms. 
 \item beamer: By default, this option is beamer=false. Set this to true if you are writing a beamer presentation. The packages hyperref (beamer loads hyperref internally with its specific options) and cleveref are not loaded by default in this case.
-\item Other options include: cleveref, bibentry, breqn, owntheorems, useTheoremCounter, highlights, diagnoselabel, response. Please read the signalpreamble.sty file for details.
+\item Other options include: subcaption, cleveref, response, bibentry, breqn, owntheorems, useTheoremCounter, highlights, diagnoselabel. Please read the signalpreamble.sty file for details.
 \end{itemize} 
 
-\item \textbf{Look through the signalpreamble.sty file first before you define your own newcommands to avoid duplication. The most updated signalpreamble.sty file is always available on \url{https://gitlab.com/wptay/latex-tips}.} I will always use the most updated signalpreamble.sty, so there is no need for you to include a copy in your workspace (you can keep a global copy somewhere and configure your Latex to point to it (see \href{https://miktex.org/kb/texmf-roots}{TEXMF}) or include a path in a latexmkrc file). If you find some useful things to add to the package, please let me know. {Hint: if you prefer some other definition of a command defined in signalpreamble.sty, you can redefine it in your tex file after the \verb|\usepackage{signalpreamble}| command using \olive{\texttt{renewcommand}}.}
-\item A typical working tree looks like that in \cref{fig:working-tree}. Note the inclusion of the \verb|latexmkrc| file, which is used by latexmk to set the BIBINPUTS and TEXINPUTS variables. For example, this allows you to have a separate subfolder for a conference version, while sharing the same figures, bib, and sty files.
+\item \textbf{Look through the signalpreamble.sty file first before you define your own newcommands to avoid duplication. The most updated signalpreamble.sty file is always available on \url{https://gitlab.com/wptay/latex-tips}.} If you find some useful things to add to the package, please let me know. \cprotect\teal{Hint: you can redefine a command in your tex file after the \verb|\usepackage{signalpreamble}| command using \olive{\texttt{renewcommand}}.}
+
+\item I will always use the most updated signalpreamble.sty, so there is no need for you to include a copy in your workspace (you can keep a global copy somewhere and configure your Latex to point to it (see \href{https://miktex.org/kb/texmf-roots}{TEXMF}) or include a path in a latexmkrc file). In Overleaf, you can add a new file from external URL at \url{https://gitlab.com/wptay/latex-tips/-/raw/main/latex/local/signalpreamble.sty}.
+
+\item A typical working tree looks like that in \cref{fig:working-tree}. Note the inclusion of the \orange{latexmkrc} file, which is used by latexmk to set the \orange{BIBINPUTS} and \orange{TEXINPUTS} variables. For example, this allows you to have a separate subfolder for a conference version, while sharing the same figures, bib, and sty files.
 
 \item Hint: you can use this tex file (without the bibentry=true option in signalpreamble package) as a starting template when writing your papers.
 \item Please ensure that you embed all your fonts into the pdf before you submit to a journal or conference.
@@ -216,7 +219,7 @@ before computing xy={l=15pt},
 
 \section{Labels}\label{sect:Labels}
 
-\begin{algorithm}[!tb]
+\begin{algorithm}[!b]
 \caption{Minibatch stochastic gradient algorithm}\label{algo:mini}
 \begin{algorithmic}[1]
 \State Initialize $\btheta,\bphi$.
@@ -341,8 +344,8 @@ Note the use of aligned environment here.
 
 \begin{enumerate}
 \item If you are using a group of symbols very frequently, define a new command for it. It is like writing a computer program. The new command can even take in an argument.
-\item Example of a simple new command is $\Real$. See the provided preamble.tex file for more examples!
-\item Example of a more complex new command is $\E_{0}[f(X)]$. \textbf{As we use $\E$ and $\P$ very frequently, please figure out how I have defined these commands in the preamble.tex and use them appropriately.} Examples are:
+\item Example of a simple new command is $\Real$. See the provided signalpreamble package for more examples!
+\item Example of a more complex new command is $\E_{0}[f(X)]$. \textbf{As we use $\E$ and $\P$ very frequently, please figure out how I have defined these commands in the signalpreamble.sty and use them appropriately.} Examples are:
 \begin{align*}
 f(\btheta) &= \E_{X \sim p_{\btheta}}^{\beta}[\frac{f(X)}{g(X,Y)} \given Y],\\
 \P(A \given B) &= \P(\set*{\omega\in\Omega \given \ofrac{2}X(\omega) > b} \given \limsup_{n\to\infty} X_n(\omega) = a).
@@ -373,11 +376,11 @@ f(\btheta) &= \E_{X \sim p_{\btheta}}^{\beta}[\frac{f(X)}{g(X,Y)} \given Y],\\
 %</tag:afigure>
 
 \begin{enumerate}
-\item You can set the graphics path in tex using \verb|\graphicspath| (this has been done in the preamble.tex file) to the ``figures'' subfolder in which you keep your images. Then \LaTeX\ will look for the right figure in the folder you have provided in the graphics path. See \cref{fig:tandem} for an example.
+\item You can set the graphics path in tex using \verb|\graphicspath| (this has been done in the signalpreamble package) to the ``figures'' subfolder in which you keep your images. Then \LaTeX\ will look for the right figure in the folder you have provided in the graphics path. See \cref{fig:tandem} for an example.
 \item I highly recommend Ipe (\url{http://ipe.otfried.org/}) for preparing your graphics. The advantage is that you can directly input latex symbols into your graphics using Ipe. Graphics can be saved directly in pdf. For example, you can open tandem.pdf in the Figures folder using the Ipe program and edit that! There is also an Ipelet that allows you to convert Ipe to tikz if you prefer the latter. Another popular graphics program with Latex capability is Inkscape~(\url{https://inkscape.org/}) with the textext extension. If you use any other graphics program, the font may not be the same as your latex document. In that case, you may need to use psfrag to replace your labels.
 \item Please use ``!htb'' or ``!htbp'' as options in your figure and table environments.
 \item Use the subcaption package for the subfigure environment. See \cref{fig:tandem} for an example. Do not use the subfig package as it does not work with the hyperref package. \item An example of a table is shown in \cref{tab:linkresults}. Note the use of \verb|\toprule|, \verb|\midrule|, and \verb|\bottomrule| from the booktabs package instead of the ugly \verb|\hline| command. The advice from the booktabs package is to ``Never, ever use vertical rules.'' and ``Never use double rules.'' 
-\item To have fixed column widths with text wrapping in your table column, use the \verb|L{width}|, \verb|C{width}|, or \verb|R{width}| column types from the preamble.tex. 
+\item To have fixed column widths with text wrapping in your table column, use the \verb|L{width}|, \verb|C{width}|, or \verb|R{width}| column types from the signalpreamble.sty. 
 \end{enumerate}
 
 
@@ -478,22 +481,18 @@ You can use tools like ChatGPT or GitHub Copilot to polish your writing. If you 
 \item Alternatively, share your tex files with me through \emph{private repositories} on Gitlab, GitHub, Gitee or BitBucket and add me as a member or collaborator.  Git takes care of version control so that we do not have to resort to manual version control.  
 \item I will highlight my major edits in \blue{blue} and \red{red}, where the latter color usually indicates something that requires your action or special attention. Deleted text for your attention is shown as \del{deleted}. Please go through all my edits to check for errors (never assume that I am always correct; I do make errors too!). If you are satisfied with an edit, remove the highlight and return the file to me, with your own edits highlighted in blue. We will iterate this process until the paper reaches a satisfactory stage.
 \item Please note that sometimes \textbf{NOT} all my edits are highlighted. Those highlighted are for your attention and checking. Some are for you to compare with your previous version so that you can learn from the change. Do not manually transfer the changes to your previous tex file. 
-\item Other available colors are \brown{brown}, \cyan{cyan}, \darkgray{darkgray}, \gray{gray}, \lightgray{lightgray}, \green{green}, \lime{lime}, \magenta{magenta}, \olive{olive}, \orange{orange}, \pink{pink}, \purple{purple}, \teal{teal}, \violet{violet}, and \yellow{yellow}. You should check out how these color commands are defined in the preamble.tex file.
-\item By defining nohighlights before inputting preamble.tex, you get a clean copy without color highlights and comments. Comments are assumed to start with the square bracket ``[''.
+\item Other available colors are \brown{brown}, \cyan{cyan}, \darkgray{darkgray}, \gray{gray}, \lightgray{lightgray}, \green{green}, \lime{lime}, \magenta{magenta}, \olive{olive}, \orange{orange}, \pink{pink}, \purple{purple}, \teal{teal}, \violet{violet}, and \yellow{yellow}. You should check out how these color commands are defined in the signalpreamble package.
+\item By using option highlights=false in signalpreamble package, you get a clean copy without color highlights and comments. Comments are assumed to start with the square bracket ``[''.
 \end{enumerate}
 
 \section{Responding to Paper Reviews}\label{sect:Response}
 \begin{enumerate}
-\item You can use the response.tex as a starting template. I have defined some useful environments for use there in your responses to reviewers' comments. Use 
-\begin{center}
-\verb|\usepackage[response]{signalpreamble}| 
-\end{center}
-
+\item You can use the response.tex as a starting template. I have defined some useful environments for use there in your responses to reviewers' comments.
 \item Check out the use of the packages catchfilebetweentags and xr. These packages make life much easier when you need to cross-reference a label (e.g., \cref{supp:Preliminaries} from the supplementary) or citation from one tex file in another tex file. It also allows you to quote a chunk of tex directly from your manuscript tex file. 
 
 \teal{
 \begin{Remark}
-If you are using Overleaf and/or TexLive 2024 or earlier, change the xr package to the xr-hyper package. If you find that cross referencing is not working, you are missing information in the latexmkrc file. See \href{https://www.overleaf.com/learn/how-to/Cross_referencing_with_the_xr_package_in_Overleaf}{this link} for more information.
+If you are using Overleaf and find that the xr package is not working, you are missing information in the latexmkrc file. See \href{https://www.overleaf.com/learn/how-to/Cross_referencing_with_the_xr_package_in_Overleaf}{this link} for more information.
 \end{Remark}    
 }
 
