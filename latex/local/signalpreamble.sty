@@ -17,6 +17,7 @@
 \DeclareBoolOption[true]{algpseudocode}
 \DeclareBoolOption[true]{cleveref}
 \DeclareBoolOption[true]{subcaption}
+\DeclareBoolOption[false]{biblatex}
 \DeclareBoolOption[false]{breqn}
 \DeclareBoolOption[false]{owntheorems}
 \DeclareBoolOption[false]{useTheoremCounter}
@@ -76,7 +77,11 @@
 \@ifpackageloaded{natbib}{
 	\relax
 }{
-	\RequirePackage{cite}
+	\ifsignalpreamble@biblatex
+		\RequirePackage[backend=biber,style=ieee]{biblatex}
+	\else
+		\RequirePackage{cite}
+	\fi
 }
 \fi
 %\makeatother
