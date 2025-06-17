@@ -13,12 +13,13 @@
 	prefix=signalpreamble@
 }
 \DeclareBoolOption[true]{hyperref} % default is true;
-\DeclareBoolOption[false]{bibentry}
 \DeclareBoolOption[true]{algpseudocode}
 \DeclareBoolOption[true]{cleveref}
 \DeclareBoolOption[true]{subcaption}
-\DeclareBoolOption[false]{biblatex}
+\DeclareBoolOption[true]{enumitem}
+
 \DeclareBoolOption[false]{breqn}
+\DeclareBoolOption[false]{bibentry}
 \DeclareBoolOption[false]{owntheorems}
 \DeclareBoolOption[false]{useTheoremCounter}
 \DeclareBoolOption[true]{highlights}
@@ -27,6 +28,8 @@
 \DeclareBoolOption[false]{response}
 \DeclareBoolOption[false]{xrhyper}
 
+\DeclareBoolOption[false]{biblatex} % default: do not load biblatex
+\DeclareStringOption[]{biblatexoptions} % default: empty
 
 \ProcessKeyvalOptions*{} % process options
 
@@ -51,8 +54,10 @@
 
 \ifsignalpreamble@beamer
 \relax
-\else 
-\RequirePackage[shortlabels]{enumitem}
+\else
+\ifsignalpreamble@enumitem 
+	\RequirePackage[shortlabels]{enumitem}
+\fi
 \RequirePackage{graphicx}
 \fi
 
@@ -78,7 +83,13 @@
 	\relax
 }{
 	\ifsignalpreamble@biblatex
-		\RequirePackage[backend=biber,style=ieee]{biblatex}
+		\ifstrequal{\signalpreamble@biblatexoptions}{}{
+			% No user options: use defaults
+			\RequirePackage[backend=biber,style=ieee]{biblatex}
+		}{
+			% User provided options
+			\expandafter\RequirePackage\expandafter[\signalpreamble@biblatexoptions]{biblatex}
+		}
 	\else
 		\RequirePackage{cite}
 	\fi
