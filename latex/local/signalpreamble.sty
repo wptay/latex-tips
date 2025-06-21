@@ -1,6 +1,6 @@
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{signalpreamble}[2025/06/17 v1.0.0 SIGNAL Preamble]
+\ProvidesPackage{signalpreamble}[2025/06/21 v1.0.1 SIGNAL Preamble]
 
 % Note: this has been tested using the latest Latex packages as of the version date. If you are getting errors, update your packages.
 % LTeX: enabled=false
@@ -17,19 +17,18 @@
 \DeclareBoolOption[true]{cleveref}
 \DeclareBoolOption[true]{subcaption}
 \DeclareBoolOption[true]{enumitem}
-
-\DeclareBoolOption[false]{breqn}
-\DeclareBoolOption[false]{bibentry}
-\DeclareBoolOption[false]{owntheorems}
-\DeclareBoolOption[false]{useTheoremCounter}
 \DeclareBoolOption[true]{highlights}
-\DeclareBoolOption[false]{diagnoselabel}
-\DeclareBoolOption[false]{beamer}
-\DeclareBoolOption[false]{response}
-\DeclareBoolOption[false]{xrhyper}
 
-\DeclareBoolOption[false]{biblatex} % default: do not load biblatex
-\DeclareStringOption[]{biblatexoptions} % default: empty
+\DeclareBoolOption[false]{response} % for response macros: load \usepackage[response]{signalpreamble}
+\DeclareBoolOption[false]{xrhyper} % change xr to xr-hyper, for TexLive 2024 and earlier (e.g. Overleaf)
+\DeclareBoolOption[false]{beamer} % for beamer presentations, with some useful macros
+\DeclareBoolOption[false]{bibentry} % provided option so that bibentry can be used with hyperref
+\DeclareBoolOption[false]{owntheorems} % if you want to define your own theorem environments
+\DeclareBoolOption[false]{useTheoremCounter} % valid only if owntheorems=false. Use if you want the same counter for Theorem, Corollary, Proposition, and Lemma
+\DeclareBoolOption[false]{diagnoselabel} % to diagnose what is causing Latex warning "Label(s) may have changed. Rerun to get cross-references right."
+
+% default: do not load biblatex
+\DeclareStringOption[false]{biblatex}[true]
 
 \ProcessKeyvalOptions*{} % process options
 
@@ -82,17 +81,19 @@
 \@ifpackageloaded{natbib}{
 	\relax
 }{
-	\ifsignalpreamble@biblatex
-		\ifstrequal{\signalpreamble@biblatexoptions}{}{
+	\expandafter\ifstrequal\expandafter{\signalpreamble@biblatex}{false}
+	{
+		% Default is biblatex=false
+		\RequirePackage{cite}
+	}{
+		\expandafter\ifstrequal\expandafter{\signalpreamble@biblatex}{true}{
 			% No user options: use defaults
-			\RequirePackage[backend=biber,style=ieee]{biblatex}
+			\RequirePackage[backend=biber,citestyle=numeric,bibstyle=ieee,sorting=none]{biblatex}
 		}{
 			% User provided options
-			\expandafter\RequirePackage\expandafter[\signalpreamble@biblatexoptions]{biblatex}
+			\expandafter\RequirePackage\expandafter[\signalpreamble@biblatex]{biblatex}
 		}
-	\else
-		\RequirePackage{cite}
-	\fi
+	}
 }
 \fi
 %\makeatother
@@ -163,159 +164,154 @@
 
 %\makeatletter
 \ifsignalpreamble@beamer
-\relax
+	\relax
 \else
-%put the float package before hyperref and algorithm package after hyperref for hyperref to work correctly with algorithm
-\RequirePackage{float}
+	%put the float package before hyperref and algorithm package after hyperref for hyperref to work correctly with algorithm
+	\RequirePackage{float}
 
-% If using TexLive 2024 (e.g., on Overleaf), use xr-hyper instead of xr.
-\ifsignalpreamble@xrhyper
-	\RequirePackage{xr-hyper}
-\else
-	\RequirePackage{xr}
-\fi
+	% If using TexLive 2024 (e.g., on Overleaf), use xr-hyper instead of xr.
+	\ifsignalpreamble@xrhyper
+		\RequirePackage{xr-hyper}
+	\else
+		\RequirePackage{xr}
+	\fi
 
-\ifsignalpreamble@hyperref%
-  \ifsignalpreamble@bibentry%
-		\RequirePackage{bibentry}%
-		\let\saved@bibitem\@bibitem%
-		\RequirePackage[hidelinks,hypertexnames=false]{hyperref}%
-		\let\@bibitem\saved@bibitem%
+	\ifsignalpreamble@hyperref%
+		\ifsignalpreamble@bibentry%
+			\RequirePackage{bibentry}%
+			\let\saved@bibitem\@bibitem%
+			\RequirePackage[hidelinks,hypertexnames=false]{hyperref}%
+			\let\@bibitem\saved@bibitem%
+		\else%
+			\RequirePackage[hidelinks,hypertexnames=false]{hyperref}%
+		\fi%
 	\else%
-		\RequirePackage[hidelinks,hypertexnames=false]{hyperref}%
-	\fi%
-\else%
-	\ifsignalpreamble@bibentry%
-		\RequirePackage{bibentry}%
-	\fi%
-\fi
+		\ifsignalpreamble@bibentry%
+			\RequirePackage{bibentry}%
+		\fi%
+	\fi
 
-\ifsignalpreamble@cleveref%
-	\RequirePackage{cleveref-forward}
-	% %% Temporary fix
-	% \AtBeginDocument
-	% {
-	% 	\def\ltx@label#1{\cref@label{#1}}%add braces
-	% 	\def\label@in@display@noarg#1{\cref@old@label@in@display{#1}}%remove braces
-	% 	\def\label@in@mmeasure@noarg#1{%
-	% 		\begingroup%
-	% 			\measuring@false%
-	% 			\cref@old@label@in@display{#1}%remove braces for multline
-	% 		\endgroup}%  
-	% } %
+	\ifsignalpreamble@cleveref%
+		\RequirePackage{cleveref-forward}
+		% %% Temporary fix
+		% \AtBeginDocument
+		% {
+		% 	\def\ltx@label#1{\cref@label{#1}}%add braces
+		% 	\def\label@in@display@noarg#1{\cref@old@label@in@display{#1}}%remove braces
+		% 	\def\label@in@mmeasure@noarg#1{%
+		% 		\begingroup%
+		% 			\measuring@false%
+		% 			\cref@old@label@in@display{#1}%remove braces for multline
+		% 		\endgroup}%  
+		% } %
 
-	%%%%%%%%%%%%%%%
-	%\RequirePackage{cleveref}
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	% 2024-06: cleveref-forward is new updated package based on cleveref that fixes some issues with cleveref. To use on Overleaf, make sure you select the 2024 or later version of TeX Live via the menu.
-	% 2023-12: recent updates to hyperref and xr-hyper breaks cleveref.
-	% The following lines fix the issue. https://tex.stackexchange.com/questions/708441/cleveref-mistakenly-showing-filename-in-external-references
-	% This fix has not been incorporated into the latex kernel.
-	% However, Overleaf seems to have their own fix. Therefore comment this out if using Overleaf.
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	% %\makeatletter
-	% \def\cref@getref#1#2{%
-	%   \expandafter\let\expandafter#2\csname r@#1@cref\endcsname%
-	%   \expandafter\expandafter\expandafter\def%
-	%     \expandafter\expandafter\expandafter#2%
-	%     \expandafter\expandafter\expandafter{%
-	%       \expandafter\@firstoffive#2}}% <-------- five
-	% \def\cpageref@getref#1#2{%
-	%   \expandafter\let\expandafter#2\csname r@#1@cref\endcsname%
-	%   \expandafter\expandafter\expandafter\def%
-	%     \expandafter\expandafter\expandafter#2%
-	%     \expandafter\expandafter\expandafter{%
-	%       \expandafter\@secondoffive#2}}% <----------- five
-				
-	% \AtBeginDocument{%
-	%    \def\label@noarg#1{%
-	%     \cref@old@label{#1}%
-	%     \@bsphack%
-	%     \edef\@tempa{{page}{\the\c@page}}%
-	%     \setcounter{page}{1}%
-	%     \edef\@tempb{\thepage}%
-	%     \expandafter\setcounter\@tempa%
-	%     \cref@constructprefix{page}{\cref@result}%
-	%     \protected@write\@auxout{}%
-	%       {\string\newlabel{#1@cref}{{\cref@currentlabel}%
-	%       {[\@tempb][\arabic{page}][\cref@result]\thepage}{}{}{}}}% <----- five
-	%     \@esphack}%
-	%   \def\label@optarg[#1]#2{%
-	%     \cref@old@label{#2}%
-	%     \@bsphack%
-	%     \edef\@tempa{{page}{\the\c@page}}%
-	%     \setcounter{page}{1}%
-	%     \edef\@tempb{\thepage}%
-	%     \expandafter\setcounter\@tempa%
-	%     \cref@constructprefix{page}{\cref@result}%
-	%     \protected@edef\cref@currentlabel{%
-	%       \expandafter\cref@override@label@type%
-	%         \cref@currentlabel\@nil{#1}}%
-	%     \protected@write\@auxout{}%
-	%       {\string\newlabel{#2@cref}{{\cref@currentlabel}%
-	%       {[\@tempb][\arabic{page}][\cref@result]\thepage}{}{}{}}}% <------- five
-	%     \@esphack}%
-	%     }  
-	% %\makeatother
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%%%%%%%%%%%%%%%
+		%\RequirePackage{cleveref}
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		% 2024-06: cleveref-forward is new updated package based on cleveref that fixes some issues with cleveref. To use on Overleaf, make sure you select the 2024 or later version of TeX Live via the menu.
+		% 2023-12: recent updates to hyperref and xr-hyper breaks cleveref.
+		% The following lines fix the issue. https://tex.stackexchange.com/questions/708441/cleveref-mistakenly-showing-filename-in-external-references
+		% This fix has not been incorporated into the latex kernel.
+		% However, Overleaf seems to have their own fix. Therefore comment this out if using Overleaf.
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		% %\makeatletter
+		% \def\cref@getref#1#2{%
+		%   \expandafter\let\expandafter#2\csname r@#1@cref\endcsname%
+		%   \expandafter\expandafter\expandafter\def%
+		%     \expandafter\expandafter\expandafter#2%
+		%     \expandafter\expandafter\expandafter{%
+		%       \expandafter\@firstoffive#2}}% <-------- five
+		% \def\cpageref@getref#1#2{%
+		%   \expandafter\let\expandafter#2\csname r@#1@cref\endcsname%
+		%   \expandafter\expandafter\expandafter\def%
+		%     \expandafter\expandafter\expandafter#2%
+		%     \expandafter\expandafter\expandafter{%
+		%       \expandafter\@secondoffive#2}}% <----------- five
+					
+		% \AtBeginDocument{%
+		%    \def\label@noarg#1{%
+		%     \cref@old@label{#1}%
+		%     \@bsphack%
+		%     \edef\@tempa{{page}{\the\c@page}}%
+		%     \setcounter{page}{1}%
+		%     \edef\@tempb{\thepage}%
+		%     \expandafter\setcounter\@tempa%
+		%     \cref@constructprefix{page}{\cref@result}%
+		%     \protected@write\@auxout{}%
+		%       {\string\newlabel{#1@cref}{{\cref@currentlabel}%
+		%       {[\@tempb][\arabic{page}][\cref@result]\thepage}{}{}{}}}% <----- five
+		%     \@esphack}%
+		%   \def\label@optarg[#1]#2{%
+		%     \cref@old@label{#2}%
+		%     \@bsphack%
+		%     \edef\@tempa{{page}{\the\c@page}}%
+		%     \setcounter{page}{1}%
+		%     \edef\@tempb{\thepage}%
+		%     \expandafter\setcounter\@tempa%
+		%     \cref@constructprefix{page}{\cref@result}%
+		%     \protected@edef\cref@currentlabel{%
+		%       \expandafter\cref@override@label@type%
+		%         \cref@currentlabel\@nil{#1}}%
+		%     \protected@write\@auxout{}%
+		%       {\string\newlabel{#2@cref}{{\cref@currentlabel}%
+		%       {[\@tempb][\arabic{page}][\cref@result]\thepage}{}{}{}}}% <------- five
+		%     \@esphack}%
+		%     }  
+		% %\makeatother
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-	\crefname{equation}{}{}
-	\Crefname{equation}{}{}
-	\crefname{claim}{claim}{claims}
-	\crefname{step}{step}{steps}
-	\crefname{line}{line}{lines}
-	\crefname{condition}{condition}{conditions}
-	\crefname{dmath}{}{}
-	\crefname{dseries}{}{}
-	\crefname{dgroup}{}{}
-	\crefname{page}{page}{pages}
+		\crefname{equation}{}{}
+		\Crefname{equation}{}{}
+		\crefname{claim}{claim}{claims}
+		\crefname{step}{step}{steps}
+		\crefname{line}{line}{lines}
+		\crefname{condition}{condition}{conditions}
+		\crefname{dmath}{}{}
+		\crefname{dseries}{}{}
+		\crefname{dgroup}{}{}
+		\crefname{page}{page}{pages}
 
-	\crefname{Problem}{Problem}{Problems}
-	\crefformat{Problem}{Problem~#2#1#3}
-	\crefrangeformat{Problem}{Problems~#3#1#4 to~#5#2#6}
+		\crefname{Problem}{Problem}{Problems}
+		\crefformat{Problem}{Problem~#2#1#3}
+		\crefrangeformat{Problem}{Problems~#3#1#4 to~#5#2#6}
 
-	\crefname{Theorem}{Theorem}{Theorems}
-	\crefname{Corollary}{Corollary}{Corollaries}
-	\crefname{Proposition}{Proposition}{Propositions}
-	\crefname{Lemma}{Lemma}{Lemmas}
-	\crefname{Definition}{Definition}{Definitions}
-	\crefname{Example}{Example}{Examples}
-	\crefname{Assumption}{Assumption}{Assumptions}
-	\crefname{Remark}{Remark}{Remarks}
-	\crefname{Rem}{Remark}{Remarks}
-	\crefname{remarks}{Remarks}{Remarks}
-	\crefname{Appendix}{Appendix}{Appendices}
-	\crefname{Supplement}{Supplement}{Supplements}
-	\crefname{Exercise}{Exercise}{Exercises}
-	\crefname{TheoremA}{Theorem}{Theorems}
-	\crefname{CorollaryA}{Corollary}{Corollaries}
-	\crefname{PropositionA}{Proposition}{Propositions}
-	\crefname{LemmaA}{Lemma}{Lemmas}
-	\crefname{DefinitionA}{Definition}{Definitions}
-	\crefname{ExampleA}{Example}{Examples}
-	\crefname{RemarkA}{Remark}{Remarks}
-	\crefname{AssumptionA}{Assumption}{Assumptions}
-	\crefname{ExerciseA}{Exercise}{Exercises}
-	\crefname{algorithm}{Algorithm}{Algorithms}
-	\crefname{figure}{Fig.}{Figs.}
-	\crefname{table}{Table}{Tables}
-	\crefname{section}{Section}{Sections}
-	\crefname{subsection}{Section}{Sections}
-	\crefname{subsubsection}{Section}{Sections}
+		\crefname{Theorem}{Theorem}{Theorems}
+		\crefname{Corollary}{Corollary}{Corollaries}
+		\crefname{Proposition}{Proposition}{Propositions}
+		\crefname{Lemma}{Lemma}{Lemmas}
+		\crefname{Definition}{Definition}{Definitions}
+		\crefname{Example}{Example}{Examples}
+		\crefname{Assumption}{Assumption}{Assumptions}
+		\crefname{Remark}{Remark}{Remarks}
+		\crefname{Rem}{Remark}{Remarks}
+		\crefname{remarks}{Remarks}{Remarks}
+		\crefname{Appendix}{Appendix}{Appendices}
+		\crefname{Supplement}{Supplement}{Supplements}
+		\crefname{Exercise}{Exercise}{Exercises}
+		\crefname{TheoremA}{Theorem}{Theorems}
+		\crefname{CorollaryA}{Corollary}{Corollaries}
+		\crefname{PropositionA}{Proposition}{Propositions}
+		\crefname{LemmaA}{Lemma}{Lemmas}
+		\crefname{DefinitionA}{Definition}{Definitions}
+		\crefname{ExampleA}{Example}{Examples}
+		\crefname{RemarkA}{Remark}{Remarks}
+		\crefname{AssumptionA}{Assumption}{Assumptions}
+		\crefname{ExerciseA}{Exercise}{Exercises}
+		\crefname{algorithm}{Algorithm}{Algorithms}
+		\crefname{figure}{Fig.}{Figs.}
+		\crefname{table}{Table}{Tables}
+		\crefname{section}{Section}{Sections}
+		\crefname{subsection}{Section}{Sections}
+		\crefname{subsubsection}{Section}{Sections}
 
-\fi %ifsignalpreamble@cleveref
-
+	\fi %ifsignalpreamble@cleveref
+\fi %ifsignalpreamble@beamer
 
 \ifsignalpreamble@algpseudocode
 	\RequirePackage{algorithm}
 	\RequirePackage{algpseudocode}
 \fi
 
-%may cause conflict with some packages like tikz, include manually if desired
-%load after hyperref
-\ifsignalpreamble@breqn	
-	\RequirePackage{breqn}
-\fi
 
 \RequirePackage{catchfilebetweentags}
 %%%% usage in manuscript
@@ -1316,10 +1312,11 @@
 #1%
 }
 
-% Allows the use of 
+% Macro for probability
 % \P : \mathbb{P}
 % \P(X) : \mathbb{P}\left( {X} \right)
 % \P_{p}(X) : \mathbb{P}_{p}\left( {X} \right)
+% \P^{p}(X) : \mathbb{P}^{p}\left( {X} \right)
 % \P(X \given Y) : \mathbb{P}\left( {X}\, \middle| \, {Y} \right). 
 % Starred version \P* does not use \left and \right. Maybe used in inline equations. 
 \DeclareDocumentCommand \P { s e{_^} d() g } {%
@@ -1337,10 +1334,11 @@
 		}%
 }
 
-% Allows the use of 
+% Macro for expectation
 % \E : \mathbb{E}
 % \E[X] : \mathbb{E}\left[ {X} \right]
 % \E_{p}[X] : \mathbb{E}_{p}\left[ {X} \right]
+% \E^{p}[X] : \mathbb{E}^{p}\left[ {X} \right]
 % \E[X \given Y]: \mathbb{E}\left[ {X}\, \middle| \, {Y} \right]. 
 % Starred version \E* does not use \left and \right. Maybe used in inline equations. 
 \DeclareDocumentCommand \E { s e{_^} o g } {%
@@ -1359,7 +1357,13 @@
 		}%
 }
 
-
+% Macro for variance
+% \Var : \var 
+% \Var(X) : \var\left( {X} \right)
+% \Var_{p}(X) : \var_{p}\left( {X} \right)
+% \Var^{p}(X) : \var^{p}\left( {X} \right)
+% \Var(X \given Y) : \var\left( {X}\, \middle| \, {Y} \right). 
+% Starred version \Var* does not use \left and \right. Maybe used in inline equations. 
 \DeclareDocumentCommand \Var { s e{_^} d() g } {%
 	\var%
 	\IfBooleanTF{#1}%
@@ -1376,6 +1380,13 @@
 		}%
 }
 
+% Macro for covariance
+% \Cov : \cov 
+% \Cov(X) : \cov\left( {X} \right)
+% \Cov_{p}(X) : \cov_{p}\left( {X} \right)
+% \Cov^{p}(X) : \cov^{p}\left( {X} \right)
+% \Cov(X \given Y) : \cov\left( {X}\, \middle| \, {Y} \right). 
+% Starred version \Cov* does not use \left and \right. Maybe used in inline equations. 
 \DeclareDocumentCommand \Cov { s e{_^} d() g } {%
 	\cov%
 	\IfBooleanTF{#1}%
@@ -1523,149 +1534,150 @@
 %\makeatletter
 \ifsignalpreamble@beamer
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Beamer specific macros
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% Beamer specific macros
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%\RequirePackage[style=ieee,backend=bibtex]{biblatex}
+	%\newcommand{\ifprefchar}{\ifpunctmark{'}} %restore functionality with BibTeX as a work-around
+	%\RequirePackage[backend=biber, citestyle=authoryear, maxcitenames=1,mincitenames=1,bibstyle=ieee, sorting=none]{biblatex}
+	\RequirePackage[backend=biber, citestyle=numeric, bibstyle=ieee, sorting=none]{biblatex}
 
-%\RequirePackage[style=ieee,backend=bibtex]{biblatex}
-%\newcommand{\ifprefchar}{\ifpunctmark{'}} %restore functionality with BibTeX as a work-around
-%\RequirePackage[backend=biber, citestyle=authoryear, maxcitenames=1,mincitenames=1,bibstyle=ieee, sorting=none]{biblatex}
-\RequirePackage[backend=biber, citestyle=numeric, bibstyle=ieee, sorting=none]{biblatex}
+	%%\makeatletter%
+	%\@addtoreset{footnote}{page}
+	%\long\def\@makefnmark{%
+	%\hbox {{\normalfont [\@thefnmark]}}}%
+	%%\makeatother
 
-%%\makeatletter%
-%\@addtoreset{footnote}{page}
-%\long\def\@makefnmark{%
-%\hbox {{\normalfont [\@thefnmark]}}}%
-%%\makeatother
+	%\renewcommand{\thefootnote}{\ifcase\value{footnote}\or$\dagger$\or$\ddagger$\or$*$\or$\circ$\or$\diamond$\or$+$\or$\square$\or$\bot$\fi}
+	%\newcommand<>{\ftcite}[1]{
+	%\footnote#2{\fullcite{#1}}
+	%}
 
-%\renewcommand{\thefootnote}{\ifcase\value{footnote}\or$\dagger$\or$\ddagger$\or$*$\or$\circ$\or$\diamond$\or$+$\or$\square$\or$\bot$\fi}
-%\newcommand<>{\ftcite}[1]{
-%\footnote#2{\fullcite{#1}}
-%}
+	\setbeamertemplate{bibliography item}{\insertbiblabel}
 
-\setbeamertemplate{bibliography item}{\insertbiblabel}
-
-%\makeatletter
-\newcommand*{\mkblankfootnote}[1]{%
-  \begingroup
-  \renewcommand\thefootnote{}%
-  \footnotetext{\bibfootnotewrapper{#1}}%
-  \endgroup
-}
-
-\newcommand*{\mkbibsupercite}[1]{%
-  \def\cbx@savedcites{\cbx@footfullcite}%
-  \mkbibbrackets{#1}%
-  \cbx@savedcites}
-
-\DeclareCiteCommand{\supercite}[\mkbibsupercite]
-{\gdef\cbx@savedkeys{}}
-{\usebibmacro{citeindex}%
-  \usebibmacro{cite}%
-  {}%
-  \xappto\cbx@savedkeys{\thefield{entrykey},}}
-{\supercitedelim}
-{\protected@xappto\cbx@savedcites{%
-    [\thefield{prenote}][\thefield{postnote}]{\cbx@savedkeys}}}
-
-\DeclareCiteCommand{\cbx@footfullcite}
-{}
-{\mkblankfootnote{%
-    \printtext[labelnumberwidth]{%
-      \usebibmacro{cite}%
-    }%
-    \setunit{\addspace}%
-    \usedriver
-    {\DeclareNameAlias{sortname}{default}}
-    {\thefield{entrytype}}}}
-{}
-{}
-%\makeatother
-\newcommand<>{\ftcite}[1]{\only#2{\supercite{#1}}}
-
-\newcommand{\backupbegin}{
-  \newcounter{framenumberappendix}
-  \setcounter{framenumberappendix}{\value{framenumber}}
-}
-\newcommand{\backupend}{
-  \addtocounter{framenumberappendix}{-\value{framenumber}}
-  \addtocounter{framenumber}{\value{framenumberappendix}}
-}
-
-\newcommand\Fontvi{\fontsize{10}{11}\selectfont}
-\newcommand\Fontvismall{\fontsize{8}{8}\selectfont}
-\newcommand\Fontvitiny{\fontsize{6}{6}\selectfont}
-\renewcommand\arraystretch{1.5}% (MyValue=1.0 is for standard spacing)
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%colors
-\newcommand<>{\red}[1]{{\color#2{red} #1}}
-\newcommand<>{\blue}[1]{{{\color#2{blue} #1}}}
-\newcommand<>{\green}[1]{{\color#2{OliveGreen} #1}}
-\newcommand<>{\gray}[1]{{\color#2{gray} #1}}
-\newcommand<>{\magenta}[1]{{\color#2{magenta} #1}}
-\newcommand<>{\orange}[1]{{\color#2{Orange} #1}}
-\newcommand<>{\cyan}[1]{{\color#2{cyan} #1}}
-\newcommand<>{\lime}[1]{{\color#2{LimeGreen} #1}}
-\newcommand<>{\purple}[1]{{\color#2{purple} #1}}
-\newcommand<>{\teal}[1]{{\color#2{teal} #1}}
-\newcommand<>{\yellow}[1]{{\color#2{yellow} #1}}
-\newcommand<>{\BurntOrange}[1]{{\color#2{BurntOrange} #1}}
-
-\newcommand<>{\alertc}[2][red]{{\color#3{#1} #2}}
-
-\else
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Non-Beamer specific macros
-
-% Editing
-\definecolor{gray90}{gray}{0.9}
-\def\colorlist{red,blue,brown,cyan,darkgray,gray,lightgray,green,lime,magenta,olive,orange,pink,purple,teal,violet,white,yellow}
-
-% Define the \createcolor macro
-\def\startcomment{[}
-\ifsignalpreamble@highlights
-	\newcommand{\createcolor}[1]{%
-			\expandafter\newcommand\csname #1\endcsname[1]{{\color{#1} ##1}}%
+	%\makeatletter
+	\newcommand*{\mkblankfootnote}[1]{%
+		\begingroup
+		\renewcommand\thefootnote{}%
+		\footnotetext{\bibfootnotewrapper{#1}}%
+		\endgroup
 	}
-	\newcommand{\msout}[1]{\text{\color{green} \st{\ensuremath{#1}}}}
-	\newcommand{\del}[1]{{\color{green}\ifmmode \msout{#1}\else\st{#1}\fi}}
-\else
-	\newcommand{\createcolor}[1]{%
-			\expandafter\newcommand\csname #1\endcsname[1]{%
-				\noexpandarg%
-				\StrChar{##1}{1}[\firstletter]%
-				\if\firstletter\startcomment%
-					\relax
-				\else%
-					##1
-				\fi
+
+	\newcommand*{\mkbibsupercite}[1]{%
+		\def\cbx@savedcites{\cbx@footfullcite}%
+		\mkbibbrackets{#1}%
+		\cbx@savedcites}
+
+	\DeclareCiteCommand{\supercite}[\mkbibsupercite]
+	{\gdef\cbx@savedkeys{}}
+	{\usebibmacro{citeindex}%
+		\usebibmacro{cite}%
+		{}%
+		\xappto\cbx@savedkeys{\thefield{entrykey},}}
+	{\supercitedelim}
+	{\protected@xappto\cbx@savedcites{%
+			[\thefield{prenote}][\thefield{postnote}]{\cbx@savedkeys}}}
+
+	\DeclareCiteCommand{\cbx@footfullcite}
+	{}
+	{\mkblankfootnote{%
+			\printtext[labelnumberwidth]{%
+				\usebibmacro{cite}%
 			}%
+			\setunit{\addspace}%
+			\usedriver
+			{\DeclareNameAlias{sortname}{default}}
+			{\thefield{entrytype}}}}
+	{}
+	{}
+	%\makeatother
+	\newcommand<>{\ftcite}[1]{\only#2{\supercite{#1}}}
+
+	\newcommand{\backupbegin}{
+		\newcounter{framenumberappendix}
+		\setcounter{framenumberappendix}{\value{framenumber}}
 	}
-	\newcommand{\msout}[1]{}
-	\newcommand{\del}[1]{}
-\fi
+	\newcommand{\backupend}{
+		\addtocounter{framenumberappendix}{-\value{framenumber}}
+		\addtocounter{framenumber}{\value{framenumberappendix}}
+	}
 
-\def\@tempa#1,{%
-    \ifx\relax#1\relax\else
-        \createcolor{#1}%
-        \expandafter\@tempa
-    \fi
-}
-\expandafter\@tempa\colorlist,\relax,
+	\newcommand\Fontvi{\fontsize{10}{11}\selectfont}
+	\newcommand\Fontvismall{\fontsize{8}{8}\selectfont}
+	\newcommand\Fontvitiny{\fontsize{6}{6}\selectfont}
+	\renewcommand\arraystretch{1.5}% (MyValue=1.0 is for standard spacing)
 
-\newcommand{\old}[1]{{\color{green} [\textrm{DELETED: }#1]}}
-\newcommand{\hhide}[1]{}
-%\newcommand{\hhide}[1]{{\color{magenta} [TO BE EXCLUDED] #1}}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\txp}[2]{\texorpdfstring{#1}{#2}}
+	%colors
+	\newcommand<>{\red}[1]{{\color#2{red} #1}}
+	\newcommand<>{\blue}[1]{{{\color#2{blue} #1}}}
+	\newcommand<>{\green}[1]{{\color#2{OliveGreen} #1}}
+	\newcommand<>{\gray}[1]{{\color#2{gray} #1}}
+	\newcommand<>{\magenta}[1]{{\color#2{magenta} #1}}
+	\newcommand<>{\orange}[1]{{\color#2{Orange} #1}}
+	\newcommand<>{\cyan}[1]{{\color#2{cyan} #1}}
+	\newcommand<>{\lime}[1]{{\color#2{LimeGreen} #1}}
+	\newcommand<>{\purple}[1]{{\color#2{purple} #1}}
+	\newcommand<>{\teal}[1]{{\color#2{teal} #1}}
+	\newcommand<>{\yellow}[1]{{\color#2{yellow} #1}}
+	\newcommand<>{\BurntOrange}[1]{{\color#2{BurntOrange} #1}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\interdisplaylinepenalty=2500   % To restore IEEEtran ability to automatically break
-% within multiline equations, when using amsmath.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\newcommand<>{\alertc}[2][red]{{\color#3{#1} #2}}
 
-\fi % End of Beamer/non-Beamer specific packages
+\else
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% Non-Beamer specific macros
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	% Editing
+	\definecolor{gray90}{gray}{0.9}
+	\def\colorlist{red,blue,brown,cyan,darkgray,gray,lightgray,green,lime,magenta,olive,orange,pink,purple,teal,violet,white,yellow}
+
+	% Define the \createcolor macro
+	\def\startcomment{[}
+	\ifsignalpreamble@highlights
+		\newcommand{\createcolor}[1]{%
+				\expandafter\newcommand\csname #1\endcsname[1]{{\color{#1} ##1}}%
+		}
+		\newcommand{\msout}[1]{\text{\color{green} \st{\ensuremath{#1}}}}
+		\newcommand{\del}[1]{{\color{green}\ifmmode \msout{#1}\else\st{#1}\fi}}
+	\else
+		\newcommand{\createcolor}[1]{%
+				\expandafter\newcommand\csname #1\endcsname[1]{%
+					\noexpandarg%
+					\StrChar{##1}{1}[\firstletter]%
+					\if\firstletter\startcomment%
+						\relax
+					\else%
+						##1
+					\fi
+				}%
+		}
+		\newcommand{\msout}[1]{}
+		\newcommand{\del}[1]{}
+	\fi
+
+	\def\@tempa#1,{%
+			\ifx\relax#1\relax\else
+					\createcolor{#1}%
+					\expandafter\@tempa
+			\fi
+	}
+	\expandafter\@tempa\colorlist,\relax,
+
+	\newcommand{\old}[1]{{\color{green} [\textrm{DELETED: }#1]}}
+	\newcommand{\hhide}[1]{}
+	%\newcommand{\hhide}[1]{{\color{magenta} [TO BE EXCLUDED] #1}}
+
+	\newcommand{\txp}[2]{\texorpdfstring{#1}{#2}}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\interdisplaylinepenalty=2500   % To restore IEEEtran ability to automatically break
+	% within multiline equations, when using amsmath.
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\fi %\ifsignalpreamble@beamer, End of Beamer/non-Beamer specific packages
 %\makeatother
 
 

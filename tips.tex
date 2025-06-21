@@ -13,7 +13,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % These additional packages are only used on in this tips.tex file, 
-% not required for your paper. Please remove.
+% and not required for your paper. Please remove.
 
 \usepackage{silence}
 \WarningFilter{caption}{Unsupported document class}
@@ -28,7 +28,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Load the signalpreamble package
 % bibentry=true loads the bibentry package (this is usually not required for your paper)
-% If hyperref (by default) is loaded, bibentry modifies \@bibitem to make bibentry package compatible with hyperref
+% If hyperref (by default) is loaded, \@bibitem is modified to make the bibentry package compatible with hyperref
 
 \usepackage[bibentry]{signalpreamble} 
 
@@ -42,6 +42,9 @@
     urlcolor=purple,
 }
 
+%may cause conflict with some packages like tikz, include manually if desired
+% load after hyperref
+%\RequirePackage{breqn}
 
 % If using \Copy and \Paste commands, you need to load the clipboard package.
 % \usepackage{clipboard}
@@ -123,12 +126,12 @@ I recommend using \href{https://git-scm.com/}{git} for version control.
 \begin{itemize}
 \item Intellisense for autocompletion and various editor tricks like multiple cursors.
 \item GitHub Copilot (sign up for \href{https://github.com/education}{GitHub Education}).
-\item Grammarly extension for spelling and grammar checking.
+\item Extensions for spelling and grammar checking.
 \item Others.
 \end{itemize} 
 
 \item Use IEEEtran draftcls as in this tex file for drafts (editing stage). See also \url{http://www.michaelshell.org/tex/ieeetran/} for faqs.
-\item I recommend using the latexmk toolchain (``latexmk -synctex=1 -interaction=nonstopmode -file-line-error -pdf'') to automatically perform the necessary multiple pdflatex runs. Use the provided latexmkrc file in this repository. If you are using Overleaf, uncomment the part in the latexmkrc file that is for Overleaf.
+\item I recommend using the latexmk toolchain (``\blue{latexmk -synctex=1 -interaction=nonstopmode -file-line-error -pdf} main.tex'') to automatically perform the necessary multiple pdflatex runs. Use the provided latexmkrc file in this repository. If you are using Overleaf, uncomment the part in the latexmkrc file that is meant for Overleaf.
 %\item Together with pdflatex, I recommend the use of SumatraPDF as the viewer. This allows you to use synctex, which lets you sync the pdf file to your tex file (double-clicking in the pdf file brings you directly to the right place in the tex file and vice versa when opening pdf from tex).
 %\item However, synctex does not allow file names with spaces. Please use an underscore ``\_'' if you need to have spaces.
 \item After running latexmk, \textbf{\red{please look through the warnings and resolve them}}. These are very helpful to catch errors like defining same labels multiple times.
@@ -192,26 +195,27 @@ before computing xy={l=15pt},
 \section{The signalpreamble package}\label{sect:signalpreamble}
 
 \begin{enumerate}
-\item I have provided a \blue{signalpreamble} package (look under the \verb|latex\local| folder for the \blue{signalpreamble.sty} file) that you \textbf{should} use in your preamble. This signalpreamble package includes all the commonly used packages, declarations and aliases. 
+\item I have provided a \blue{signalpreamble} package (look under the {./latex/local} folder for the \href{https://gitlab.com/wptay/latex-tips/-/raw/main/latex/local/signalpreamble.sty}{signalpreamble.sty} file) that you \textbf{should} use in your preamble. This signalpreamble package includes all the commonly used packages, declarations and aliases. 
 \item Typical usage is to include the following line in the preamble of your tex file:
 \begin{center}
 \verb|\usepackage{signalpreamble}| 
 \end{center}
 \item The options available for the signalpreamble package are:
 \begin{itemize}
-\item hyperref: By default, this option is hyperref=true and will load the hyperref package with the options hidelinks, hypertexnames=false. If you do not want to use hyperref, set this option to false.
-\item algpseudocode: By default, this option is algpseudocode=true and will load the algpseudocode package. The algorithm package is loaded first. The algpseudocode is the preferred way to write algorithms. 
-\item beamer: By default, this option is beamer=false. Set this to true if you are writing a beamer presentation. The packages hyperref (beamer loads hyperref internally with its specific options) and cleveref are not loaded by default in this case.
-\item Other options include: subcaption, cleveref, response, bibentry, breqn, owntheorems, useTheoremCounter, highlights, diagnoselabel. Please read the signalpreamble.sty file for details.
+\item hyperref: By default, this option is hyperref=true and will load the hyperref package with the options \texttt{[hidelinks, hypertexnames=false]}. If you do not want to use hyperref, set this option to false.
+\item algpseudocode: By default, this option is algpseudocode=true and will load the algpseudocode package. The algorithm package is loaded first. The algpseudocode package is my preferred way to write algorithms. 
+\item response: Use \verb|\usepackage[response]{signalpreamble}| in your response.tex file to load the response macros. See \cref{sect:Response} for details.
+\item beamer: By default, this option is beamer=false. Set this to true if you are writing a beamer presentation. Beamer loads hyperref internally with its specific options. The package cleveref is not loaded by default in this case.
+\item Other options include: subcaption, cleveref, bibentry, owntheorems, useTheoremCounter, highlights, diagnoselabel, and so on. Please read the \href{https://gitlab.com/wptay/latex-tips/-/raw/main/latex/local/signalpreamble.sty}{signalpreamble.sty} file for details.
 \end{itemize} 
 
 \item \textbf{Look through the signalpreamble.sty file first before you define your own newcommands to avoid duplication. The most updated signalpreamble.sty file is always available on \url{https://gitlab.com/wptay/latex-tips}.} If you find some useful things to add to the package, please let me know. \cprotect\teal{Hint: you can redefine a command in your tex file after the \verb|\usepackage{signalpreamble}| command using \olive{\texttt{renewcommand}}.}
 
 \item I will always use the most updated signalpreamble.sty, so there is no need for you to include a copy in your workspace (you can keep a global copy somewhere and configure your Latex to point to it (see \href{https://miktex.org/kb/texmf-roots}{TEXMF}) or include a path in a latexmkrc file). In Overleaf, you can add a new file from external URL at \url{https://gitlab.com/wptay/latex-tips/-/raw/main/latex/local/signalpreamble.sty} and use \verb|\usepackage[xrhyper]{signalpreamble}| in your tex file because the most updated version of TexLive in Overleaf as of June 2025 is version 2024.
 
-\item A typical working tree looks like that in \cref{fig:working-tree}. Note the inclusion of the \orange{latexmkrc} file, which is used by latexmk to set the \orange{BIBINPUTS} and \orange{TEXINPUTS} variables. For example, this allows you to have a separate subfolder for a conference version, while sharing the same figures, bib, and sty files.
+\item A typical working tree looks like that in \cref{fig:working-tree}. Note the inclusion of the \orange{latexmkrc} file, which is used by latexmk to set the \orange{BIBINPUTS} and \orange{TEXINPUTS} variables. For example, this allows you to have a separate subfolder for a conference version, while sharing the same figures, bib, and sty files. See the latexmkrc file in the subfolder \texttt{presentation} for an example. 
 
-\item Hint: you can use this tex file (without the bibentry=true option in signalpreamble package) as a starting template when writing your papers.
+\item Hint: you can use this tex file (without the \texttt{bibentry} option in signalpreamble package) as a starting template when writing your papers.
 \item Please ensure that you embed all your fonts into the pdf before you submit to a journal or conference.
 \end{enumerate}
 
@@ -345,10 +349,10 @@ Note the use of aligned environment here.
 \begin{enumerate}
 \item If you are using a group of symbols very frequently, define a new command for it. It is like writing a computer program. The new command can even take in an argument.
 \item Example of a simple new command is $\Real$. See the provided signalpreamble package for more examples!
-\item Example of a more complex new command is $\E_{0}[f(X)]$. \textbf{As we use $\E$ and $\P$ very frequently, please figure out how I have defined these commands in the signalpreamble.sty and use them appropriately.} Examples are:
+\item Example of a more complex new command is $\E_{0}[f(X)]$. \textbf{As we use $\E$ and $\P$ very frequently, please find out how I have defined these commands in the signalpreamble.sty and use them appropriately.} Examples are the following:
 \begin{align*}
 f(\btheta) &= \E_{X \sim p_{\btheta}}^{\beta}[\frac{f(X)}{g(X,Y)} \given Y],\\
-\P(A \given B) &= \P(\set*{\omega\in\Omega \given \ofrac{2}X(\omega) > b} \given \limsup_{n\to\infty} X_n(\omega) = a).
+\P(A \given B) &= \P_0(\set*{\omega\in\Omega \given \ofrac{2}X(\omega) > b} \given \limsup_{n\to\infty} X_n(\omega) = a).
 \end{align*}
 \item You can define newacronym so that you do not have to remember if you have already used them. For example, this is ``\gls{KLD}'' at first use, and this is ``\gls{KLD}'' at second use. Acronyms should be reset immediately after the abstract as we do not consider the abstract as being part of the main paper. Use \verb|\glsresetall{}| to do this.
 \end{enumerate}
@@ -487,7 +491,16 @@ You can use tools like ChatGPT or GitHub Copilot to polish your writing. If you 
 
 \section{Responding to Paper Reviews}\label{sect:Response}
 \begin{enumerate}
-\item You can use the response.tex as a starting template. I have defined some useful environments for use there in your responses to reviewers' comments.
+\item You can use the response.tex as a starting template with
+\begin{center}
+\verb|\usepackage[response]{signalpreamble}| 
+\end{center}
+or 
+\begin{center}
+\verb|\usepackage[xrhyper,response]{signalpreamble}| 
+\end{center}
+if using Overleaf (TexLive 2024). I have defined some useful environments for use there in your responses to reviewers' comments.
+
 \item Check out the use of the packages catchfilebetweentags and xr. These packages make life much easier when you need to cross-reference a label (e.g., \cref{supp:Preliminaries} from the supplementary) or citation from one tex file in another tex file. It also allows you to quote a chunk of tex directly from your manuscript tex file. 
 
 \teal{
@@ -502,9 +515,9 @@ If you are using Overleaf and find that the xr package is not working, you are m
 Therefore, we have shown that $P \ne NP$.
 %</tag:NP>
 \end{verbatim}
-and use \verb|\revision{tag:NP}| in your response.tex, the sentence between the two tags will be quoted in your response. See response.tex for more details, including the starred version of the command \verb|\revision|.
+and use \verb|\revision{tag:NP}| in your response.tex, the sentence between the two tags will be quoted in your response. You can even use tags to catch the newcommands and newacronyms you have defined in your main paper if you need the same definitions for the response. See response.tex for more details.
 %<*tag:catch>
-This ensures that whatever changes you make in the tex file are reflected in the response. Examples given below are used in response.tex.
+This ensures that whatever changes you make in the tex file are reflected in the response. Examples given below are used in response.tex for illustration purposes.
 %</tag:catch>
 \end{enumerate}
 
@@ -569,7 +582,7 @@ From \cref{thm:limit_var}, we have that the limit posterior covariance of $f(v_0
 \nobibliography*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\red{The option bibentry=true in the signalpreamble package allows the bib entries to be printed as below. Remove this option in your paper.}
+\red{The option \texttt{bibentry=true} or simply \texttt{bibentry} in the signalpreamble package allows the bib entries to be printed as below. Remove this option in your paper.}
 
 \begin{enumerate}
 \item Use bibtex to keep track of your references.

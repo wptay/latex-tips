@@ -1,4 +1,4 @@
-\RequirePackage{etex}
+
 \documentclass[11pt, onecolumn, final]{IEEEtran}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -9,19 +9,24 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Used by additional references. If you do not have any local cites, comment this out.
+% Cite additional references using \citeA. 
+\usepackage[labeled,resetlabels]{multibib}
+\newcites{A}{Additional References}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \usepackage{lmodern}
 \usepackage{anyfontsize}
-\usepackage{expl3}
 \usepackage{silence}
 \WarningFilter{caption}{Unsupported document class}
 \WarningFilter{caption}{Unknown document class}
 \WarningFilter{latex}{No \author given}
-
-
-\usepackage[labeled,resetlabels]{multibib}
-% Used by additional references. If you do not have any local cites, comment this out.
-% Cite additional references using \citeA. 
-\newcites{A}{Additional References}
 
 \usepackage[response]{signalpreamble} 
 
@@ -42,7 +47,8 @@
 \begin{document}
 \maketitle
 
-% This copies the new commands and acronyms from the main paper.
+% This copies the new commands and acronyms from the main paper. 
+% Enclose these in the tags %<*tag:commands-main> %</tag:commands-main> in the main paper.
 \ExecuteMetaData[\maintext]{tag:commands-main}
 
 

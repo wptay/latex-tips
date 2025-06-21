@@ -1,5 +1,5 @@
 ensure_path( 'BIBINPUTS', '../bib//' );
-ensure_path( 'TEXINPUTS', '../latex/local//', '../Figures//' ); # E.g., path to directory containing your preamble.tex
+ensure_path( 'TEXINPUTS', '../latex/local//', '../figures//' ); # E.g., path to directory containing your preamble.tex
 
 ##########################################
 # #For use in Overleaf with xr package
