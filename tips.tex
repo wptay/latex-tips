@@ -77,7 +77,7 @@
 \begin{document}
 
 \title{Tips on Writing Papers in \LaTeX}
-\author{Wee~Peng~Tay,~\IEEEmembership{Senior~Member,~IEEE}%
+\author{Wee~Peng~Tay%
 \thanks{
 This work was supported by the xxxxx. Preliminary versions of parts of this paper were presented at xxxx.  The author is with the School of Electrical and Electronic Engineering, Nanyang Technological University, Singapore. E-mail: \texttt{wptay@ntu.edu.sg}
 }%
@@ -112,8 +112,8 @@ We list some best practices and tips for writing technical papers in \LaTeX.
 Tips, suggestions, best practices.
 \end{IEEEkeywords}
 
-\section{General}\label{sect:General}
-\textbf{Please see the tex file for actual implementation of the examples in this note. You will not learn anything by just reading the pdf file.} This tex file includes some of the more commonly used packages and settings. It also illustrates the use of some packages, e.g., the enumitem package allows customization of the item listing. For details, read the documentation of the packages for different options. discrete set $\{1,2,\ldots, n\}$. 
+\section{General}\label{sec:General}
+\textbf{Please see the tex file for actual implementation of the examples in this note. You will not learn anything by just reading the pdf file.} This tex file includes some of the more commonly used packages and settings. It also illustrates the use of some packages, e.g., the enumitem package allows customization of the item listing. For details, read the documentation of the packages for different options. 
 
 \begin{enumerate}
 \item Windows tex distribution: \href{https://miktex.org/}{MiKTeX}.
@@ -131,7 +131,7 @@ I recommend using \href{https://git-scm.com/}{git} for version control.
 \end{itemize} 
 
 \item Use IEEEtran draftcls as in this tex file for drafts (editing stage). See also \url{http://www.michaelshell.org/tex/ieeetran/} for faqs.
-\item I recommend using the latexmk toolchain (``\blue{latexmk -synctex=1 -interaction=nonstopmode -file-line-error -pdf} main.tex'') to automatically perform the necessary multiple pdflatex runs. Use the provided latexmkrc file in this repository. If you are using Overleaf, uncomment the part in the latexmkrc file that is meant for Overleaf.
+\item I recommend using the latexmk toolchain (``\blue{latexmk -synctex=1 -interaction=nonstopmode -file-line-error -pdf} main.tex'') to automatically perform the necessary multiple pdflatex runs. Use the provided \orange{latexmkrc} file in this repository. If you are using Overleaf, uncomment the part in the latexmkrc file that is meant for Overleaf.
 %\item Together with pdflatex, I recommend the use of SumatraPDF as the viewer. This allows you to use synctex, which lets you sync the pdf file to your tex file (double-clicking in the pdf file brings you directly to the right place in the tex file and vice versa when opening pdf from tex).
 %\item However, synctex does not allow file names with spaces. Please use an underscore ``\_'' if you need to have spaces.
 \item After running latexmk, \textbf{\red{please look through the warnings and resolve them}}. These are very helpful to catch errors like defining same labels multiple times.
@@ -192,7 +192,7 @@ before computing xy={l=15pt},
 \end{figure}
 
 
-\section{The signalpreamble package}\label{sect:signalpreamble}
+\section{The signalpreamble package}\label{sec:signalpreamble}
 
 \begin{enumerate}
 \item I have provided a \blue{signalpreamble} package (look under the {./latex/local} folder for the \href{https://gitlab.com/wptay/latex-tips/-/raw/main/latex/local/signalpreamble.sty}{signalpreamble.sty} file) that you \textbf{should} use in your preamble. This signalpreamble package includes all the commonly used packages, declarations and aliases. 
@@ -204,14 +204,14 @@ before computing xy={l=15pt},
 \begin{itemize}
 \item hyperref: By default, this option is hyperref=true and will load the hyperref package with the options \texttt{[hidelinks, hypertexnames=false]}. If you do not want to use hyperref, set this option to false.
 \item algpseudocode: By default, this option is algpseudocode=true and will load the algpseudocode package. The algorithm package is loaded first. The algpseudocode package is my preferred way to write algorithms. 
-\item response: Use \verb|\usepackage[response]{signalpreamble}| in your response.tex file to load the response macros. See \cref{sect:Response} for details.
+\item response: Use \verb|\usepackage[response]{signalpreamble}| in your response.tex file to load the response macros. See \cref{sec:Response} for details.
 \item beamer: By default, this option is beamer=false. Set this to true if you are writing a beamer presentation. Beamer loads hyperref internally with its specific options. The package cleveref is not loaded by default in this case.
 \item Other options include: subcaption, cleveref, bibentry, owntheorems, useTheoremCounter, highlights, diagnoselabel, and so on. Please read the \href{https://gitlab.com/wptay/latex-tips/-/raw/main/latex/local/signalpreamble.sty}{signalpreamble.sty} file for details.
 \end{itemize} 
 
 \item \textbf{Look through the signalpreamble.sty file first before you define your own newcommands to avoid duplication. The most updated signalpreamble.sty file is always available on \url{https://gitlab.com/wptay/latex-tips}.} If you find some useful things to add to the package, please let me know. \cprotect\teal{Hint: you can redefine a command in your tex file after the \verb|\usepackage{signalpreamble}| command using \olive{\texttt{renewcommand}}.}
 
-\item I will always use the most updated signalpreamble.sty, so there is no need for you to include a copy in your workspace (you can keep a global copy somewhere and configure your Latex to point to it (see \href{https://miktex.org/kb/texmf-roots}{TEXMF}) or include a path in a latexmkrc file). In Overleaf, you can add a new file from external URL at \url{https://gitlab.com/wptay/latex-tips/-/raw/main/latex/local/signalpreamble.sty} and use \verb|\usepackage[xrhyper]{signalpreamble}| in your tex file because the most updated version of TexLive in Overleaf as of June 2025 is version 2024.
+\item I will always use the most updated signalpreamble.sty, so there is no need for you to include a copy in your workspace (you can keep a global copy somewhere and configure your Latex to point to it (see \href{https://miktex.org/kb/texmf-roots}{TEXMF}) or include a path in a latexmkrc file). In Overleaf, you can add a new file from external URL at \url{https://gitlab.com/wptay/latex-tips/-/raw/main/latex/local/signalpreamble.sty} and use \verb|\usepackage[xrhyper]{signalpreamble}| in your tex file because the most updated version of TexLive in Overleaf as of June 2025 is version 2024 and its xr package has not been updated.
 
 \item A typical working tree looks like that in \cref{fig:working-tree}. Note the inclusion of the \orange{latexmkrc} file, which is used by latexmk to set the \orange{BIBINPUTS} and \orange{TEXINPUTS} variables. For example, this allows you to have a separate subfolder for a conference version, while sharing the same figures, bib, and sty files. See the latexmkrc file in the subfolder \texttt{presentation} for an example. 
 
@@ -221,7 +221,7 @@ before computing xy={l=15pt},
 
 
 
-\section{Labels}\label{sect:Labels}
+\section{Labels}\label{sec:Labels}
 
 \begin{algorithm}[!b]
 \caption{Minibatch stochastic gradient algorithm}\label{algo:mini}
@@ -238,7 +238,7 @@ before computing xy={l=15pt},
 
 
 \begin{enumerate}[(a)]
-\item Use meaningful labels for your sections, equations, inequalities, figures, tables, and others. For example, use something like ``sect:Labels'' to label your section so that you know that this label is for a section. Later on in your text, you can then easily refer to it via something like ``\cref{sect:Labels}''. 
+\item Use meaningful labels for your sections, equations, inequalities, figures, tables, and others. For example, use something like ``sec:Labels'' to label your section so that you know that this label is for a section. Later on in your text, you can then easily refer to it via something like ``\cref{sec:Labels}''. 
 
 % \begin{Example}\label{eg:lipsum}
 % \lipsum[1] 
@@ -247,19 +247,19 @@ before computing xy={l=15pt},
 \item\label{it:myitem} Tip: items can also be labeled! Example is this reference \ref{it:myitem}. 
 \item Do not over label! For equations, tables, figures and most ``objects'', we usually label only those that we need to refer to in another part of the text. In some cases, you may also label important equations although you may not refer to these in any part of your text. This makes it easier for readers to refer to your equations. However, do this judiciously.
 
-\item You should try to use the cleveref-forward package to reference labels. It is smart enough to know what you are referencing, e.g., \cref{sect:General}, \cref{sect:General,sect:Labels,sect:Equations}, and \cref{eq:X} all use the same cref command. Otherwise, you have put a tilde like ``Section~\ref{sect:General}'' to avoid line breaks immediately after ``Section''.
+\item You should try to use the cleveref-forward package to reference labels. It is smart enough to know what you are referencing, e.g., \cref{sec:General}, \cref{sec:General,sec:Labels,sec:Equations}, and \cref{eq:X} all use the same cref command. Otherwise, you have put a tilde like ``Section~\ref{sec:General}'' to avoid line breaks immediately after ``Section''.
 
 \item \Cref{algo:mini} uses the algpseudocode package. 
 \end{enumerate}
 
 
-\section{Equations}\label{sect:Equations}
+\section{Equations}\label{sec:Equations}
 
 \begin{enumerate}[1)]
 \item There are many ways to write equations, but I find that you really only need to use either the align or align* environments provided by amsmath. The environment align will have equation numbers at every line and align* has no equation numbers. See the tips on labeling to decide when to use align and align*. Examples are:
 \begin{align}
 X & = \sum_{i=1}^n y_i \label{eq:X}\\
-& = \int_{a}^b f(x) \ud x \nn
+& = \int_{a}^b f(x) \ud x \label{eq:int}\\
 & = \norm*{\sum_{t=0}^\infty e^{t\bA}}. \label{eq:norm_sum}
 \end{align}
 The align* environment is used when you do not need to number the equations. For example, if you want to write the same equations as above but without numbering, you can use the align* environment:
@@ -274,13 +274,14 @@ Other examples are as follows:
 \Lambda_{\mathrm{SGLR}}(k,t) & =\max\left\{\Lambda(k,t),\Lambda_n(k,t)\right\}, \label{eq:Lambda_SGLR}    \\
 \tau_{\mathrm{SGLR}}(b)      & =\min\{\tau(b),\tau_n(b)\}, \label{eq:tau_SGLR2}                           \\
 \tau_{\mathrm{W-SGLR}}(b)    & =\min\{\widetilde{\tau}(b),\widetilde{\tau_n}(b)\}, \label{eq:tau_WSGLR2}  \\
-\Phi_i                       & = \tau_{\mathrm{W-SGLR}}(b) + i^2,\ \text{for $i=1,\dots,N$},         \nn
+\Phi_i                       & = \tau_{\mathrm{W-SGLR}}(b) + i^2,\ \text{for $i=1,\dots,N$},         			\nn
 \tbC                         & = \onehot{\tbL}, \label{eq:tbC}                                            \\
-\bx &= \bB\Herm\bSigma\bM\T\bPhi\bM\bA\T,\nn
-d                            & = \KLD*{p_X}{p_{Z}}. \nonumber
+\bx 												 &= \bB\Herm\bSigma\bM\T\bPhi\bM\bA\T, 																				\nn
+d                            & = \KLD*{p_X}{p_{Z}}. 																											\nonumber
 \end{align}
 %</tag:equation>
-\textbf{Note when punctuation marks like ``,'' and ``.'' are required in the equations.} 
+Note the use of the command \verb|\nn| to indicate \verb|\nonumber\\|.
+\textbf{Punctuation marks like ``,'' and ``.'' are required in the equation displays, i.e., they are read in the same way as in the text.} 
 
 
 \item Please put \& before the binary operators like $=$, $\leq$ and $\geq$. You can see why by comparing the following example with that above. Do you see that the spacing behind $=$ is now missing?
@@ -344,7 +345,7 @@ Note the use of aligned environment here.
 
 
 
-\section{New Commands}\label{sect:New_Commands}
+\section{New Commands}\label{sec:New_Commands}
 
 \begin{enumerate}
 \item If you are using a group of symbols very frequently, define a new command for it. It is like writing a computer program. The new command can even take in an argument.
@@ -357,7 +358,7 @@ f(\btheta) &= \E_{X \sim p_{\btheta}}^{\beta}[\frac{f(X)}{g(X,Y)} \given Y],\\
 \item You can define newacronym so that you do not have to remember if you have already used them. For example, this is ``\gls{KLD}'' at first use, and this is ``\gls{KLD}'' at second use. Acronyms should be reset immediately after the abstract as we do not consider the abstract as being part of the main paper. Use \verb|\glsresetall{}| to do this.
 \end{enumerate}
 
-\section{Figures and Tables}\label{sect:Graphics}
+\section{Figures and Tables}\label{sec:Graphics}
 
 %<*tag:afigure>
 \begin{figure}[!htb]
@@ -380,10 +381,11 @@ f(\btheta) &= \E_{X \sim p_{\btheta}}^{\beta}[\frac{f(X)}{g(X,Y)} \given Y],\\
 %</tag:afigure>
 
 \begin{enumerate}
-\item You can set the graphics path in tex using \verb|\graphicspath| (this has been done in the signalpreamble package) to the ``figures'' subfolder in which you keep your images. Then \LaTeX\ will look for the right figure in the folder you have provided in the graphics path. See \cref{fig:tandem} for an example.
+\item You can set the graphics path in tex using \verb|\graphicspath| (this has been done in the signalpreamble package to figures and Figures) to the ``figures'' subfolder in which you keep your images. Then \LaTeX\ will look for the right figure in the folder you have provided in the graphics path. See \cref{fig:tandem} for an example.
 \item I highly recommend Ipe (\url{http://ipe.otfried.org/}) for preparing your graphics. The advantage is that you can directly input latex symbols into your graphics using Ipe. Graphics can be saved directly in pdf. For example, you can open tandem.pdf in the Figures folder using the Ipe program and edit that! There is also an Ipelet that allows you to convert Ipe to tikz if you prefer the latter. Another popular graphics program with Latex capability is Inkscape~(\url{https://inkscape.org/}) with the textext extension. If you use any other graphics program, the font may not be the same as your latex document. In that case, you may need to use psfrag to replace your labels.
 \item Please use ``!htb'' or ``!htbp'' as options in your figure and table environments.
-\item Use the subcaption package for the subfigure environment. See \cref{fig:tandem} for an example. Do not use the subfig package as it does not work with the hyperref package. \item An example of a table is shown in \cref{tab:linkresults}. Note the use of \verb|\toprule|, \verb|\midrule|, and \verb|\bottomrule| from the booktabs package instead of the ugly \verb|\hline| command. The advice from the booktabs package is to ``Never, ever use vertical rules.'' and ``Never use double rules.'' 
+\item Use the subcaption package for the subfigure environment. See \cref{fig:tandem} for an example. Do not use the subfig package as it does not work with the hyperref package. 
+\item An example of a table is shown in \cref{tab:linkresults}. Note the use of \verb|\toprule|, \verb|\midrule|, and \verb|\bottomrule| from the booktabs package instead of the ugly \verb|\hline| command. The advice from the booktabs package is to ``Never, ever use vertical rules.'' and ``Never use double rules.'' 
 \item To have fixed column widths with text wrapping in your table column, use the \verb|L{width}|, \verb|C{width}|, or \verb|R{width}| column types from the signalpreamble.sty. 
 \end{enumerate}
 
@@ -436,15 +438,15 @@ HamGNN  & $\second{99.73\sd{0.26}}$                          &$\first{99.99\sd{0
 \toprule
 Dataset  & F-GRAND          & L-F-GRAND         & P-F-GRAND         & R-F-GRAND \\
 \midrule
-Cora     & $84.68\sd{1.01}$   & $84.73\sd{1.12}$    & \second{$84.76\sd{1.10}$}    & \first{$85.16\sd{1.18}$}\\
+Cora     & $84.68\sd{1.01}$   & $84.73\sd{1.12}$    & $\second{84.76\sd{1.10}}$    & $\first{85.16\sd{1.18}}$\\
 \midrule
-Citeseer & $73.71\sd{1.00}$   & \second{$73.75\sd{1.64}$}    & $73.72\sd{1.67}$    & \first{$74.05\sd{1.60}$}\\
+Citeseer & $73.71\sd{1.00}$   & $\second{73.75\sd{1.64}}$    & $73.72\sd{1.67}$    & $\first{74.05\sd{1.60}}$\\
 \midrule
-Pubmed   & $79.14\sd{1.68}$   & \second{$79.29\sd{2.09}$}   & $79.19\sd{1.55}$    & \first{$79.38\sd{1.59}$}\\
+Pubmed   & $79.14\sd{1.68}$   & $\second{79.29\sd{2.09}}$   & $79.19\sd{1.55}$    & $\first{79.38\sd{1.59}}$\\
 \midrule
-Photo    & $92.54\sd{1.36}$   & $92.55\sd{1.26}$    & \second{$92.70\sd{1.31}$}    & \first{$93.16\sd{1.33}$}\\
+Photo    & $92.54\sd{1.36}$   & $92.55\sd{1.26}$    & $\second{92.70\sd{1.31}}$    & $\first{93.16\sd{1.33}}$\\
 \midrule
-CS       & $92.93\sd{0.25}$   & \second{$93.02\sd{0.24}$}    & $92.98\sd{0.21}$    & \first{$93.37\sd{0.25}$}\\
+CS       & $92.93\sd{0.25}$   & $\second{93.02\sd{0.24}}$    & $92.98\sd{0.21}$    & $\first{93.37\sd{0.25}}$\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -463,9 +465,9 @@ CS       & $92.93\sd{0.25}$   & \second{$93.02\sd{0.24}$}    & $92.98\sd{0.21}$ 
 \item Please write in formal language and refrain from using flowery words. Do not use short forms, e.g., ``it's'' should be written as ``it is'', ``we've'' should be written as ``we have'', and ``thanks very much for your comment'' should be rephrased as ``thank you for your comment''. Avoid descriptions such as ``innovative'' and ``pioneering'' when describing your own work. These are judgments to be made by other researchers years later.
 \item Write in the \textbf{active present tense}. E.g., 
 \begin{itemize}
-\item ``In this paper, we \olive{shall show} that $A=B$.'' reads better as ``In this paper, we \cyan{show} that $A=B$.''
-\item  ``In our experiments, we \olive{divided} the data into training and testing sets.'' reads better as ``In our experiments, we \cyan{divide} the data into training and testing sets.''
-\item ``In \cite{kipf2016semi}, the authors \olive{used} a GCN model to classify the nodes.'' reads better as ``In \cite{kipf2016semi}, the authors \cyan{use} a GCN model to classify the nodes.''
+\item ``In this paper, we \cyan{show} that $A=B$.'' instead of ``In this paper, we \olive{shall show} that $A=B$.'' 
+\item  ``In our experiments, we \cyan{divide} the data into training and testing sets.'' instead of ``In our experiments, we \olive{divided} the data into training and testing sets.''
+\item ``In \cite{kipf2016semi}, the authors \cyan{use} a GCN model to classify the nodes.'' instead of ``In \cite{kipf2016semi}, the authors \olive{used} a GCN model to classify the nodes.''
 \end{itemize}
 \end{enumerate}
 
@@ -477,19 +479,19 @@ You can use tools like ChatGPT or GitHub Copilot to polish your writing. If you 
 ``To improve the readability, parts of this paper have been grammatically revised using ChatGPT \cite{OpenAI}.''
 
 
-\section{Paper Editing Process}\label{sect:editing}
+\section{Paper Editing Process}\label{sec:editing}
 \begin{enumerate}
-\item After you have written your paper, put it aside for a day and revise it with a fresh mind in order to improve it. \textbf{This includes checking the bibliography for errors.} See \cref{sect:Bibliography}.
+\item After you have written your paper, put it aside for a day and revise it with a fresh mind in order to improve it. \textbf{This includes checking the bibliography for errors.} See \cref{sec:Bibliography}.
 \item Please send me your paper for editing only after you have gone over it \textbf{several times} to correct any errors and improve it. You should send the paper to me only after you feel fully satisfied with the version that you have. Typically, this will be the fourth or fifth version.
-\item Share your Overleaf project with me and give me edit permission. 
+\item If you are using Overleaf, share your Overleaf project with me and give me edit permission. 
 \item Alternatively, share your tex files with me through \emph{private repositories} on Gitlab, GitHub, Gitee or BitBucket and add me as a member or collaborator.  Git takes care of version control so that we do not have to resort to manual version control.  
 \item I will highlight my major edits in \blue{blue} and \red{red}, where the latter color usually indicates something that requires your action or special attention. Deleted text for your attention is shown as \del{deleted}. Please go through all my edits to check for errors (never assume that I am always correct; I do make errors too!). If you are satisfied with an edit, remove the highlight and return the file to me, with your own edits highlighted in blue. We will iterate this process until the paper reaches a satisfactory stage.
 \item Please note that sometimes \textbf{NOT} all my edits are highlighted. Those highlighted are for your attention and checking. Some are for you to compare with your previous version so that you can learn from the change. Do not manually transfer the changes to your previous tex file. 
 \item Other available colors are \brown{brown}, \cyan{cyan}, \darkgray{darkgray}, \gray{gray}, \lightgray{lightgray}, \green{green}, \lime{lime}, \magenta{magenta}, \olive{olive}, \orange{orange}, \pink{pink}, \purple{purple}, \teal{teal}, \violet{violet}, and \yellow{yellow}. You should check out how these color commands are defined in the signalpreamble package.
-\item By using option highlights=false in signalpreamble package, you get a clean copy without color highlights and comments. Comments are assumed to start with the square bracket ``[''.
+\item By using option highlights=false in the signalpreamble package, you get a clean copy without color highlights and comments. Comments are assumed to start with the square bracket ``[''.
 \end{enumerate}
 
-\section{Responding to Paper Reviews}\label{sect:Response}
+\section{Responding to Paper Reviews}\label{sec:Response}
 \begin{enumerate}
 \item You can use the response.tex as a starting template with
 \begin{center}
@@ -505,7 +507,7 @@ if using Overleaf (TexLive 2024). I have defined some useful environments for us
 
 \teal{
 \begin{Remark}
-If you are using Overleaf and find that the xr package is not working, you are missing information in the latexmkrc file. See \href{https://www.overleaf.com/learn/how-to/Cross_referencing_with_the_xr_package_in_Overleaf}{this link} for more information.
+If you are using Overleaf and find that the xr or xr-hyper package is not working, you are missing information in the latexmkrc file. See \href{https://www.overleaf.com/learn/how-to/Cross_referencing_with_the_xr_package_in_Overleaf}{this link} for more information.
 \end{Remark}    
 }
 
@@ -575,7 +577,7 @@ From \cref{thm:limit_var}, we have that the limit posterior covariance of $f(v_0
 
 
 
-\section{Bibliography}\label{sect:Bibliography}
+\section{Bibliography}\label{sec:Bibliography}
 
 %%%%% This is placed here due to bibentry, not usually used in your papers.
 \bstctlcite{IEEEBSTcontrol}
