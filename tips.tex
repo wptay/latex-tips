@@ -201,8 +201,8 @@ before computing xy={l=15pt},
 \end{center}
 \item The options available for the signalpreamble package are:
 \begin{itemize}
-\item hyperref: By default, this option is hyperref=true and will load the hyperref package with the options \texttt{[hidelinks, hypertexnames=false]}. If you do not want to use hyperref, set this option to false.
-\item algpseudocode: By default, this option is algpseudocode=true and will load the algpseudocode package. The algorithm package is loaded first. The algpseudocode package is my preferred way to write algorithms. 
+\item hyperref: By default, this option is hyperref=true and loads the hyperref package with the options \texttt{[hidelinks, hypertexnames=false]}. If you do not want to use hyperref, set this option to false.
+\item algpseudocode: By default, this option is algpseudocode=true and loads the algpseudocode package. The algorithm package is loaded first. The algpseudocode package is my preferred way to write algorithms. 
 \item response: Use \verb|\usepackage[response]{signalpreamble}| in your response.tex file to load the response macros. See \cref{sec:Response} for details.
 \item beamer: By default, this option is beamer=false. Set this to true if you are writing a beamer presentation. Beamer loads hyperref internally with its specific options. The package cleveref is not loaded by default in this case.
 \item Other options include: subcaption, cleveref, bibentry, owntheorems, useTheoremCounter, highlights, diagnoselabel, and so on. Please read the \href{https://gitlab.com/wptay/latex-tips/-/raw/main/latex/local/signalpreamble.sty}{signalpreamble.sty} file for details.
@@ -210,7 +210,7 @@ before computing xy={l=15pt},
 
 \item \textbf{Look through the signalpreamble.sty file first before you define your own newcommands to avoid duplication. The most updated signalpreamble.sty file is always available on \url{https://gitlab.com/wptay/latex-tips}.} If you find some useful things to add to the package, please let me know. \cprotect\teal{Hint: you can redefine a command in your tex file after the \verb|\usepackage{signalpreamble}| command using \olive{\texttt{renewcommand}}.}
 
-\item I will always use the most updated signalpreamble.sty, so there is no need for you to include a copy in your workspace (you can keep a global copy somewhere and configure your Latex to point to it (see \href{https://miktex.org/kb/texmf-roots}{TEXMF}) or include a path in a latexmkrc file). In Overleaf, you can add a new file from external URL at \url{https://gitlab.com/wptay/latex-tips/-/raw/main/latex/local/signalpreamble.sty} and use \verb|\usepackage[xrhyper]{signalpreamble}| in your tex file because the most updated version of TexLive in Overleaf as of June 2025 is version 2024 and its xr package has not been updated.
+\item I will always use the most updated signalpreamble.sty, so there is no need for you to include a copy in your workspace (you can keep a global copy somewhere and configure your Latex to point to it (see \href{https://miktex.org/kb/texmf-roots}{TEXMF}) or include a path in a latexmkrc file). In Overleaf, you can add a new file from external URL at \url{https://gitlab.com/wptay/latex-tips/-/raw/main/latex/local/signalpreamble.sty}. Check that your Overleaf compiler is TexLive 2025 or later, otherwise you have to use \verb|\usepackage[xrhyper]{signalpreamble}| in your tex file.
 
 \item A typical working tree looks like that in \cref{fig:working-tree}. Note the inclusion of the \orange{latexmkrc} file, which is used by latexmk to set the \orange{BIBINPUTS} and \orange{TEXINPUTS} variables. For example, this allows you to have a separate subfolder for a conference version, while sharing the same figures, bib, and sty files. See the latexmkrc file in the subfolder \texttt{presentation} for an example. 
 
@@ -496,11 +496,7 @@ You can use tools like ChatGPT or GitHub Copilot to polish your writing. If you 
 \begin{center}
 \verb|\usepackage[response]{signalpreamble}| 
 \end{center}
-or 
-\begin{center}
-\verb|\usepackage[xrhyper,response]{signalpreamble}| 
-\end{center}
-if using Overleaf (TexLive 2024). I have defined some useful environments for use there in your responses to reviewers' comments.
+Check that your Overleaf compiler is TexLive 2025 or later. I have defined some useful environments for use there in your responses to reviewers' comments.
 
 \item Check out the use of the packages catchfilebetweentags and xr. These packages make life much easier when you need to cross-reference a label (e.g., \cref{supp:Preliminaries} from the supplementary) or citation from one tex file in another tex file. It also allows you to quote a chunk of tex directly from your manuscript tex file. 
 
