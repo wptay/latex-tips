@@ -27,11 +27,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Load the signalpreamble package
-% bibentry=true loads the bibentry package (this is usually not required for your paper)
-% If hyperref (by default) is loaded, \@bibitem is modified to make the bibentry package compatible with hyperref
+% Typical usage is \usepackage{signalpreamble} 
+% In this file ONLY, we use bibentry=true to load the bibentry package (this is usually not required for your paper).
+% If hyperref (by default) is loaded, \@bibitem is modified to make the bibentry package compatible with hyperref.
 
 \usepackage[bibentry]{signalpreamble} 
 
+% Some options for use with the hyperref package.
 % This is used only for this tips.tex file, not required for your paper.
 \hypersetup{%
     colorlinks=true,
@@ -41,7 +43,7 @@
     urlcolor=purple,
 }
 
-%may cause conflict with some packages like tikz, include manually if desired
+% The following may cause conflict with some packages like tikz, include manually if desired
 % load after hyperref
 %\RequirePackage{breqn}
 
