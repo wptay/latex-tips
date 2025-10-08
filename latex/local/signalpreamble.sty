@@ -1,6 +1,6 @@
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{signalpreamble}[2025/06/21 v1.0.1 SIGNAL Preamble]
+\ProvidesPackage{signalpreamble}[2025/10/08 v1.0.2 SIGNAL Preamble]
 
 % Note: this has been tested using the latest Latex packages as of the version date. If you are getting errors, update your packages.
 % LTeX: enabled=false
@@ -67,7 +67,7 @@
 \RequirePackage{colortbl}
 \RequirePackage{booktabs}
 \RequirePackage{multirow}
-\RequirePackage{xcolor}
+\RequirePackage[table,dvipsnames]{xcolor}
 \RequirePackage{soul}
 \RequirePackage{xparse,xstring}
 \RequirePackage{calc}
@@ -1596,18 +1596,26 @@
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-	%colors
+	% explicit overlay-aware color commands
+	% Note: difficult to implement an overlay-aware generator similar to the non-Beamer case because of the need to use \newcommand<>{...} instead of \newcommand{...}
 	\newcommand<>{\red}[1]{{\color#2{red} #1}}
-	\newcommand<>{\blue}[1]{{{\color#2{blue} #1}}}
-	\newcommand<>{\green}[1]{{\color#2{OliveGreen} #1}}
-	\newcommand<>{\gray}[1]{{\color#2{gray} #1}}
-	\newcommand<>{\magenta}[1]{{\color#2{magenta} #1}}
-	\newcommand<>{\orange}[1]{{\color#2{Orange} #1}}
+	\newcommand<>{\blue}[1]{{\color#2{blue} #1}}
+	\newcommand<>{\brown}[1]{{\color#2{brown} #1}}
 	\newcommand<>{\cyan}[1]{{\color#2{cyan} #1}}
-	\newcommand<>{\lime}[1]{{\color#2{LimeGreen} #1}}
+	\newcommand<>{\darkgray}[1]{{\color#2{darkgray} #1}}
+	\newcommand<>{\gray}[1]{{\color#2{gray} #1}}
+	\newcommand<>{\lightgray}[1]{{\color#2{lightgray} #1}}
+	\newcommand<>{\magenta}[1]{{\color#2{magenta} #1}}
+	\newcommand<>{\olive}[1]{{\color#2{olive} #1}}
+	\newcommand<>{\orange}[1]{{\color#2{orange} #1}}
+	\newcommand<>{\pink}[1]{{\color#2{pink} #1}}
 	\newcommand<>{\purple}[1]{{\color#2{purple} #1}}
 	\newcommand<>{\teal}[1]{{\color#2{teal} #1}}
+	\newcommand<>{\violet}[1]{{\color#2{violet} #1}}
+	\newcommand<>{\white}[1]{{\color#2{white} #1}}
 	\newcommand<>{\yellow}[1]{{\color#2{yellow} #1}}
+	\newcommand<>{\green}[1]{{\color#2{OliveGreen} #1}}
+	\newcommand<>{\lime}[1]{{\color#2{LimeGreen} #1}}
 	\newcommand<>{\BurntOrange}[1]{{\color#2{BurntOrange} #1}}
 
 	\newcommand<>{\alertc}[2][red]{{\color#3{#1} #2}}
