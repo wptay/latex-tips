@@ -250,8 +250,25 @@ before computing xy={l=15pt},
 
 \item You should try to use the cleveref-forward package to reference labels. It is smart enough to know what you are referencing, e.g., \cref{sec:General}, \cref{sec:General,sec:Labels,sec:Equations}, and \cref{eq:X} all use the same cref command. Otherwise, you have put a tilde like ``Section~\ref{sec:General}'' to avoid line breaks immediately after ``Section''.
 
-\item \Cref{algo:mini} uses the algpseudocode package. 
+\item Another example of referencing: \cref{algo:mini} uses the algpseudocode package. Note that you do not have to write ``Algorithm~\ref{algo:mini}''.
+
+\item Referencing multiple labels: use \cref{eq:X,eq:int,eq:norm_sum} to refer to multiple equations at once.
+
+\item Sometimes you may want to refer to a sub element in an labeled environment like Assumption. An example is given in \cref{assum:something} and you can refer to its parts using \cref{assum:bounded-noise} and \cref{assum:step-size}.
+
 \end{enumerate}
+
+
+\begin{Assumption}\label{assum:something}\
+
+\begin{enumerate}[label=(\roman*),ref={\theAssumption(\roman*)}]
+
+\item\label[Assumption]{assum:bounded-noise} We have $\norm{\epsilon_t} \leq C$ for some constant $C > 0$.
+
+\item \label[Assumption]{assum:step-size} The step size $\alpha_t$ satisfies $\sum_{t=0}^\infty \alpha_t = \infty$ and $\sum_{t=0}^\infty \alpha_t^2 < \infty$.
+
+\end{enumerate}
+\end{Assumption}
 
 
 \section{Equations}\label{sec:Equations}
