@@ -17,6 +17,7 @@
 \DeclareBoolOption[true]{cleveref}
 \DeclareBoolOption[true]{subcaption}
 \DeclareBoolOption[true]{enumitem}
+\DeclareBoolOption[true]{glossaries}
 \DeclareBoolOption[true]{highlights}
 
 \DeclareBoolOption[false]{response} % for response macros: load \usepackage[response]{signalpreamble}
@@ -125,42 +126,6 @@
 \fi
 %\makeatother
 
-
-\RequirePackage{glossaries}
-%\makeatletter
-\sfcode`\.1006
-
-% copy old \gls and \glspl '
-\let\oldgls\gls
-\let\oldglspl\glspl
-
-% define a non space skipping version of \@ifnextchar
-\newcommand\fussy@ifnextchar[3]{%
-	\let\reserved@d=#1%
-	\def\reserved@a{#2}%
-	\def\reserved@b{#3}%
-	\futurelet\@let@token\fussy@ifnch}
-\def\fussy@ifnch{%
-	\ifx\@let@token\reserved@d
-		\let\reserved@c\reserved@a
-	\else
-		\let\reserved@c\reserved@b
-	\fi
-	\reserved@c}
-
-\renewcommand{\gls}[1]{%
-\oldgls{#1}\fussy@ifnextchar.{\@checkperiod}{\@}}
-\renewcommand{\glspl}[1]{%
-\oldglspl{#1}\fussy@ifnextchar.{\@checkperiod}{\@}}
-
-\newcommand{\@checkperiod}[1]{%
-	\ifnum\sfcode`\.=\spacefactor\else#1\fi
-}
-
-% '
-\robustify{\gls}
-\robustify{\glspl}
-%\makeatother
 
 %\makeatletter
 \ifsignalpreamble@beamer
@@ -306,6 +271,62 @@
 
 	\fi %ifsignalpreamble@cleveref
 \fi %ifsignalpreamble@beamer
+
+\ifsignalpreamble@glossaries
+	%\RequirePackage[acronym,hyperfirst=false]{glossaries}
+	\RequirePackage{glossaries-extra}
+	\setabbreviationstyle[acronym]{long-short}
+	\glssetcategoryattribute{acronym}{nohyperfirst}{true}
+	\renewcommand*{\glsdonohyperlink}[2]{%
+	{\glsxtrprotectlinks 
+		\edef\fieldvalue{\glsxtrusefield{\glslabel}{hastarget}}%
+		\ifdefstring\fieldvalue{true}
+		{%
+			#2%
+		}%
+		{%
+			\gGlsXtrSetField{\glslabel}{hastarget}{true}\glsdohypertarget{#1}{#2}%
+		}%
+	}%
+	}
+
+	\sfcode`\.1006
+
+	% copy old \gls and \glspl '
+	\let\oldgls\gls
+	\let\oldglspl\glspl
+
+	% define a non space skipping version of \@ifnextchar
+	\newcommand\fussy@ifnextchar[3]{%
+		\let\reserved@d=#1%
+		\def\reserved@a{#2}%
+		\def\reserved@b{#3}%
+		\futurelet\@let@token\fussy@ifnch}
+	\def\fussy@ifnch{%
+		\ifx\@let@token\reserved@d
+			\let\reserved@c\reserved@a
+		\else
+			\let\reserved@c\reserved@b
+		\fi
+		\reserved@c}
+
+	\renewcommand{\gls}[1]{%
+	\oldgls{#1}\fussy@ifnextchar.{\@checkperiod}{\@}}
+	\renewcommand{\glspl}[1]{%
+	\oldglspl{#1}\fussy@ifnextchar.{\@checkperiod}{\@}}
+
+	\newcommand{\@checkperiod}[1]{%
+		\ifnum\sfcode`\.=\spacefactor\else#1\fi
+	}
+
+	% '
+	\robustify{\gls}
+	\robustify{\glspl}
+
+\fi %ifsignalpreamble@glossaries
+%\makeatother
+
+
 
 \ifsignalpreamble@algpseudocode
 	\RequirePackage{algorithm}
@@ -583,6 +604,8 @@
 \newacronym[plural={R.H.S.},\glsshortpluralkey={R.H.S.}]{RHS}{R.H.S.}{right-hand side}
 \newacronym[plural={L.H.S.},\glsshortpluralkey={L.H.S.}]{LHS}{L.H.S.}{left-hand side}
 \newacronym{iid}{i.i.d.}{independent and identically distributed}
+\newacronym{pdf}{pdf}{probability density function}
+\newacronym{cdf}{cdf}{cumulative distribution function}
 \newacronym{SOTA}{SOTA}{state-of-the-art}
 %\newacronym{MIMO}{MIMO}{mulitple-input multiple-output}
 %\newacronym{AOA}{AOA}{angle-of-arrival}
