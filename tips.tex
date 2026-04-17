@@ -162,32 +162,35 @@ fit=band,
 before computing xy={l=15pt},
 }
 [work directory
-[figures
-[abc.pdf]
-[xyz.png]
-]
-% [drafts (NOT required if using git)
-% [papernameV1.tex]
-% [papernameV1.pdf]
-% [papernameV2.tex]
-% [papernameV2.pdf]
-% [responseR1.tex]
-% [responseR1.pdf]
-% ]
-[conferencename (conference version)
-[latexmkrc (for BIBINPUTS and TEXINPUTS)]
-[papernameconf.tex]
-[papernameconf.pdf]
-]
-[bib (if you have many bib files)
-[file1.bib]
-[file2.bib]
-]
-[latexmkrc (for BIBINPUTS and TEXINPUTS)]
-[papername.tex]
-[papername.pdf]
-[supplementary.tex (if applicable)]
-[response.tex (if applicable)]
+	[figures
+		[abc.pdf]
+		[xyz.png]
+	]
+	% [drafts (NOT required if using git)
+		% [papernameV1.tex]
+		% [papernameV1.pdf]
+		% [papernameV2.tex]
+		% [papernameV2.pdf]
+		% [responseR1.tex]
+		% [responseR1.pdf]
+	% ]
+	[conferencename (conference version)
+		[latexmkrc (for BIBINPUTS and TEXINPUTS)]
+		[papernameconf.tex]
+		[papernameconf.pdf]
+	]
+	[bib (if you have many bib files)
+		[file1.bib]
+		[file2.bib]
+	]
+	[latex 
+		[local/signalpreamble.sty]
+		[specialconference.sty]
+	]
+	[latexmkrc (for BIBINPUTS and TEXINPUTS)]
+	[papername.tex]
+	[supplementary.tex (if applicable)]
+	[response.tex (if applicable)]
 ]
 \end{forest}
 \caption{Typical working tree.}\label{fig:working-tree}
@@ -522,7 +525,7 @@ Check that your Overleaf compiler is TexLive 2025 or later. I have defined some 
 
 \teal{
 \begin{Remark}
-If you are using Overleaf and find that the xr or xr-hyper package is not working, you are missing information in the latexmkrc file. See \href{https://www.overleaf.com/learn/how-to/Cross_referencing_with_the_xr_package_in_Overleaf}{this link} for more information.
+If you are using Overleaf and find that the xr package is not working, you are missing information in the latexmkrc file. See \href{https://www.overleaf.com/learn/how-to/Cross_referencing_with_the_xr_package_in_Overleaf}{this link} for more information.
 \end{Remark}    
 }
 
