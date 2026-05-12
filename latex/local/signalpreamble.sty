@@ -1483,11 +1483,7 @@
 		\ifblank{##1}{%
 			{\color{#2} \textbf{#2}}%
 		}{%
-			\ifmmode
-				\textcolor{#2}{\bm{##1}}%
-			\else%
-				{\color{#2} \textbf{##1}}%
-			\fi	
+			\textcolor{#2}{##1}%
 		}%
 	}
 }
