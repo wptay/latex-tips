@@ -124,7 +124,7 @@ Tips, suggestions, best practices.
 %More traditional latex-centric editors are TeXstudio or TeXnicCenter. 
 I recommend using \href{https://git-scm.com/}{git} for version control. 
 
-\item You can also make use of the online latex platform \href{https://www.overleaf.com/project}{Overleaf}. In this case, please ensure that you always have a \red{local updated backup copy}. The server can crash right before a paper deadline leaving you with no access (it has happened before and will happen again!). For Overleaf, you need a premium account (you can use mine by making me the project owner) to use git. You should consider to use \href{https://marketplace.visualstudio.com/items?itemName=iamhyc.overleaf-workshop}{Overleaf Workshop} in VS Code to make use of the many functionalities available in various VS Code extensions:
+\item You can also make use of the online latex platform \href{https://www.overleaf.com/project}{Overleaf}. In this case, please ensure that you always have a \red{local updated backup copy}. The server can crash right before a paper deadline leaving you with no access (it has happened before and will happen again!). For Overleaf, you need a premium account (you can use mine by making me the project owner) to use git. You should consider to use \href{https://marketplace.visualstudio.com/items?itemName=iamhyc.overleaf-workshop}{Overleaf Workshop} in \href{https://code.visualstudio.com/}{VS Code} to make use of the many functionalities available in various extensions:
 \begin{itemize}
 \item Intellisense for autocompletion and various editor tricks like multiple cursors.
 \item GitHub Copilot (sign up for \href{https://github.com/education}{GitHub Education}).
@@ -132,7 +132,10 @@ I recommend using \href{https://git-scm.com/}{git} for version control.
 \item Others.
 \end{itemize} 
 
-\item Use IEEEtran draftcls as in this tex file for drafts (editing stage). See also \url{http://www.michaelshell.org/tex/ieeetran/} for faqs.
+\item If the submission is to an IEEE journal, use IEEEtran draftcls as in this tex file for drafts (editing stage). See also \url{http://www.michaelshell.org/tex/ieeetran/} for faqs. For other submissions, please check the latex template provided by the conference or journal. \textbf{As far as possible, please do not use} \verb|\vspace|, \verb|\hspace| and other math spacing commands (e.g., \verb|\!|) to adjust the spacing in your document. This defeats the whole philosophy of using \LaTeX, which is to let the system take care of the spacing for you.  
+
+
+
 \item I recommend using the latexmk toolchain (``\blue{latexmk -synctex=1 -interaction=nonstopmode -file-line-error -pdf} main.tex'') to automatically perform the necessary multiple pdflatex runs. Use the provided \orange{latexmkrc} file in this repository. If you are using Overleaf, uncomment the part in the latexmkrc file that is meant for Overleaf.
 %\item Together with pdflatex, I recommend the use of SumatraPDF as the viewer. This allows you to use synctex, which lets you sync the pdf file to your tex file (double-clicking in the pdf file brings you directly to the right place in the tex file and vice versa when opening pdf from tex).
 %\item However, synctex does not allow file names with spaces. Please use an underscore ``\_'' if you need to have spaces.
