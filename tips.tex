@@ -132,8 +132,10 @@ I recommend using \href{https://git-scm.com/}{git} for version control.
 \item Others.
 \end{itemize} 
 
-\item If the submission is to an IEEE journal, use IEEEtran draftcls as in this tex file for drafts (editing stage). See also \url{http://www.michaelshell.org/tex/ieeetran/} for faqs. For other submissions, please check the latex template provided by the conference or journal. \textbf{As far as possible, please do not use} \verb|\vspace|, \verb|\hspace| and other math spacing commands (e.g., \verb|\!|) to adjust the spacing in your document. This defeats the whole philosophy of using \LaTeX, which is to let the system take care of the spacing for you.  
+\item If the submission is to an IEEE journal, use IEEEtran draftcls as in this tex file for drafts (editing stage). See also \url{http://www.michaelshell.org/tex/ieeetran/} for faqs. For other submissions, please check the latex template provided by the conference or journal. 
 
+\item \textbf{As far as possible, please do not use} \verb|\vspace|, \verb|\hspace| and other math spacing commands (e.g., \verb|\!|) to adjust the spacing in your document. This defeats the whole philosophy of using \LaTeX, which is to let the system take care of the spacing for you.  
+The only scenario where you may need spacing commands is when you are writing a long equation and need to manually break the equation into multiple lines, with spacing commands like \verb|\qquad| to adjust the spacing. An example is given in \cref{eq:long-equation-manual}.
 
 
 \item I recommend using the latexmk toolchain (``\blue{latexmk -synctex=1 -interaction=nonstopmode -file-line-error -pdf} main.tex'') to automatically perform the necessary multiple pdflatex runs. Use the provided \orange{latexmkrc} file in this repository. If you are using Overleaf, uncomment the part in the latexmkrc file that is meant for Overleaf.
@@ -356,7 +358,21 @@ f_{\mathrm{Exp}}(x) =
 
 \item Please refrain from using the \verb|$$ ... $$| or \verb|\[ ... \]| environment for equation displays. It makes the latex hard for me to read and makes it difficult to add labeling later on. Tip: If you find it a hassle to type the begin and end tags, set up some keyboard shortcuts! You should have keyboard shortcuts for the commonly used environments and commands to improve your writing efficiency. A useful tool is AutoHotkey.
 
-\item An interesting package is breqn, which provides special equation environments that can perform line breaks \emph{automatically}. This is very useful if you need to produce both single- and double-column versions of the same paper. Do check it out! As there are still some bugs in this package, I recommend that you use the breqn environments only for those few long equations, while sticking to align and align* for the rest.
+\item For long equations that cannot fit into a single line, you can either manually break them and use spacing commands to adjust the layout, or use the \verb|\ml| command from the \verb|signalpreamble| package. An example is as follows. 
+\begin{align}
+\norm{\bP -\bZ}
+& \leq \norm{\bP - \bA} +\norm{\bA - \bB} + \norm{\bB-\bC} \label{eq:long-equation-manual}\\ 
+& \qquad + \norm{\bC-\bD} + \norm{\bD-\bE} + \norm{\bE-\bF}\nn
+& \qquad + \norm{\bF-\bG}  + \norm{\bG-\bZ} \nn
+& \leq
+\ml{\norm{\bP - \bA} +\norm{\bA - \bB} + \norm{\bB-\bC} \\ 
++ \norm{\bC-\bD} + \norm{\bD-\bE} + \norm{\bE-\bF} \\
++ \norm{\bF-\bG}  + \norm{\bG-\bZ}
+} \label{eq:long-equation-ml}
+\end{align} 
+
+
+\item An interesting package is breqn, which provides special equation environments that can perform line breaks \emph{automatically}. This is very useful if you need to produce both single- and double-column versions of the same paper. Do check it out! As there are still some bugs in this package, I recommend that you use the breqn environments only for those few long equations, while sticking to align and align* for the rest. 
 
 \item We define a function 
 \begin{align}
