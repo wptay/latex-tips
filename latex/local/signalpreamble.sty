@@ -119,10 +119,18 @@
 
 %\makeatletter
 \ifsignalpreamble@subcaption
-\let\MYcaption\@makecaption
-\RequirePackage[font=footnotesize]{subcaption}
-% Change the caption to IEEE style
-\let\@makecaption\MYcaption
+\ifsignalpreamble@beamer
+	\RequirePackage[font=footnotesize]{subcaption}%
+\else
+	\@ifundefined{@makecaption}{%
+		\RequirePackage[font=footnotesize]{subcaption}%
+	}{%
+		\let\MYcaption\@makecaption
+		\RequirePackage[font=footnotesize]{subcaption}
+		% Change the caption to IEEE style
+		\let\@makecaption\MYcaption
+	}
+\fi
 \fi
 %\makeatother
 
