@@ -17,6 +17,7 @@
 \DeclareBoolOption[true]{cleveref}
 \DeclareBoolOption[true]{subcaption}
 \DeclareBoolOption[true]{enumitem}
+\DeclareBoolOption[true]{float}
 \DeclareBoolOption[true]{glossaries}
 \DeclareBoolOption[true]{highlights}
 
@@ -141,7 +142,9 @@
 	\relax
 \else
 	%put the float package before hyperref and algorithm package after hyperref for hyperref to work correctly with algorithm
-	\RequirePackage{float}
+	\ifsignalpreamble@float
+		\RequirePackage{float}
+	\fi
 
 	% If using TexLive 2024 (e.g., on Overleaf), use xr-hyper instead of xr.
 	\ifsignalpreamble@xrhyper
