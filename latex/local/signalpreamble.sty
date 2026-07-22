@@ -169,6 +169,8 @@
 	\fi
 
 	\ifsignalpreamble@cleveref%
+		% If xpatch is already loaded, mark regexpatch as loaded to prevent clash when cleveref-forward requests it.
+		\@ifpackageloaded{xpatch}{\@ifundefined{ver@regexpatch.sty}{\@namedef{ver@regexpatch.sty}{2021/03/21 v0.2f}}{}}{}
 		\RequirePackage{cleveref-forward}
 		% %% Temporary fix
 		% \AtBeginDocument
@@ -285,6 +287,9 @@
 \fi %ifsignalpreamble@beamer
 
 \ifsignalpreamble@glossaries
+	% Fallback when hyperref is disabled: glossaries-extra may still call \hypertarget.
+	\providecommand{\hypertarget}[2]{#2}
+
 	%\RequirePackage[acronym,hyperfirst=false]{glossaries}
 	\RequirePackage{glossaries-extra}
 	\setabbreviationstyle[acronym]{long-short}
