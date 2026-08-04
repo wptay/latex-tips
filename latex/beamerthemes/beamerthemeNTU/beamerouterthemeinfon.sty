@@ -16,7 +16,7 @@
 \setbeamercolor*{title in head/foot}{parent=palette secondary}
 \setbeamercolor*{date in head/foot}{parent=palette primary}
 
-\setbeamercolor*{section in head/foot}{parent=palette tertiary}
+\setbeamercolor*{section in head/foot}{parent=palette primary,fg=white}
 \setbeamercolor*{subsection in head/foot}{parent=palette primary}
 
 \defbeamertemplate*{footline}{infolines theme}
@@ -42,10 +42,10 @@
   \leavevmode%
   \hbox{%
   \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,right]{section in head/foot}%
-    \usebeamerfont{section in head/foot}\insertsectionhead\hspace*{2ex}
+    \usebeamerfont{section in head/foot}\let\hyperlink\@secondoftwo\let\beamer@link\@secondoftwo\insertsectionhead\hspace*{2ex}
   \end{beamercolorbox}%
   \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,left]{subsection in head/foot}%
-    \usebeamerfont{subsection in head/foot}\hspace*{2ex}\insertsubsectionhead
+    \usebeamerfont{subsection in head/foot}\hspace*{2ex}\let\hyperlink\@secondoftwo\let\beamer@link\@secondoftwo\insertsubsectionhead
   \end{beamercolorbox}}%
   \vskip0pt%
 }
