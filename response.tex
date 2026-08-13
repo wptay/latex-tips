@@ -34,6 +34,10 @@
 
 \myexternaldocument{\maintext}
 
+% This copies the new commands and acronyms from the main paper. 
+% Enclose these in the tags %<*tag:commands-main> %</tag:commands-main> in the main paper.
+\ExecuteMetaData[\maintext]{tag:commands-main}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -47,10 +51,6 @@
 
 \begin{document}
 \maketitle
-
-% This copies the new commands and acronyms from the main paper. 
-% Enclose these in the tags %<*tag:commands-main> %</tag:commands-main> in the main paper.
-\ExecuteMetaData[\maintext]{tag:commands-main}
 
 
 We sincerely thank the Associate Editor and all reviewers for their helpful comments and suggestions. We have revised the manuscript and included here a point-by-point response. The main changes are the following:
@@ -136,7 +136,7 @@ Thank you for your comment. Please refer to \cref{fig:tandem}. We provide the fo
 
 Note the use of \verb|\xrcounterref| in the macro \verb|\revision| to set the numbering of environments correctly. \textbf{If you know how to make this automatic, let me know.}
 
-The macro \verb|\revision| takes in an optional list of pairs of environment name and label, separated by semicolons ;. Each pair is of the form \verb|environment_name>label|. The environment name can be figure, table, Theorem, Lemma, Example, etc. The label is the label of the environment in the main paper. For example, in the above example, we have \verb|Example>eg:subGSP;figure>fig:fractal|.  
+The macro \verb|\revision| takes in an optional list of pairs of environment name and label, separated by semicolons ;. Each pair is of the form \verb|environment_name>label|. The environment name can be figure, table, Theorem, Lemma, Example, etc. The label is the label of the environment in the main paper. In the above example, we have \verb|Example>eg:subGSP;figure>fig:fractal|.  
 \end{response}
 
 \begin{comment}

@@ -70,6 +70,8 @@
 \newcommand{\tbL}{\widetilde{\bL}}
 \newcommand{\onehot}[1]{\mathrm{one\_hot}\left(#1\right)}
 
+\DeclareMathOperator{\specialop}{[\divideontimes]}
+
 \newacronym{KLD}{KLD}{Kullbeck-Leibler divergence}
 %</tag:commands-main>
 
@@ -221,7 +223,7 @@ before computing xy={l=15pt},
 
 \item \textbf{Look through the signalpreamble.sty file first before you define your own newcommands to avoid duplication. The most updated signalpreamble.sty file is always available on \url{https://github.com/wptay/latex-tips}.} If you find some useful things to add to the package, please let me know. \cprotect\teal{Hint: you can redefine a command in your tex file after the \verb|\usepackage{signalpreamble}| command using \cprotect\olive{\verb|\renewcommand|}.}
 
-\item I will always use the most updated signalpreamble.sty, so there is no need for you to include a copy in your workspace (you can keep a global copy somewhere and configure your Latex to point to it (see \href{https://miktex.org/kb/texmf-roots}{TEXMF}) or include a path in a latexmkrc file). In Overleaf, you can add a new file from external URL at \url{https://raw.githubusercontent.com/wptay/latex-tips/refs/heads/main/latex/local/signalpreamble.sty}. Check that your Overleaf compiler is TexLive 2025 or later, otherwise you have to use \verb|\usepackage[xrhyper]{signalpreamble}| in your tex file.
+\item I will always use the most updated signalpreamble.sty, so there is no need for you to include a copy in your workspace (you can keep a global copy somewhere and configure your Latex to point to it (see \href{https://miktex.org/kb/texmf-roots}{TEXMF}) or include a path in a latexmkrc file). In Overleaf, you can add a new file from external URL at \url{https://raw.githubusercontent.com/wptay/latex-tips/refs/heads/main/latex/local/signalpreamble.sty}. Check that your Overleaf compiler is TexLive 2025 or later.
 
 \item A typical working tree looks like that in \cref{fig:working-tree}. Note the inclusion of the \orange{latexmkrc} file, which is used by latexmk to set the \orange{BIBINPUTS} and \orange{TEXINPUTS} variables. For example, this allows you to have a separate subfolder for a conference version, while sharing the same figures, bib, and sty files. See the latexmkrc file in the subfolder \texttt{presentation} for an example. 
 
@@ -298,13 +300,14 @@ X & = \sum_{i=1}^n y_i \\
 %<*tag:equation>
 Other examples are as follows:
 \begin{align}
-\Lambda_{\mathrm{SGLR}}(k,t) & =\max\left\{\Lambda(k,t),\Lambda_n(k,t)\right\}, \label{eq:Lambda_SGLR}    \\
-\tau_{\mathrm{SGLR}}(b)      & =\min\{\tau(b),\tau_n(b)\}, \label{eq:tau_SGLR2}                           \\
-\tau_{\mathrm{W-SGLR}}(b)    & =\min\{\widetilde{\tau}(b),\widetilde{\tau_n}(b)\}, \label{eq:tau_WSGLR2}  \\
-\Phi_i                       & = \tau_{\mathrm{W-SGLR}}(b) + i^2,\ \text{for $i=1,\dots,N$},         			\nn
-\tbC                         & = \onehot{\tbL}, \label{eq:tbC}                                            \\
-\bx 												 &= \bB\Herm\bSigma\bM\T\bPhi\bM\bA\T, 																				\nn
-d                            & = \KLD*{p_X}{p_{Z}}. 																											\nonumber
+\Lambda_{\mathrm{SGLR}}(k,t) & =\max\left\{\Lambda(k,t),\Lambda_n(k,t)\right\}, \label{eq:Lambda_SGLR} \\
+\tau_{\mathrm{SGLR}}(b) & =\min\{\tau(b),\tau_n(b)\}, \label{eq:tau_SGLR2} \\
+\tau_{\mathrm{W-SGLR}}(b) & =\min\{\widetilde{\tau}(b),\widetilde{\tau_n}(b)\}, \label{eq:tau_WSGLR2}  \\
+\Phi_i & = \tau_{\mathrm{W-SGLR}}(b) + i^2,\ \text{for $i=1,\dots,N$}, \nn
+\tbC & = \onehot{\tbL}, \label{eq:tbC} \\
+\by &= \bx \specialop \bz, \label{eq:by} \\
+\bx &= \bB\Herm\bSigma\bM\T\bPhi\bM\bA\T, \nn
+d & = \KLD*{p_X}{p_{Z}}. \nonumber
 \end{align}
 %</tag:equation>
 Note the use of the command \verb|\nn| to indicate \verb|\nonumber\\|.

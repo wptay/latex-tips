@@ -50,6 +50,9 @@
 
 \myexternaldocument{\maintext}
 
+% This copies the new commands and acronyms from the main paper. 
+% Enclose these in the tags %<*tag:commands-main> %</tag:commands-main> in the main paper.
+\ExecuteMetaData[\maintext]{tag:commands-main}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -59,9 +62,7 @@
 \begin{document}
 \maketitle
 
-% This copies the new commands and acronyms from the main paper. 
-% Enclose these in the tags %<*tag:commands-main> %</tag:commands-main> in the main paper.
-\ExecuteMetaData[\maintext]{tag:commands-main}
+
 
 This is the supplementary material to ``Tips on Writing Papers in \LaTeX''. The references like equation numbers refer to those in the main paper, except for those prefixed by ``\docprefix''. For example, we can reference \cref{sec:General} and \cref{eq:Lambda_SGLR} from the main paper but \cref{eq:f} is from this supplementary material. 
 
@@ -74,7 +75,8 @@ To include local citations like \citeSR{WanSonTay:J21} that appear only in this 
 This is a section in the supplementary material. From a result in \citeSR[Theorem 2]{WanSonTay:J21} (note that this is a local citation that does not appear in the main paper), we have
 \begin{align}
 		f(\btheta) &= \E_{X \sim p_{\btheta}}[\frac{f(X)}{g(X,Y)} \given Y], \label{eq:f}\\
-		\P(A \given B) &= \P(\set*{\omega\in\Omega \given \ofrac{2}X(\omega) > b} \given \limsup_{n\to\infty} X_n(\omega) = a). \label{eq:AB}
+		\P(A \given B) &= \P(\set*{\omega\in\Omega \given \ofrac{2}X(\omega) > b} \given \limsup_{n\to\infty} X_n(\omega) = a), \label{eq:AB} \\
+		X &= Y \specialop Z. \label{eq:Xcomp}
 \end{align}
 
 \section{Proof of Theorem \ref{thm:Gamma}}\label{proof:thm:Gamma}
