@@ -72,16 +72,25 @@ To include local citations like \citeSR{WanSonTay:J21} that appear only in this 
 
 \section{Preliminaries}\label{supp:Preliminaries}
 
-This is a section in the supplementary material. From a result in \citeSR[Theorem 2]{WanSonTay:J21} (note that this is a local citation that does not appear in the main paper), we have
+This is a section in the supplementary material. 
+From a result in \citeSR[Theorem 2]{WanSonTay:J21} (note that this is a local citation that does not appear in the main paper), we have
 \begin{align}
-		f(\btheta) &= \E_{X \sim p_{\btheta}}[\frac{f(X)}{g(X,Y)} \given Y], \label{eq:f}\\
-		\P(A \given B) &= \P(\set*{\omega\in\Omega \given \ofrac{2}X(\omega) > b} \given \limsup_{n\to\infty} X_n(\omega) = a), \label{eq:AB} \\
-		X &= Y \specialop Z. \label{eq:Xcomp}
+f(\bY) &= \bX \label{eq:bY}.
 \end{align}
+%<*tag:supp-eq>
+Therefore, we obtain
+\begin{align}
+f(\btheta) &= \E_{X \sim p_{\btheta}}[\frac{f(X)}{g(X,Y)} \given Y], \label{eq:f}\\
+\P(A \given B) &= \P(\set*{\omega\in\Omega \given \ofrac{2}X(\omega) > b} \given \limsup_{n\to\infty} X_n(\omega) = a), \label{eq:AB} \\
+X &= Y \specialop Z. \label{eq:Xcomp}
+\end{align}
+%</tag:supp-eq>
 
 \section{Proof of Theorem \ref{thm:Gamma}}\label{proof:thm:Gamma}
 
+%<*tag:supp-proof>
 Note that \cref{thm:Gamma} is stated in the main file. We can reference \cref{eq:X} from the main file, or \cref{eq:AB}, a local equation in this supplementary.
+%</tag:supp-proof>
 
 % Used by \citeSR. If you do not have any local cites, comment this out.
 \bibliographystyleSR{IEEEtran}
