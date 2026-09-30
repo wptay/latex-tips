@@ -1,6 +1,6 @@
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{signalpreamble}[2025/10/08 v1.0.2 SIGNAL Preamble]
+\ProvidesPackage{signalpreamble}[2026/09/30 v1.1.0 SIGNAL Preamble]
 
 % Note: this has been tested using the latest Latex packages as of the version date. If you are getting errors, update your packages.
 % LTeX: enabled=false
@@ -1108,21 +1108,25 @@
 \newcommand{\hbLambda}{\widehat{\bLambda}}
 
 %\makeatletter
-\newcommand*\rel@kern[1]{\kern#1\dimexpr\macc@kerna}
-\newcommand*\widebar[1]{%
-  \begingroup
-  \def\mathaccent##1##2{%
-    \rel@kern{0.8}%
-    \overline{\rel@kern{-0.8}\macc@nucleus\rel@kern{0.2}}%
-    \rel@kern{-0.2}%
-  }%
-  \macc@depth\@ne
-  \let\math@bgroup\@empty \let\math@egroup\macc@set@skewchar
-  \mathsurround\z@ \frozen@everymath{\mathgroup\macc@group\relax}%
-  \macc@set@skewchar\relax
-  \let\mathaccentV\macc@nested@a
-  \macc@nested@a\relax111{#1}%
-  \endgroup
+\@ifpackageloaded{newtxmath}{%
+	\relax 
+}{%
+	\newcommand*\rel@kern[1]{\kern#1\dimexpr\macc@kerna}
+	\newcommand*\widebar[1]{%
+	\begingroup
+	\def\mathaccent##1##2{%
+		\rel@kern{0.8}%
+		\overline{\rel@kern{-0.8}\macc@nucleus\rel@kern{0.2}}%
+		\rel@kern{-0.2}%
+	}%
+	\macc@depth\@ne
+	\let\math@bgroup\@empty \let\math@egroup\macc@set@skewchar
+	\mathsurround\z@ \frozen@everymath{\mathgroup\macc@group\relax}%
+	\macc@set@skewchar\relax
+	\let\mathaccentV\macc@nested@a
+	\macc@nested@a\relax111{#1}%
+	\endgroup
+	}
 }
 %\makeatother
 
