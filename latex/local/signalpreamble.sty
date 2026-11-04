@@ -1279,20 +1279,33 @@
 \newcommand{\indicator}[1]{{\bf 1}_{\braces*{\ifbcdot{#1}}}}
 \newcommand{\indicatore}[1]{{\bf 1}_{#1}}
 \newcommand{\tc}[1]{^{(#1)}}
-\NewDocumentCommand\ofrac{s m}{%
-	\IfBooleanTF#1%
-	{\dfrac{1}{#2}}%
-	{\frac{1}{#2}}%
+
+\NewDocumentCommand\ofrac{t{!} t{*} m}{%
+	\IfBooleanTF{#1}{%
+		1 / {#3}%
+	}{%
+		\IfBooleanTF{#2}%
+		{\dfrac{1}{#3}}%
+		{\frac{1}{#3}}%
+	}%
 }
-\NewDocumentCommand\ddfrac{s m m}{%
-	\IfBooleanTF#1%
-	{\dfrac{\mathrm{d} {#2}}{\mathrm{d} {#3}}}%
-	{\frac{\mathrm{d} {#2}}{\mathrm{d} {#3}}}%
+\NewDocumentCommand\ddfrac{t{!} t{*} m m}{%
+	\IfBooleanTF{#1}{%
+		{\mathrm{d} #3} / {\mathrm{d} #4}%
+	}{%
+		\IfBooleanTF{#2}%
+		{\dfrac{\mathrm{d} #3}{\mathrm{d} #4}}%
+		{\frac{\mathrm{d} #3}{\mathrm{d} #4}}%
+	}%
 }
-\NewDocumentCommand\ppfrac{s m m}{%
-	\IfBooleanTF#1%
-	{\dfrac{\partial {#2}}{\partial {#3}}}%
-	{\frac{\partial {#2}}{\partial {#3}}}%
+\NewDocumentCommand\ppfrac{t{!} t{*} m m}{%
+	\IfBooleanTF{#1}{%
+		{\partial #3} / {\partial #4}%
+	}{%
+		\IfBooleanTF{#2}%
+		{\dfrac{\partial #3}{\partial #4}}%
+		{\frac{\partial #3}{\partial #4}}%
+	}%
 }
 
 \newcommand{\bmat}[1]{\begin{bmatrix} #1 \end{bmatrix}}
